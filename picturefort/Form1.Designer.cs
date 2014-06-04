@@ -31,6 +31,18 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.grid = new System.Windows.Forms.TableLayoutPanel();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.txtCommentQuery = new System.Windows.Forms.TextBox();
+			this.txtCommentPlace = new System.Windows.Forms.TextBox();
+			this.txtCommentBuild = new System.Windows.Forms.TextBox();
+			this.txtCommentDig = new System.Windows.Forms.TextBox();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.txtStartPos = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.cbStartPos = new System.Windows.Forms.ComboBox();
+			this.cbQuery = new System.Windows.Forms.CheckBox();
+			this.cbPlace = new System.Windows.Forms.CheckBox();
+			this.cbBuild = new System.Windows.Forms.CheckBox();
+			this.cbDig = new System.Windows.Forms.CheckBox();
 			this.btnImageChooser = new System.Windows.Forms.Button();
 			this.btnMultiCSV = new System.Windows.Forms.Button();
 			this.btnSingleCSV = new System.Windows.Forms.Button();
@@ -46,26 +58,14 @@
 			this.txtOutPath = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.cbDig = new System.Windows.Forms.CheckBox();
-			this.cbBuild = new System.Windows.Forms.CheckBox();
-			this.cbPlace = new System.Windows.Forms.CheckBox();
-			this.cbQuery = new System.Windows.Forms.CheckBox();
-			this.cbStartPos = new System.Windows.Forms.ComboBox();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.label3 = new System.Windows.Forms.Label();
-			this.txtStartPos = new System.Windows.Forms.TextBox();
-			this.txtCommentDig = new System.Windows.Forms.TextBox();
-			this.txtCommentBuild = new System.Windows.Forms.TextBox();
-			this.txtCommentPlace = new System.Windows.Forms.TextBox();
-			this.txtCommentQuery = new System.Windows.Forms.TextBox();
 			this.cbRecursive = new System.Windows.Forms.CheckBox();
 			this.grid.SuspendLayout();
 			this.panel1.SuspendLayout();
+			this.panel2.SuspendLayout();
 			this.tabPanel.SuspendLayout();
 			this.tabImagePreview.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
 			this.tabColorDesignations.SuspendLayout();
-			this.panel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// grid
@@ -75,7 +75,7 @@
 			this.grid.ColumnCount = 3;
 			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
 			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 209F));
 			this.grid.Controls.Add(this.panel1, 2, 0);
 			this.grid.Controls.Add(this.btnMultiCSV, 2, 2);
 			this.grid.Controls.Add(this.btnSingleCSV, 2, 1);
@@ -112,11 +112,124 @@
 			this.panel1.Controls.Add(this.cbDig);
 			this.panel1.Controls.Add(this.btnImageChooser);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(573, 3);
+			this.panel1.Location = new System.Drawing.Point(564, 3);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(200, 386);
+			this.panel1.Size = new System.Drawing.Size(209, 386);
 			this.panel1.TabIndex = 1;
+			// 
+			// txtCommentQuery
+			// 
+			this.txtCommentQuery.Location = new System.Drawing.Point(54, 91);
+			this.txtCommentQuery.Name = "txtCommentQuery";
+			this.txtCommentQuery.Size = new System.Drawing.Size(143, 20);
+			this.txtCommentQuery.TabIndex = 11;
+			// 
+			// txtCommentPlace
+			// 
+			this.txtCommentPlace.Location = new System.Drawing.Point(54, 69);
+			this.txtCommentPlace.Name = "txtCommentPlace";
+			this.txtCommentPlace.Size = new System.Drawing.Size(143, 20);
+			this.txtCommentPlace.TabIndex = 10;
+			// 
+			// txtCommentBuild
+			// 
+			this.txtCommentBuild.Location = new System.Drawing.Point(54, 46);
+			this.txtCommentBuild.Name = "txtCommentBuild";
+			this.txtCommentBuild.Size = new System.Drawing.Size(143, 20);
+			this.txtCommentBuild.TabIndex = 9;
+			// 
+			// txtCommentDig
+			// 
+			this.txtCommentDig.Location = new System.Drawing.Point(54, 23);
+			this.txtCommentDig.Name = "txtCommentDig";
+			this.txtCommentDig.Size = new System.Drawing.Size(143, 20);
+			this.txtCommentDig.TabIndex = 8;
+			// 
+			// panel2
+			// 
+			this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel2.Controls.Add(this.txtStartPos);
+			this.panel2.Controls.Add(this.label3);
+			this.panel2.Controls.Add(this.cbStartPos);
+			this.panel2.Location = new System.Drawing.Point(3, 308);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(203, 75);
+			this.panel2.TabIndex = 7;
+			// 
+			// txtStartPos
+			// 
+			this.txtStartPos.Location = new System.Drawing.Point(3, 43);
+			this.txtStartPos.Name = "txtStartPos";
+			this.txtStartPos.Size = new System.Drawing.Size(132, 20);
+			this.txtStartPos.TabIndex = 8;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(3, 0);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(56, 13);
+			this.label3.TabIndex = 7;
+			this.label3.Text = "Start Point";
+			// 
+			// cbStartPos
+			// 
+			this.cbStartPos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbStartPos.FormattingEnabled = true;
+			this.cbStartPos.Items.AddRange(new object[] {
+            "Custom",
+            "Center",
+            "Top-Left",
+            "Top-Right",
+            "Bottom-Left",
+            "Bottom-Right"});
+			this.cbStartPos.Location = new System.Drawing.Point(3, 16);
+			this.cbStartPos.Name = "cbStartPos";
+			this.cbStartPos.Size = new System.Drawing.Size(132, 21);
+			this.cbStartPos.TabIndex = 6;
+			this.cbStartPos.SelectedIndexChanged += new System.EventHandler(this.cbStartPos_SelectedIndexChanged);
+			// 
+			// cbQuery
+			// 
+			this.cbQuery.AutoSize = true;
+			this.cbQuery.Location = new System.Drawing.Point(6, 94);
+			this.cbQuery.Name = "cbQuery";
+			this.cbQuery.Size = new System.Drawing.Size(54, 17);
+			this.cbQuery.TabIndex = 5;
+			this.cbQuery.Text = "Query";
+			this.cbQuery.UseVisualStyleBackColor = true;
+			// 
+			// cbPlace
+			// 
+			this.cbPlace.AutoSize = true;
+			this.cbPlace.Location = new System.Drawing.Point(6, 71);
+			this.cbPlace.Name = "cbPlace";
+			this.cbPlace.Size = new System.Drawing.Size(53, 17);
+			this.cbPlace.TabIndex = 4;
+			this.cbPlace.Text = "Place";
+			this.cbPlace.UseVisualStyleBackColor = true;
+			// 
+			// cbBuild
+			// 
+			this.cbBuild.AutoSize = true;
+			this.cbBuild.Location = new System.Drawing.Point(6, 48);
+			this.cbBuild.Name = "cbBuild";
+			this.cbBuild.Size = new System.Drawing.Size(49, 17);
+			this.cbBuild.TabIndex = 3;
+			this.cbBuild.Text = "Build";
+			this.cbBuild.UseVisualStyleBackColor = true;
+			// 
+			// cbDig
+			// 
+			this.cbDig.AutoSize = true;
+			this.cbDig.Location = new System.Drawing.Point(6, 25);
+			this.cbDig.Name = "cbDig";
+			this.cbDig.Size = new System.Drawing.Size(42, 17);
+			this.cbDig.TabIndex = 2;
+			this.cbDig.Text = "Dig";
+			this.cbDig.UseVisualStyleBackColor = true;
 			// 
 			// btnImageChooser
 			// 
@@ -124,7 +237,7 @@
 			this.btnImageChooser.Location = new System.Drawing.Point(0, 0);
 			this.btnImageChooser.Margin = new System.Windows.Forms.Padding(0);
 			this.btnImageChooser.Name = "btnImageChooser";
-			this.btnImageChooser.Size = new System.Drawing.Size(200, 20);
+			this.btnImageChooser.Size = new System.Drawing.Size(209, 20);
 			this.btnImageChooser.TabIndex = 1;
 			this.btnImageChooser.Text = "Load Image(s)";
 			this.btnImageChooser.UseVisualStyleBackColor = true;
@@ -134,26 +247,27 @@
 			// 
 			this.btnMultiCSV.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.btnMultiCSV.Enabled = false;
-			this.btnMultiCSV.Location = new System.Drawing.Point(573, 415);
+			this.btnMultiCSV.Location = new System.Drawing.Point(564, 415);
 			this.btnMultiCSV.Margin = new System.Windows.Forms.Padding(0);
 			this.btnMultiCSV.Name = "btnMultiCSV";
-			this.btnMultiCSV.Size = new System.Drawing.Size(200, 20);
+			this.btnMultiCSV.Size = new System.Drawing.Size(209, 20);
 			this.btnMultiCSV.TabIndex = 6;
 			this.btnMultiCSV.Text = "Batch Templates";
 			this.btnMultiCSV.UseVisualStyleBackColor = true;
+			this.btnMultiCSV.Click += new System.EventHandler(this.btnMultiCSV_Click);
 			// 
 			// btnSingleCSV
 			// 
 			this.btnSingleCSV.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.btnSingleCSV.Enabled = false;
-			this.btnSingleCSV.Location = new System.Drawing.Point(573, 392);
+			this.btnSingleCSV.Location = new System.Drawing.Point(564, 392);
 			this.btnSingleCSV.Margin = new System.Windows.Forms.Padding(0);
 			this.btnSingleCSV.Name = "btnSingleCSV";
-			this.btnSingleCSV.Size = new System.Drawing.Size(200, 20);
+			this.btnSingleCSV.Size = new System.Drawing.Size(209, 20);
 			this.btnSingleCSV.TabIndex = 2;
 			this.btnSingleCSV.Text = "Single Template";
 			this.btnSingleCSV.UseVisualStyleBackColor = true;
-			this.btnSingleCSV.Click += new System.EventHandler(this.btnConvertImage_Click);
+			this.btnSingleCSV.Click += new System.EventHandler(this.btnSingleCSV_Click);
 			// 
 			// progress_bar
 			// 
@@ -161,7 +275,7 @@
 			this.progress_bar.Location = new System.Drawing.Point(156, 438);
 			this.progress_bar.Margin = new System.Windows.Forms.Padding(0);
 			this.progress_bar.Name = "progress_bar";
-			this.progress_bar.Size = new System.Drawing.Size(414, 20);
+			this.progress_bar.Size = new System.Drawing.Size(405, 20);
 			this.progress_bar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.progress_bar.TabIndex = 3;
 			this.progress_bar.Value = 100;
@@ -177,7 +291,7 @@
 			this.tabPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tabPanel.Name = "tabPanel";
 			this.tabPanel.SelectedIndex = 0;
-			this.tabPanel.Size = new System.Drawing.Size(567, 386);
+			this.tabPanel.Size = new System.Drawing.Size(558, 386);
 			this.tabPanel.TabIndex = 5;
 			// 
 			// tabImagePreview
@@ -186,7 +300,7 @@
 			this.tabImagePreview.Location = new System.Drawing.Point(4, 22);
 			this.tabImagePreview.Name = "tabImagePreview";
 			this.tabImagePreview.Padding = new System.Windows.Forms.Padding(3);
-			this.tabImagePreview.Size = new System.Drawing.Size(559, 360);
+			this.tabImagePreview.Size = new System.Drawing.Size(550, 360);
 			this.tabImagePreview.TabIndex = 0;
 			this.tabImagePreview.Text = "Image Preview";
 			this.tabImagePreview.UseVisualStyleBackColor = true;
@@ -198,7 +312,7 @@
 			this.preview.Location = new System.Drawing.Point(3, 3);
 			this.preview.Margin = new System.Windows.Forms.Padding(0);
 			this.preview.Name = "preview";
-			this.preview.Size = new System.Drawing.Size(553, 354);
+			this.preview.Size = new System.Drawing.Size(544, 354);
 			this.preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.preview.TabIndex = 0;
 			this.preview.TabStop = false;
@@ -209,7 +323,7 @@
 			this.tabColorDesignations.Location = new System.Drawing.Point(4, 22);
 			this.tabColorDesignations.Name = "tabColorDesignations";
 			this.tabColorDesignations.Padding = new System.Windows.Forms.Padding(3);
-			this.tabColorDesignations.Size = new System.Drawing.Size(606, 360);
+			this.tabColorDesignations.Size = new System.Drawing.Size(553, 360);
 			this.tabColorDesignations.TabIndex = 1;
 			this.tabColorDesignations.Text = "Color Designations";
 			this.tabColorDesignations.UseVisualStyleBackColor = true;
@@ -228,7 +342,7 @@
 			// 
 			this.tabAdvancedSettings.Location = new System.Drawing.Point(4, 22);
 			this.tabAdvancedSettings.Name = "tabAdvancedSettings";
-			this.tabAdvancedSettings.Size = new System.Drawing.Size(606, 360);
+			this.tabAdvancedSettings.Size = new System.Drawing.Size(553, 360);
 			this.tabAdvancedSettings.TabIndex = 2;
 			this.tabAdvancedSettings.Text = "Advanced";
 			this.tabAdvancedSettings.UseVisualStyleBackColor = true;
@@ -237,9 +351,9 @@
 			// 
 			this.status.AutoSize = true;
 			this.status.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.status.Location = new System.Drawing.Point(576, 438);
+			this.status.Location = new System.Drawing.Point(567, 438);
 			this.status.Name = "status";
-			this.status.Size = new System.Drawing.Size(194, 20);
+			this.status.Size = new System.Drawing.Size(203, 20);
 			this.status.TabIndex = 7;
 			this.status.Text = "Ready";
 			this.status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -250,8 +364,9 @@
 			this.txtOutFilePath.Location = new System.Drawing.Point(156, 392);
 			this.txtOutFilePath.Margin = new System.Windows.Forms.Padding(0);
 			this.txtOutFilePath.Name = "txtOutFilePath";
-			this.txtOutFilePath.Size = new System.Drawing.Size(414, 20);
+			this.txtOutFilePath.Size = new System.Drawing.Size(405, 20);
 			this.txtOutFilePath.TabIndex = 8;
+			this.txtOutFilePath.DoubleClick += new System.EventHandler(this.txtOutFilePath_DoubleClick);
 			// 
 			// txtOutPath
 			// 
@@ -259,8 +374,9 @@
 			this.txtOutPath.Location = new System.Drawing.Point(156, 415);
 			this.txtOutPath.Margin = new System.Windows.Forms.Padding(0);
 			this.txtOutPath.Name = "txtOutPath";
-			this.txtOutPath.Size = new System.Drawing.Size(414, 20);
+			this.txtOutPath.Size = new System.Drawing.Size(405, 20);
 			this.txtOutPath.TabIndex = 9;
+			this.txtOutPath.DoubleClick += new System.EventHandler(this.txtOutPath_DoubleClick);
 			// 
 			// label1
 			// 
@@ -283,118 +399,6 @@
 			this.label2.TabIndex = 11;
 			this.label2.Text = "Output Directory";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// cbDig
-			// 
-			this.cbDig.AutoSize = true;
-			this.cbDig.Location = new System.Drawing.Point(6, 25);
-			this.cbDig.Name = "cbDig";
-			this.cbDig.Size = new System.Drawing.Size(42, 17);
-			this.cbDig.TabIndex = 2;
-			this.cbDig.Text = "Dig";
-			this.cbDig.UseVisualStyleBackColor = true;
-			// 
-			// cbBuild
-			// 
-			this.cbBuild.AutoSize = true;
-			this.cbBuild.Location = new System.Drawing.Point(6, 48);
-			this.cbBuild.Name = "cbBuild";
-			this.cbBuild.Size = new System.Drawing.Size(49, 17);
-			this.cbBuild.TabIndex = 3;
-			this.cbBuild.Text = "Build";
-			this.cbBuild.UseVisualStyleBackColor = true;
-			// 
-			// cbPlace
-			// 
-			this.cbPlace.AutoSize = true;
-			this.cbPlace.Location = new System.Drawing.Point(6, 71);
-			this.cbPlace.Name = "cbPlace";
-			this.cbPlace.Size = new System.Drawing.Size(53, 17);
-			this.cbPlace.TabIndex = 4;
-			this.cbPlace.Text = "Place";
-			this.cbPlace.UseVisualStyleBackColor = true;
-			// 
-			// cbQuery
-			// 
-			this.cbQuery.AutoSize = true;
-			this.cbQuery.Location = new System.Drawing.Point(6, 94);
-			this.cbQuery.Name = "cbQuery";
-			this.cbQuery.Size = new System.Drawing.Size(54, 17);
-			this.cbQuery.TabIndex = 5;
-			this.cbQuery.Text = "Query";
-			this.cbQuery.UseVisualStyleBackColor = true;
-			// 
-			// cbStartPos
-			// 
-			this.cbStartPos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbStartPos.FormattingEnabled = true;
-			this.cbStartPos.Items.AddRange(new object[] {
-            "Custom",
-            "Center",
-            "Top-Left",
-            "Top-Right",
-            "Bottom-Left",
-            "Bottom-Right"});
-			this.cbStartPos.Location = new System.Drawing.Point(3, 16);
-			this.cbStartPos.Name = "cbStartPos";
-			this.cbStartPos.Size = new System.Drawing.Size(132, 21);
-			this.cbStartPos.TabIndex = 6;
-			// 
-			// panel2
-			// 
-			this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.panel2.Controls.Add(this.txtStartPos);
-			this.panel2.Controls.Add(this.label3);
-			this.panel2.Controls.Add(this.cbStartPos);
-			this.panel2.Location = new System.Drawing.Point(3, 308);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(194, 75);
-			this.panel2.TabIndex = 7;
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(3, 0);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(56, 13);
-			this.label3.TabIndex = 7;
-			this.label3.Text = "Start Point";
-			// 
-			// txtStartPos
-			// 
-			this.txtStartPos.Location = new System.Drawing.Point(3, 43);
-			this.txtStartPos.Name = "txtStartPos";
-			this.txtStartPos.Size = new System.Drawing.Size(132, 20);
-			this.txtStartPos.TabIndex = 8;
-			// 
-			// txtCommentDig
-			// 
-			this.txtCommentDig.Location = new System.Drawing.Point(54, 23);
-			this.txtCommentDig.Name = "txtCommentDig";
-			this.txtCommentDig.Size = new System.Drawing.Size(143, 20);
-			this.txtCommentDig.TabIndex = 8;
-			// 
-			// txtCommentBuild
-			// 
-			this.txtCommentBuild.Location = new System.Drawing.Point(54, 46);
-			this.txtCommentBuild.Name = "txtCommentBuild";
-			this.txtCommentBuild.Size = new System.Drawing.Size(143, 20);
-			this.txtCommentBuild.TabIndex = 9;
-			// 
-			// txtCommentPlace
-			// 
-			this.txtCommentPlace.Location = new System.Drawing.Point(54, 69);
-			this.txtCommentPlace.Name = "txtCommentPlace";
-			this.txtCommentPlace.Size = new System.Drawing.Size(143, 20);
-			this.txtCommentPlace.TabIndex = 10;
-			// 
-			// txtCommentQuery
-			// 
-			this.txtCommentQuery.Location = new System.Drawing.Point(54, 91);
-			this.txtCommentQuery.Name = "txtCommentQuery";
-			this.txtCommentQuery.Size = new System.Drawing.Size(143, 20);
-			this.txtCommentQuery.TabIndex = 11;
 			// 
 			// cbRecursive
 			// 
@@ -422,12 +426,12 @@
 			this.grid.PerformLayout();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
+			this.panel2.ResumeLayout(false);
+			this.panel2.PerformLayout();
 			this.tabPanel.ResumeLayout(false);
 			this.tabImagePreview.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
 			this.tabColorDesignations.ResumeLayout(false);
-			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}

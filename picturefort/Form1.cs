@@ -14,12 +14,12 @@ using System.Threading;
 //TODO
 /*
  ------------------------------* progressbar / status info
- ---------------------* persistent settings
- --------* default color designations
- -------------* custom folder for csv files
- -------------* batch image processing
+ -------------------------* persistent settings
+ ---------------------* default color designations
+ ---------------------* custom folder for csv files
+ ------------------------------* batch image processing
  ------------------------------* multiple z-level designations
- * per-image descriptions
+ * per-image persistent descriptions
  * image/csv rotation
  */
 
@@ -33,6 +33,8 @@ namespace picturefort
 		{
 			InitializeComponent();
 			btnSingleCSV.Enabled = false;
+			btnMultiCSV.Enabled = false;
+			cbStartPos.SelectedIndex = 1;
 		}
 		private void Form1_Load(object sender, EventArgs e)
 		{
@@ -40,7 +42,10 @@ namespace picturefort
 			p.read_settings();
 		}
 
-
+		/// <summary>
+		/// Generates a list of all the different colors for all the currently loaded images
+		/// </summary>
+		/// <returns></returns>
 		public bool load_palettes()
 		{
 			pf.palette.Clear();
@@ -54,28 +59,18 @@ namespace picturefort
 						if (!pf.palette.Contains(c)) pf.palette.Add(c);
 					}
 				}
-
-				foreach (Color c in pf.palette)
-				{
-					if (c.A != 255) continue; //skip transparent colors
-
-					TextBox temp = new TextBox();
-					temp.BackColor = c;
-					if (c.R < 32 || c.G < 32 || c.B < 32) temp.ForeColor = Color.White;
-					if (pf.settings[pf.convert_color(c)] != null) 
-						temp.Text = pf.settings[pf.convert_color(c)].ToString();
-
-					listColorDesignations.Controls.Add(temp);
-				}
-				Console.WriteLine("controls: " + listColorDesignations.Controls.Count);
 			}
-
-
+			create_designations();
 			return true;
 		}
 
+		/// <summary>
+		/// Writes each color designation key and value to the settings hashtable
+		/// </summary>
+		/// <returns></returns>
 		public bool save_palette()
 		{
+
 			foreach (TextBox txt in listColorDesignations.Controls)
 			{
 				string key = pf.convert_color(txt.BackColor);
@@ -86,12 +81,17 @@ namespace picturefort
 			return true;
 		}
 
+		/// <summary>
+		/// Creates a file chooser dialog, loads necessary data from each image (byte_image.get_pixel_data), and displays the top image in the preview window
+		/// </summary>
+		/// <returns></returns>
 		public bool load_images()
 		{
 			OpenFileDialog d = new OpenFileDialog();
 
 			pf.settings[setting.restore_directory] = d.RestoreDirectory;
 			d.Multiselect = true;
+			//TODO: remove all files, provide more extensive list of image types
 			d.Filter = "Images|*.png;*.bmp;*.jpg;|All files|*";
 
 			if (d.ShowDialog() == DialogResult.OK)
@@ -109,15 +109,11 @@ namespace picturefort
 
 					pf.loaded_images.Add(temp);
 
-					btnSingleCSV.Text = string.Format("Loading Pixel Data ({0}/{1})", loading_number, d.FileNames.Count());
-					btnSingleCSV.Refresh();
+					status.Text = string.Format("Loading Pixel Data ({0}/{1})", loading_number, d.FileNames.Count());
+					status.Refresh();
 
 					loading_number++;
 				}
-
-				btnSingleCSV.Text = "Convert Image";
-				btnSingleCSV.Enabled = true;
-				btnSingleCSV.Refresh();
 
 				if (pf.loaded_images.Count > 0) display_image(pf.loaded_images[0].image, preview);
 
@@ -126,12 +122,33 @@ namespace picturefort
 			return true;
 		}
 
-		private void btnImageChooser_Click(object sender, EventArgs e)
+		/// <summary>
+		/// Creates the possible color designations for all the currently loaded images
+		/// </summary>
+		/// <returns></returns>
+		public bool create_designations()
 		{
-			load_images();
-			load_palettes();
+			foreach (Color c in pf.palette)
+			{
+				if (c.A != 255) continue; //skip transparent colors
+
+				TextBox temp = new TextBox();
+				temp.BackColor = c;
+				if (c.R < 32 || c.G < 32 || c.B < 32) temp.ForeColor = Color.White;
+				if (pf.settings[pf.convert_color(c)] != null)
+					temp.Text = pf.settings[pf.convert_color(c)].ToString();
+
+				listColorDesignations.Controls.Add(temp);
+			}
+			Console.WriteLine("controls: " + listColorDesignations.Controls.Count);
+			return true;
 		}
 
+		/// <summary>
+		/// Displays provided image into preview window, scaling it up as appropriate.
+		/// </summary>
+		/// <param name="image">Image to be displayed</param>
+		/// <param name="p">PictureBox image will be displayed in</param>
 		private void display_image(Image image, PictureBox p)
 		{
 			Bitmap bmp = new Bitmap(p.Width, p.Height);
@@ -145,17 +162,50 @@ namespace picturefort
 
 		}
 
-		private void btnConvertImage_Click(object sender, EventArgs e)
+		#region Event Handlers
+		private void btnImageChooser_Click(object sender, EventArgs e)
 		{
-			btnSingleCSV.Text = "Generating CSV File";
-			btnSingleCSV.Enabled = false;
-			btnSingleCSV.Refresh();
+			load_images();
+			load_palettes();
 
-			save_palette();
-
-			p.multi_csv(pf.loaded_images, null, progress_bar, btnSingleCSV);
-
+			btnSingleCSV.Enabled = true;
+			btnMultiCSV.Enabled = true;
 		}
 
+		private void btnSingleCSV_Click(object sender, EventArgs e)
+		{
+			save_palette();
+			btnSingleCSV.Enabled = false;
+			
+			p.multi_csv(pf.loaded_images, "./test.csv", progress_bar, status);
+		}
+
+		private void btnMultiCSV_Click(object sender, EventArgs e)
+		{
+			save_palette();
+			btnMultiCSV.Enabled = false;
+
+			p.batch_csv(pf.loaded_images, "./test/", progress_bar, status);
+		}
+		private void cbStartPos_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (cbStartPos.SelectedIndex == 0) txtStartPos.Enabled = true;
+			else txtStartPos.Enabled = false;
+			//TODO: update text box with coordinates when index changes
+		}
+		
+		private void txtOutFilePath_DoubleClick(object sender, EventArgs e)
+		{
+			//TODO: open directory
+		}
+
+		private void txtOutPath_DoubleClick(object sender, EventArgs e)
+		{
+			//TODO: open directory
+		}
+
+
+
+		#endregion Event Handlers
 	}
 }
