@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("picturefort")]
+[assembly: AssemblyTitle("picturefort-multiplatform")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("picturefort")]
+[assembly: AssemblyProduct("picturefort-multiplatform")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("aa08124f-0faa-4592-9fd1-9520fb1f113e")]
+[assembly: Guid("6022a185-41a2-44e2-8f1f-5bebfe453c73")]
 
 // Version information for an assembly consists of the following four values:
 //

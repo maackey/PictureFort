@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace picturefort_multiplatform
+namespace picturefort
 {
 
 	public enum setting
@@ -44,8 +44,9 @@ namespace picturefort_multiplatform
 		public const string settingsfilepath = "./picturefort.ini";
 		public static Hashtable settings = new Hashtable();
 		public static List<byte_image> loaded_images = new List<byte_image>();
-		public static List<Color> palette = new List<Color>();
 		public static ProgressBar progress;
+
+		public static List<Color> palette = new List<Color>();
 		public static Dictionary<string, string> designations_dig = new Dictionary<string, string>();
 		public static Dictionary<string, string> designations_build = new Dictionary<string, string>();
 		public static Dictionary<string, string> designations_place = new Dictionary<string, string>();
@@ -358,16 +359,24 @@ namespace picturefort_multiplatform
 			return string.Format("#{0}{1}{2}{3}", c.A.ToString("X2"), c.R.ToString("X2"), c.G.ToString("X2"), c.B.ToString("X2"));
 		}
 
-		public bool batch_csv(List<byte_image> images, string csv_path = "./", ProgressBar p = null)
+		public bool batch_csv(List<byte_image> images, string csv_path = "./csv", ProgressBar p = null)
 		{
 			foreach (byte_image image in images)
 			{
-				
+				string filepath = csv_path.Trim('/').Trim('\\') + "/" + image.csv_file;
+				single_csv(image, filepath, p, null);
 			}
 			return true;
 		}
 
-		public bool build_csv(List<byte_image> images, string csv_filepath = null, ProgressBar progress = null, Button b = null)
+		public bool single_csv(byte_image image, string csv_filepath = null, ProgressBar progress = null, Button b = null)
+		{
+			List<byte_image> imagelist =  new List<byte_image>();
+			imagelist.Add(image);
+			return multi_csv(imagelist, csv_filepath, progress, b);
+		}
+
+		public bool multi_csv(List<byte_image> images, string csv_filepath = null, ProgressBar progress = null, Button b = null)
 		{
 
 			if (images == null || images.Count == 0) return false;
@@ -531,6 +540,7 @@ namespace picturefort_multiplatform
 			public List<Color> palette = new List<Color>();
 			public Queue<Color> image_array = new Queue<Color>();
 			public string csv_filepath;
+			public string csv_file;
 
 			public byte_image(Image raw_image, string image_filepath, string csv_path = null, ProgressBar p = null)
 			{
@@ -540,7 +550,7 @@ namespace picturefort_multiplatform
 				string image_file = image_filepath.Substring(fstart + 1);
 				string image_extension = image_file.Substring(image_file.LastIndexOf("."));
 
-				string csv_file = image_file.Replace(image_extension, ".csv");
+				csv_file = image_file.Replace(image_extension, ".csv");
 
 				if (csv_path == null || csv_path == "")
 				{

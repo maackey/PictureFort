@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace picturefort_multiplatform
+namespace picturefort
 {
 	public partial class color_designation : UserControl
 	{

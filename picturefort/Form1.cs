@@ -23,7 +23,7 @@ using System.Threading;
  * image/csv rotation
  */
 
-namespace picturefort_multiplatform
+namespace picturefort
 {
 	public partial class Form1 : Form
 	{
@@ -32,7 +32,7 @@ namespace picturefort_multiplatform
 		public Form1()
 		{
 			InitializeComponent();
-			btnConvertImage.Enabled = false;
+			btnSingleCSV.Enabled = false;
 		}
 		private void Form1_Load(object sender, EventArgs e)
 		{
@@ -109,15 +109,15 @@ namespace picturefort_multiplatform
 
 					pf.loaded_images.Add(temp);
 
-					btnConvertImage.Text = string.Format("Loading Pixel Data ({0}/{1})", loading_number, d.FileNames.Count());
-					btnConvertImage.Refresh();
+					btnSingleCSV.Text = string.Format("Loading Pixel Data ({0}/{1})", loading_number, d.FileNames.Count());
+					btnSingleCSV.Refresh();
 
 					loading_number++;
 				}
 
-				btnConvertImage.Text = "Convert Image";
-				btnConvertImage.Enabled = true;
-				btnConvertImage.Refresh();
+				btnSingleCSV.Text = "Convert Image";
+				btnSingleCSV.Enabled = true;
+				btnSingleCSV.Refresh();
 
 				if (pf.loaded_images.Count > 0) display_image(pf.loaded_images[0].image, preview);
 
@@ -147,13 +147,13 @@ namespace picturefort_multiplatform
 
 		private void btnConvertImage_Click(object sender, EventArgs e)
 		{
-			btnConvertImage.Text = "Generating CSV File";
-			btnConvertImage.Enabled = false;
-			btnConvertImage.Refresh();
+			btnSingleCSV.Text = "Generating CSV File";
+			btnSingleCSV.Enabled = false;
+			btnSingleCSV.Refresh();
 
 			save_palette();
 
-			p.build_csv(pf.loaded_images, null, progress_bar, btnConvertImage);
+			p.multi_csv(pf.loaded_images, null, progress_bar, btnSingleCSV);
 
 		}
 

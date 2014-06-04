@@ -1,4 +1,4 @@
-﻿namespace picturefort_multiplatform
+﻿namespace picturefort
 {
 	partial class color_designation
 	{
