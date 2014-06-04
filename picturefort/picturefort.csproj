@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\picturefort_logo.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\picturefort_logo_pf.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -92,7 +92,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\picturefort_logo.ico" />
+    <Content Include="Resources\picturefort_logo_df.ico" />
+    <Content Include="Resources\picturefort_logo_pf.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
