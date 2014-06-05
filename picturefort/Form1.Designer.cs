@@ -35,7 +35,7 @@
 			this.txtCommentPlace = new System.Windows.Forms.TextBox();
 			this.txtCommentBuild = new System.Windows.Forms.TextBox();
 			this.txtCommentDig = new System.Windows.Forms.TextBox();
-			this.panel2 = new System.Windows.Forms.Panel();
+			this.panelStartPos = new System.Windows.Forms.Panel();
 			this.txtStartPos = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.cbStartPos = new System.Windows.Forms.ComboBox();
@@ -52,26 +52,27 @@
 			this.preview = new System.Windows.Forms.PictureBox();
 			this.tabColorDesignations = new System.Windows.Forms.TabPage();
 			this.listColorDesignations = new System.Windows.Forms.FlowLayoutPanel();
-			this.tabAdvancedSettings = new System.Windows.Forms.TabPage();
 			this.status = new System.Windows.Forms.Label();
 			this.txtOutFilePath = new System.Windows.Forms.TextBox();
 			this.txtOutPath = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.cbRecursive = new System.Windows.Forms.CheckBox();
+			this.panelTemplateType = new System.Windows.Forms.Panel();
 			this.grid.SuspendLayout();
 			this.panel1.SuspendLayout();
-			this.panel2.SuspendLayout();
+			this.panelStartPos.SuspendLayout();
 			this.tabPanel.SuspendLayout();
 			this.tabImagePreview.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
 			this.tabColorDesignations.SuspendLayout();
+			this.panelTemplateType.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// grid
 			// 
-			this.grid.BackColor = System.Drawing.SystemColors.ActiveCaption;
-			this.grid.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.InsetDouble;
+			this.grid.BackColor = System.Drawing.Color.Transparent;
+			this.grid.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
 			this.grid.ColumnCount = 3;
 			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
 			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -101,69 +102,67 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.txtCommentQuery);
-			this.panel1.Controls.Add(this.txtCommentPlace);
-			this.panel1.Controls.Add(this.txtCommentBuild);
-			this.panel1.Controls.Add(this.txtCommentDig);
-			this.panel1.Controls.Add(this.panel2);
-			this.panel1.Controls.Add(this.cbQuery);
-			this.panel1.Controls.Add(this.cbPlace);
-			this.panel1.Controls.Add(this.cbBuild);
-			this.panel1.Controls.Add(this.cbDig);
+			this.panel1.Controls.Add(this.panelTemplateType);
+			this.panel1.Controls.Add(this.panelStartPos);
 			this.panel1.Controls.Add(this.btnImageChooser);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(564, 3);
+			this.panel1.Location = new System.Drawing.Point(566, 1);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(209, 386);
+			this.panel1.Size = new System.Drawing.Size(209, 396);
 			this.panel1.TabIndex = 1;
 			// 
 			// txtCommentQuery
 			// 
-			this.txtCommentQuery.Location = new System.Drawing.Point(54, 91);
+			this.txtCommentQuery.Location = new System.Drawing.Point(57, 71);
+			this.txtCommentQuery.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentQuery.Name = "txtCommentQuery";
 			this.txtCommentQuery.Size = new System.Drawing.Size(143, 20);
 			this.txtCommentQuery.TabIndex = 11;
 			// 
 			// txtCommentPlace
 			// 
-			this.txtCommentPlace.Location = new System.Drawing.Point(54, 69);
+			this.txtCommentPlace.Location = new System.Drawing.Point(57, 47);
+			this.txtCommentPlace.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentPlace.Name = "txtCommentPlace";
 			this.txtCommentPlace.Size = new System.Drawing.Size(143, 20);
 			this.txtCommentPlace.TabIndex = 10;
 			// 
 			// txtCommentBuild
 			// 
-			this.txtCommentBuild.Location = new System.Drawing.Point(54, 46);
+			this.txtCommentBuild.Location = new System.Drawing.Point(57, 24);
+			this.txtCommentBuild.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentBuild.Name = "txtCommentBuild";
 			this.txtCommentBuild.Size = new System.Drawing.Size(143, 20);
 			this.txtCommentBuild.TabIndex = 9;
 			// 
 			// txtCommentDig
 			// 
-			this.txtCommentDig.Location = new System.Drawing.Point(54, 23);
+			this.txtCommentDig.Location = new System.Drawing.Point(57, 1);
+			this.txtCommentDig.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentDig.Name = "txtCommentDig";
 			this.txtCommentDig.Size = new System.Drawing.Size(143, 20);
 			this.txtCommentDig.TabIndex = 8;
 			// 
-			// panel2
+			// panelStartPos
 			// 
-			this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.panelStartPos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.panel2.Controls.Add(this.txtStartPos);
-			this.panel2.Controls.Add(this.label3);
-			this.panel2.Controls.Add(this.cbStartPos);
-			this.panel2.Location = new System.Drawing.Point(3, 308);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(203, 75);
-			this.panel2.TabIndex = 7;
+			this.panelStartPos.Controls.Add(this.txtStartPos);
+			this.panelStartPos.Controls.Add(this.label3);
+			this.panelStartPos.Controls.Add(this.cbStartPos);
+			this.panelStartPos.Location = new System.Drawing.Point(3, 318);
+			this.panelStartPos.Name = "panelStartPos";
+			this.panelStartPos.Size = new System.Drawing.Size(203, 75);
+			this.panelStartPos.TabIndex = 7;
 			// 
 			// txtStartPos
 			// 
 			this.txtStartPos.Location = new System.Drawing.Point(3, 43);
 			this.txtStartPos.Name = "txtStartPos";
-			this.txtStartPos.Size = new System.Drawing.Size(132, 20);
+			this.txtStartPos.Size = new System.Drawing.Size(197, 20);
 			this.txtStartPos.TabIndex = 8;
+			this.txtStartPos.TextChanged += new System.EventHandler(this.txtStartPos_TextChanged);
 			// 
 			// label3
 			// 
@@ -178,23 +177,17 @@
 			// 
 			this.cbStartPos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbStartPos.FormattingEnabled = true;
-			this.cbStartPos.Items.AddRange(new object[] {
-            "Custom",
-            "Center",
-            "Top-Left",
-            "Top-Right",
-            "Bottom-Left",
-            "Bottom-Right"});
 			this.cbStartPos.Location = new System.Drawing.Point(3, 16);
 			this.cbStartPos.Name = "cbStartPos";
-			this.cbStartPos.Size = new System.Drawing.Size(132, 21);
+			this.cbStartPos.Size = new System.Drawing.Size(197, 21);
 			this.cbStartPos.TabIndex = 6;
 			this.cbStartPos.SelectedIndexChanged += new System.EventHandler(this.cbStartPos_SelectedIndexChanged);
 			// 
 			// cbQuery
 			// 
 			this.cbQuery.AutoSize = true;
-			this.cbQuery.Location = new System.Drawing.Point(6, 94);
+			this.cbQuery.Location = new System.Drawing.Point(3, 73);
+			this.cbQuery.Margin = new System.Windows.Forms.Padding(0);
 			this.cbQuery.Name = "cbQuery";
 			this.cbQuery.Size = new System.Drawing.Size(54, 17);
 			this.cbQuery.TabIndex = 5;
@@ -204,7 +197,8 @@
 			// cbPlace
 			// 
 			this.cbPlace.AutoSize = true;
-			this.cbPlace.Location = new System.Drawing.Point(6, 71);
+			this.cbPlace.Location = new System.Drawing.Point(3, 49);
+			this.cbPlace.Margin = new System.Windows.Forms.Padding(0);
 			this.cbPlace.Name = "cbPlace";
 			this.cbPlace.Size = new System.Drawing.Size(53, 17);
 			this.cbPlace.TabIndex = 4;
@@ -214,7 +208,8 @@
 			// cbBuild
 			// 
 			this.cbBuild.AutoSize = true;
-			this.cbBuild.Location = new System.Drawing.Point(6, 48);
+			this.cbBuild.Location = new System.Drawing.Point(3, 26);
+			this.cbBuild.Margin = new System.Windows.Forms.Padding(0);
 			this.cbBuild.Name = "cbBuild";
 			this.cbBuild.Size = new System.Drawing.Size(49, 17);
 			this.cbBuild.TabIndex = 3;
@@ -224,7 +219,10 @@
 			// cbDig
 			// 
 			this.cbDig.AutoSize = true;
-			this.cbDig.Location = new System.Drawing.Point(6, 25);
+			this.cbDig.Checked = true;
+			this.cbDig.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cbDig.Location = new System.Drawing.Point(3, 3);
+			this.cbDig.Margin = new System.Windows.Forms.Padding(0);
 			this.cbDig.Name = "cbDig";
 			this.cbDig.Size = new System.Drawing.Size(42, 17);
 			this.cbDig.TabIndex = 2;
@@ -246,8 +244,7 @@
 			// btnMultiCSV
 			// 
 			this.btnMultiCSV.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnMultiCSV.Enabled = false;
-			this.btnMultiCSV.Location = new System.Drawing.Point(564, 415);
+			this.btnMultiCSV.Location = new System.Drawing.Point(566, 419);
 			this.btnMultiCSV.Margin = new System.Windows.Forms.Padding(0);
 			this.btnMultiCSV.Name = "btnMultiCSV";
 			this.btnMultiCSV.Size = new System.Drawing.Size(209, 20);
@@ -259,8 +256,7 @@
 			// btnSingleCSV
 			// 
 			this.btnSingleCSV.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnSingleCSV.Enabled = false;
-			this.btnSingleCSV.Location = new System.Drawing.Point(564, 392);
+			this.btnSingleCSV.Location = new System.Drawing.Point(566, 398);
 			this.btnSingleCSV.Margin = new System.Windows.Forms.Padding(0);
 			this.btnSingleCSV.Name = "btnSingleCSV";
 			this.btnSingleCSV.Size = new System.Drawing.Size(209, 20);
@@ -272,10 +268,10 @@
 			// progress_bar
 			// 
 			this.progress_bar.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.progress_bar.Location = new System.Drawing.Point(156, 438);
+			this.progress_bar.Location = new System.Drawing.Point(152, 440);
 			this.progress_bar.Margin = new System.Windows.Forms.Padding(0);
 			this.progress_bar.Name = "progress_bar";
-			this.progress_bar.Size = new System.Drawing.Size(405, 20);
+			this.progress_bar.Size = new System.Drawing.Size(413, 20);
 			this.progress_bar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.progress_bar.TabIndex = 3;
 			this.progress_bar.Value = 100;
@@ -285,13 +281,12 @@
 			this.grid.SetColumnSpan(this.tabPanel, 2);
 			this.tabPanel.Controls.Add(this.tabImagePreview);
 			this.tabPanel.Controls.Add(this.tabColorDesignations);
-			this.tabPanel.Controls.Add(this.tabAdvancedSettings);
 			this.tabPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabPanel.Location = new System.Drawing.Point(3, 3);
+			this.tabPanel.Location = new System.Drawing.Point(1, 1);
 			this.tabPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tabPanel.Name = "tabPanel";
 			this.tabPanel.SelectedIndex = 0;
-			this.tabPanel.Size = new System.Drawing.Size(558, 386);
+			this.tabPanel.Size = new System.Drawing.Size(564, 396);
 			this.tabPanel.TabIndex = 5;
 			// 
 			// tabImagePreview
@@ -300,7 +295,7 @@
 			this.tabImagePreview.Location = new System.Drawing.Point(4, 22);
 			this.tabImagePreview.Name = "tabImagePreview";
 			this.tabImagePreview.Padding = new System.Windows.Forms.Padding(3);
-			this.tabImagePreview.Size = new System.Drawing.Size(550, 360);
+			this.tabImagePreview.Size = new System.Drawing.Size(556, 370);
 			this.tabImagePreview.TabIndex = 0;
 			this.tabImagePreview.Text = "Image Preview";
 			this.tabImagePreview.UseVisualStyleBackColor = true;
@@ -312,7 +307,7 @@
 			this.preview.Location = new System.Drawing.Point(3, 3);
 			this.preview.Margin = new System.Windows.Forms.Padding(0);
 			this.preview.Name = "preview";
-			this.preview.Size = new System.Drawing.Size(544, 354);
+			this.preview.Size = new System.Drawing.Size(550, 364);
 			this.preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.preview.TabIndex = 0;
 			this.preview.TabStop = false;
@@ -323,7 +318,7 @@
 			this.tabColorDesignations.Location = new System.Drawing.Point(4, 22);
 			this.tabColorDesignations.Name = "tabColorDesignations";
 			this.tabColorDesignations.Padding = new System.Windows.Forms.Padding(3);
-			this.tabColorDesignations.Size = new System.Drawing.Size(553, 360);
+			this.tabColorDesignations.Size = new System.Drawing.Size(550, 360);
 			this.tabColorDesignations.TabIndex = 1;
 			this.tabColorDesignations.Text = "Color Designations";
 			this.tabColorDesignations.UseVisualStyleBackColor = true;
@@ -338,20 +333,11 @@
 			this.listColorDesignations.Size = new System.Drawing.Size(762, 397);
 			this.listColorDesignations.TabIndex = 5;
 			// 
-			// tabAdvancedSettings
-			// 
-			this.tabAdvancedSettings.Location = new System.Drawing.Point(4, 22);
-			this.tabAdvancedSettings.Name = "tabAdvancedSettings";
-			this.tabAdvancedSettings.Size = new System.Drawing.Size(553, 360);
-			this.tabAdvancedSettings.TabIndex = 2;
-			this.tabAdvancedSettings.Text = "Advanced";
-			this.tabAdvancedSettings.UseVisualStyleBackColor = true;
-			// 
 			// status
 			// 
 			this.status.AutoSize = true;
 			this.status.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.status.Location = new System.Drawing.Point(567, 438);
+			this.status.Location = new System.Drawing.Point(569, 440);
 			this.status.Name = "status";
 			this.status.Size = new System.Drawing.Size(203, 20);
 			this.status.TabIndex = 7;
@@ -361,20 +347,20 @@
 			// txtOutFilePath
 			// 
 			this.txtOutFilePath.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtOutFilePath.Location = new System.Drawing.Point(156, 392);
+			this.txtOutFilePath.Location = new System.Drawing.Point(152, 398);
 			this.txtOutFilePath.Margin = new System.Windows.Forms.Padding(0);
 			this.txtOutFilePath.Name = "txtOutFilePath";
-			this.txtOutFilePath.Size = new System.Drawing.Size(405, 20);
+			this.txtOutFilePath.Size = new System.Drawing.Size(413, 20);
 			this.txtOutFilePath.TabIndex = 8;
 			this.txtOutFilePath.DoubleClick += new System.EventHandler(this.txtOutFilePath_DoubleClick);
 			// 
 			// txtOutPath
 			// 
 			this.txtOutPath.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtOutPath.Location = new System.Drawing.Point(156, 415);
+			this.txtOutPath.Location = new System.Drawing.Point(152, 419);
 			this.txtOutPath.Margin = new System.Windows.Forms.Padding(0);
 			this.txtOutPath.Name = "txtOutPath";
-			this.txtOutPath.Size = new System.Drawing.Size(405, 20);
+			this.txtOutPath.Size = new System.Drawing.Size(413, 20);
 			this.txtOutPath.TabIndex = 9;
 			this.txtOutPath.DoubleClick += new System.EventHandler(this.txtOutPath_DoubleClick);
 			// 
@@ -382,35 +368,52 @@
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label1.Location = new System.Drawing.Point(6, 392);
+			this.label1.Location = new System.Drawing.Point(4, 398);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(144, 20);
 			this.label1.TabIndex = 10;
 			this.label1.Text = "Ouput Flie";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
 			this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label2.Location = new System.Drawing.Point(6, 415);
+			this.label2.Location = new System.Drawing.Point(4, 419);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(144, 20);
 			this.label2.TabIndex = 11;
 			this.label2.Text = "Output Directory";
-			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// cbRecursive
 			// 
 			this.cbRecursive.AutoSize = true;
 			this.cbRecursive.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.cbRecursive.Location = new System.Drawing.Point(8, 438);
+			this.cbRecursive.Location = new System.Drawing.Point(6, 440);
 			this.cbRecursive.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
 			this.cbRecursive.Name = "cbRecursive";
 			this.cbRecursive.Size = new System.Drawing.Size(145, 20);
 			this.cbRecursive.TabIndex = 12;
 			this.cbRecursive.Text = "Recursive Directories?";
 			this.cbRecursive.UseVisualStyleBackColor = true;
+			// 
+			// panelTemplateType
+			// 
+			this.panelTemplateType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelTemplateType.Controls.Add(this.cbDig);
+			this.panelTemplateType.Controls.Add(this.cbBuild);
+			this.panelTemplateType.Controls.Add(this.cbPlace);
+			this.panelTemplateType.Controls.Add(this.cbQuery);
+			this.panelTemplateType.Controls.Add(this.txtCommentQuery);
+			this.panelTemplateType.Controls.Add(this.txtCommentPlace);
+			this.panelTemplateType.Controls.Add(this.txtCommentBuild);
+			this.panelTemplateType.Controls.Add(this.txtCommentDig);
+			this.panelTemplateType.Location = new System.Drawing.Point(3, 22);
+			this.panelTemplateType.Name = "panelTemplateType";
+			this.panelTemplateType.Size = new System.Drawing.Size(203, 97);
+			this.panelTemplateType.TabIndex = 12;
 			// 
 			// Form1
 			// 
@@ -425,13 +428,14 @@
 			this.grid.ResumeLayout(false);
 			this.grid.PerformLayout();
 			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
-			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
+			this.panelStartPos.ResumeLayout(false);
+			this.panelStartPos.PerformLayout();
 			this.tabPanel.ResumeLayout(false);
 			this.tabImagePreview.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
 			this.tabColorDesignations.ResumeLayout(false);
+			this.panelTemplateType.ResumeLayout(false);
+			this.panelTemplateType.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -447,7 +451,6 @@
 		private System.Windows.Forms.PictureBox preview;
 		private System.Windows.Forms.TabPage tabColorDesignations;
 		private System.Windows.Forms.FlowLayoutPanel listColorDesignations;
-		private System.Windows.Forms.TabPage tabAdvancedSettings;
 		private System.Windows.Forms.Button btnMultiCSV;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Label status;
@@ -455,7 +458,7 @@
 		private System.Windows.Forms.TextBox txtOutPath;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Panel panel2;
+		private System.Windows.Forms.Panel panelStartPos;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ComboBox cbStartPos;
 		private System.Windows.Forms.CheckBox cbQuery;
@@ -468,6 +471,7 @@
 		private System.Windows.Forms.TextBox txtCommentBuild;
 		private System.Windows.Forms.TextBox txtCommentDig;
 		private System.Windows.Forms.CheckBox cbRecursive;
+		private System.Windows.Forms.Panel panelTemplateType;
 
 	}
 }

@@ -29,23 +29,23 @@ powers of two, image size, aspect ratio, the phase of the moon, or format of the
 How to use
 ----------
 
-- 1.) Create an image of your desired fort. Each pixel represents one tile ingame. Each distinct color can have its own designation of your choosing. 
+1. Create an image of your desired fort. Each pixel represents one tile ingame. Each distinct color can have its own designation of your choosing. 
 
-- 2.) Run picturefort.exe, click "Load Image(s)". Select the image (or images) that you want to convert.
+2. Run picturefort.exe, click "Load Image(s)". Select the image (or images) that you want to convert.
 
-- 3.) The "Color Designations" tab will generate a list of entries from the currently loaded images where you can enter your designations per color.
+3. The "Color Designations" tab will generate a list of entries from the currently loaded images where you can enter your designations per color.
 
-- 4.) Select which type of template(s) to create (dig, build, place, query) and add any respective comments each one should have. 
+4. Select which type of template(s) to create (dig, build, place, query) and add any respective comments each one should have. 
 
-- 5.) Select the drawing start position.
+5. Select the drawing start position.
 
-- 6.) Save your template(s):
+6. Save your template(s):
     - The "Output File" textbox will specify the name of the file. If left blank, the template will have the same name as the originating image.
     - The "Output Path" textbox will specify the directory generated templates will be created in. If left blank, they will be created in the same directory as the images.
     - "Single Template" will create a single template from the loaded images. Each image is its own z-level.
     - "Batch Templates" will create multiple templates from the loaded images. Each file is its own template.
 
-- 7.) Run Quickfort while playing Dwarf Fortress, and load up your shiny new template. 
+7. Run Quickfort while playing Dwarf Fortress, and load up your shiny new template. 
 
 
 Contact

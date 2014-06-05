@@ -14,9 +14,9 @@ using System.Threading;
 //TODO
 /*
  ------------------------------* progressbar / status info
- -------------------------* persistent settings
+ ------------------------------* persistent settings
  ---------------------* default color designations
- ---------------------* custom folder for csv files
+ ------------------------------* custom folder for csv files
  ------------------------------* batch image processing
  ------------------------------* multiple z-level designations
  * per-image persistent descriptions
@@ -32,14 +32,12 @@ namespace picturefort
 		public Form1()
 		{
 			InitializeComponent();
-			btnSingleCSV.Enabled = false;
-			btnMultiCSV.Enabled = false;
-			cbStartPos.SelectedIndex = 1;
 		}
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			p = new pf(progress_bar);
 			p.read_settings();
+			cbRecursive.Enabled = false;
 		}
 
 		/// <summary>
@@ -48,19 +46,18 @@ namespace picturefort
 		/// <returns></returns>
 		public bool load_palettes()
 		{
-			pf.palette.Clear();
+			p.palette.Clear();
 			listColorDesignations.Controls.Clear();
-			if (pf.loaded_images != null && pf.loaded_images.Count > 0)
+			if (p.loaded_images != null && p.loaded_images.Count > 0)
 			{
-				foreach (pf.byte_image image in pf.loaded_images)
+				foreach (pf.byte_image image in p.loaded_images)
 				{
 					foreach (Color c in image.palette)
 					{
-						if (!pf.palette.Contains(c)) pf.palette.Add(c);
+						if (!p.palette.Contains(c)) p.palette.Add(c);
 					}
 				}
 			}
-			create_designations();
 			return true;
 		}
 
@@ -89,7 +86,6 @@ namespace picturefort
 		{
 			OpenFileDialog d = new OpenFileDialog();
 
-			pf.settings[setting.restore_directory] = d.RestoreDirectory;
 			d.Multiselect = true;
 			//TODO: remove all files, provide more extensive list of image types
 			d.Filter = "Images|*.png;*.bmp;*.jpg;|All files|*";
@@ -97,7 +93,7 @@ namespace picturefort
 			if (d.ShowDialog() == DialogResult.OK)
 			{
 				int loading_number = 1;
-				pf.loaded_images.Clear();
+				p.loaded_images.Clear();
 
 				foreach (string image_filepath in d.FileNames)
 				{
@@ -107,7 +103,7 @@ namespace picturefort
 						(string)pf.settings[setting.csv_path],
 						progress_bar);
 
-					pf.loaded_images.Add(temp);
+					p.loaded_images.Add(temp);
 
 					status.Text = string.Format("Loading Pixel Data ({0}/{1})", loading_number, d.FileNames.Count());
 					status.Refresh();
@@ -115,7 +111,7 @@ namespace picturefort
 					loading_number++;
 				}
 
-				if (pf.loaded_images.Count > 0) display_image(pf.loaded_images[0].image, preview);
+				if (p.loaded_images.Count > 0) display_image(p.loaded_images[0].image, preview);
 
 			}
 
@@ -128,7 +124,7 @@ namespace picturefort
 		/// <returns></returns>
 		public bool create_designations()
 		{
-			foreach (Color c in pf.palette)
+			foreach (Color c in p.palette)
 			{
 				if (c.A != 255) continue; //skip transparent colors
 
@@ -141,6 +137,22 @@ namespace picturefort
 				listColorDesignations.Controls.Add(temp);
 			}
 			Console.WriteLine("controls: " + listColorDesignations.Controls.Count);
+			return true;
+		}
+
+		/// <summary>
+		/// Creates some pre-defined starting positions for the preview image
+		/// </summary>
+		/// <returns></returns>
+		public bool create_start_positions()
+		{
+
+			AutoCompleteStringCollection source_startpos = new AutoCompleteStringCollection();
+			source_startpos.AddRange(p.start_positions.ToArray<string>());
+			cbStartPos.DataSource = p.start_positions;
+			cbStartPos.AutoCompleteCustomSource = source_startpos;
+			cbStartPos.SelectedIndex = 1;
+			
 			return true;
 		}
 
@@ -163,49 +175,117 @@ namespace picturefort
 		}
 
 		#region Event Handlers
+
 		private void btnImageChooser_Click(object sender, EventArgs e)
 		{
 			load_images();
 			load_palettes();
+			create_designations();
+			create_start_positions();
 
-			btnSingleCSV.Enabled = true;
-			btnMultiCSV.Enabled = true;
+			txtOutFilePath.Text = "";
+			txtOutPath.Text = pf.settings[setting.csv_path].ToString();
 		}
 
 		private void btnSingleCSV_Click(object sender, EventArgs e)
 		{
 			save_palette();
-			btnSingleCSV.Enabled = false;
-			
-			p.multi_csv(pf.loaded_images, "./test.csv", progress_bar, status);
+
+			if (cbDig.Checked)
+			{
+				string description = string.Format("{0} {1} {2}", "#dig", txtStartPos.Text, txtCommentDig.Text);
+				p.multi_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+			}
+			if (cbBuild.Checked)
+			{
+				string description = string.Format("{0} {1} {2}", "#build", txtStartPos.Text, txtCommentBuild.Text);
+				p.multi_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+			}
+			if (cbPlace.Checked)
+			{
+				string description = string.Format("{0} {1} {2}", "#place", txtStartPos.Text, txtCommentPlace.Text);
+				p.multi_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+			}
+			if (cbQuery.Checked)
+			{
+				string description = string.Format("{0} {1} {2}", "#query", txtStartPos.Text, txtCommentQuery.Text);
+				p.multi_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+			}
+
+			string filepath = p.loaded_images[0].csv_filepath;
+			txtOutFilePath.Text = filepath;
 		}
 
 		private void btnMultiCSV_Click(object sender, EventArgs e)
 		{
+			//TODO: per image descriptions -- pass in array of descriptions
+			
 			save_palette();
-			btnMultiCSV.Enabled = false;
 
-			p.batch_csv(pf.loaded_images, "./test/", progress_bar, status);
+			if (cbDig.Checked)
+			{
+				string description = string.Format("{0} {1} {2}", "#dig", "", "");
+				p.batch_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+			}
+			if (cbBuild.Checked)
+			{
+				string description = string.Format("{0} {1} {2}", "#build", "", "");
+				p.batch_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+			}
+			if (cbPlace.Checked)
+			{
+				string description = string.Format("{0} {1} {2}", "#place", "", "");
+				p.batch_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+			}
+			if (cbQuery.Checked)
+			{
+				string description = string.Format("{0} {1} {2}", "#query", "", "");
+				p.batch_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+			}
+
+			string path = p.loaded_images[0].csv_filepath.Replace(p.loaded_images[0].csv_file, "");
+			txtOutPath.Text = path;
 		}
+
 		private void cbStartPos_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (cbStartPos.SelectedIndex == 0) txtStartPos.Enabled = true;
 			else txtStartPos.Enabled = false;
-			//TODO: update text box with coordinates when index changes
+			
+			Image img = p.loaded_images[0].image;
+			switch (cbStartPos.SelectedValue.ToString())
+			{
+				case "Custom": break;
+				case "Center": txtStartPos.Text = String.Format("({0};{1}; Start: Center)", (int) img.Width/2, (int) img.Height/2); break;
+				case "Top-Left": txtStartPos.Text = String.Format("({0};{1}; Start: Top-Left)", 0, 0); break;
+				case "Top-Right": txtStartPos.Text = String.Format("({0};{1}; Start: Top-Right)", img.Width, 0); break;
+				case "Bottom-Left": txtStartPos.Text = String.Format("({0};{1}; Start: Bottom-Left)", 0, img.Height); break;
+				case "Bottom-Right": txtStartPos.Text = String.Format("({0};{1}; Start: Bottom-Right)", img.Width, img.Height); break;
+				default: break;
+			}
 		}
 		
 		private void txtOutFilePath_DoubleClick(object sender, EventArgs e)
 		{
 			//TODO: open directory
+			OpenFileDialog d = new OpenFileDialog();
+			if (d.ShowDialog() == DialogResult.OK) txtOutPath.Text = d.FileName;
 		}
 
 		private void txtOutPath_DoubleClick(object sender, EventArgs e)
 		{
 			//TODO: open directory
+			FolderBrowserDialog d = new FolderBrowserDialog();
+			if (d.ShowDialog() == DialogResult.OK) txtOutPath.Text = d.SelectedPath;
 		}
 
 
 
 		#endregion Event Handlers
+
+		private void txtStartPos_TextChanged(object sender, EventArgs e)
+		{
+			//TODO: validate text
+		}
 	}
 }
