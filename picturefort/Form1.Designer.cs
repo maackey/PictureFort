@@ -76,7 +76,7 @@
 			this.grid.ColumnCount = 3;
 			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
 			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 210F));
+			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 211F));
 			this.grid.Controls.Add(this.panel1, 2, 0);
 			this.grid.Controls.Add(this.btnMultiCSV, 2, 2);
 			this.grid.Controls.Add(this.btnSingleCSV, 2, 1);
@@ -106,10 +106,10 @@
 			this.panel1.Controls.Add(this.panelStartPos);
 			this.panel1.Controls.Add(this.btnImageChooser);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(565, 1);
+			this.panel1.Location = new System.Drawing.Point(564, 1);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(210, 396);
+			this.panel1.Size = new System.Drawing.Size(211, 396);
 			this.panel1.TabIndex = 1;
 			// 
 			// panelTemplateType
@@ -126,7 +126,7 @@
 			this.panelTemplateType.Controls.Add(this.txtCommentDig);
 			this.panelTemplateType.Location = new System.Drawing.Point(3, 22);
 			this.panelTemplateType.Name = "panelTemplateType";
-			this.panelTemplateType.Size = new System.Drawing.Size(204, 97);
+			this.panelTemplateType.Size = new System.Drawing.Size(205, 97);
 			this.panelTemplateType.TabIndex = 12;
 			// 
 			// cbDig
@@ -216,7 +216,7 @@
 			this.panelStartPos.Controls.Add(this.cbStartPos);
 			this.panelStartPos.Location = new System.Drawing.Point(3, 318);
 			this.panelStartPos.Name = "panelStartPos";
-			this.panelStartPos.Size = new System.Drawing.Size(204, 75);
+			this.panelStartPos.Size = new System.Drawing.Size(205, 75);
 			this.panelStartPos.TabIndex = 7;
 			// 
 			// txtStartPos
@@ -252,7 +252,7 @@
 			this.btnImageChooser.Location = new System.Drawing.Point(0, 0);
 			this.btnImageChooser.Margin = new System.Windows.Forms.Padding(0);
 			this.btnImageChooser.Name = "btnImageChooser";
-			this.btnImageChooser.Size = new System.Drawing.Size(210, 20);
+			this.btnImageChooser.Size = new System.Drawing.Size(211, 20);
 			this.btnImageChooser.TabIndex = 1;
 			this.btnImageChooser.Text = "Load Image(s)";
 			this.btnImageChooser.UseVisualStyleBackColor = true;
@@ -261,10 +261,10 @@
 			// btnMultiCSV
 			// 
 			this.btnMultiCSV.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnMultiCSV.Location = new System.Drawing.Point(565, 419);
+			this.btnMultiCSV.Location = new System.Drawing.Point(564, 419);
 			this.btnMultiCSV.Margin = new System.Windows.Forms.Padding(0);
 			this.btnMultiCSV.Name = "btnMultiCSV";
-			this.btnMultiCSV.Size = new System.Drawing.Size(210, 20);
+			this.btnMultiCSV.Size = new System.Drawing.Size(211, 20);
 			this.btnMultiCSV.TabIndex = 6;
 			this.btnMultiCSV.Text = "Batch Templates";
 			this.btnMultiCSV.UseVisualStyleBackColor = true;
@@ -273,10 +273,10 @@
 			// btnSingleCSV
 			// 
 			this.btnSingleCSV.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnSingleCSV.Location = new System.Drawing.Point(565, 398);
+			this.btnSingleCSV.Location = new System.Drawing.Point(564, 398);
 			this.btnSingleCSV.Margin = new System.Windows.Forms.Padding(0);
 			this.btnSingleCSV.Name = "btnSingleCSV";
-			this.btnSingleCSV.Size = new System.Drawing.Size(210, 20);
+			this.btnSingleCSV.Size = new System.Drawing.Size(211, 20);
 			this.btnSingleCSV.TabIndex = 2;
 			this.btnSingleCSV.Text = "Single Template";
 			this.btnSingleCSV.UseVisualStyleBackColor = true;
@@ -288,7 +288,7 @@
 			this.progress_bar.Location = new System.Drawing.Point(152, 440);
 			this.progress_bar.Margin = new System.Windows.Forms.Padding(0);
 			this.progress_bar.Name = "progress_bar";
-			this.progress_bar.Size = new System.Drawing.Size(412, 20);
+			this.progress_bar.Size = new System.Drawing.Size(411, 20);
 			this.progress_bar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.progress_bar.TabIndex = 3;
 			this.progress_bar.Value = 100;
@@ -303,7 +303,7 @@
 			this.tabPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tabPanel.Name = "tabPanel";
 			this.tabPanel.SelectedIndex = 0;
-			this.tabPanel.Size = new System.Drawing.Size(563, 396);
+			this.tabPanel.Size = new System.Drawing.Size(562, 396);
 			this.tabPanel.TabIndex = 5;
 			// 
 			// tabImagePreview
@@ -312,7 +312,7 @@
 			this.tabImagePreview.Location = new System.Drawing.Point(4, 22);
 			this.tabImagePreview.Name = "tabImagePreview";
 			this.tabImagePreview.Padding = new System.Windows.Forms.Padding(3);
-			this.tabImagePreview.Size = new System.Drawing.Size(555, 370);
+			this.tabImagePreview.Size = new System.Drawing.Size(554, 370);
 			this.tabImagePreview.TabIndex = 0;
 			this.tabImagePreview.Text = "Image Preview";
 			this.tabImagePreview.UseVisualStyleBackColor = true;
@@ -324,7 +324,7 @@
 			this.preview.Location = new System.Drawing.Point(3, 3);
 			this.preview.Margin = new System.Windows.Forms.Padding(0);
 			this.preview.Name = "preview";
-			this.preview.Size = new System.Drawing.Size(549, 364);
+			this.preview.Size = new System.Drawing.Size(548, 364);
 			this.preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.preview.TabIndex = 0;
 			this.preview.TabStop = false;
@@ -335,7 +335,7 @@
 			this.tabColorDesignations.Location = new System.Drawing.Point(4, 22);
 			this.tabColorDesignations.Name = "tabColorDesignations";
 			this.tabColorDesignations.Padding = new System.Windows.Forms.Padding(3);
-			this.tabColorDesignations.Size = new System.Drawing.Size(556, 370);
+			this.tabColorDesignations.Size = new System.Drawing.Size(555, 370);
 			this.tabColorDesignations.TabIndex = 1;
 			this.tabColorDesignations.Text = "Color Designations";
 			this.tabColorDesignations.UseVisualStyleBackColor = true;
@@ -354,9 +354,9 @@
 			// 
 			this.status.AutoSize = true;
 			this.status.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.status.Location = new System.Drawing.Point(568, 440);
+			this.status.Location = new System.Drawing.Point(567, 440);
 			this.status.Name = "status";
-			this.status.Size = new System.Drawing.Size(204, 20);
+			this.status.Size = new System.Drawing.Size(205, 20);
 			this.status.TabIndex = 7;
 			this.status.Text = "Ready";
 			this.status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -367,7 +367,7 @@
 			this.txtOutFilePath.Location = new System.Drawing.Point(152, 398);
 			this.txtOutFilePath.Margin = new System.Windows.Forms.Padding(0);
 			this.txtOutFilePath.Name = "txtOutFilePath";
-			this.txtOutFilePath.Size = new System.Drawing.Size(412, 20);
+			this.txtOutFilePath.Size = new System.Drawing.Size(411, 20);
 			this.txtOutFilePath.TabIndex = 8;
 			this.txtOutFilePath.DoubleClick += new System.EventHandler(this.txtOutFilePath_DoubleClick);
 			// 
@@ -377,7 +377,7 @@
 			this.txtOutPath.Location = new System.Drawing.Point(152, 419);
 			this.txtOutPath.Margin = new System.Windows.Forms.Padding(0);
 			this.txtOutPath.Name = "txtOutPath";
-			this.txtOutPath.Size = new System.Drawing.Size(412, 20);
+			this.txtOutPath.Size = new System.Drawing.Size(411, 20);
 			this.txtOutPath.TabIndex = 9;
 			this.txtOutPath.DoubleClick += new System.EventHandler(this.txtOutPath_DoubleClick);
 			// 
@@ -389,7 +389,7 @@
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(144, 20);
 			this.label1.TabIndex = 10;
-			this.label1.Text = "Ouput Flie";
+			this.label1.Text = "Ouput File";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// label2
