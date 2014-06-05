@@ -13,13 +13,10 @@ using System.Threading;
 
 //TODO
 /*
- ------------------------------* progressbar / status info
- ------------------------------* persistent settings
- ---------------------* default color designations
- ------------------------------* custom folder for csv files
- ------------------------------* batch image processing
- ------------------------------* multiple z-level designations
- * per-image persistent descriptions
+ ------------------------------* Completed
+ ---------------------* default color designations (dropdown comboboxes)
+ --* multi image previews (side panel with smaller images)
+ --* per-image persistent descriptions
  * image/csv rotation
  */
 
