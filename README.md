@@ -10,7 +10,8 @@ Version 2 - Major overhaul of UI and feature additions
 - Changed WPF to WinForms enabling support on Linux/Mac with Mono
 - Added multi-Level templates
 - Added batch templates
-- Added persistent settings
+- Added persistent settings (colors and last used output path)
+- Added initial set of UI helpers (dig/query/place/build modes, start position, file/path chooser)
 
 
 Version 1 - Initial Release
