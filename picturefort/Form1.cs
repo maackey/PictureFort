@@ -37,6 +37,9 @@ namespace picturefort
 		{
 			p = new pf(progress_bar);
 			p.read_settings();
+			txtOutPath.Text = pf.settings[setting.csv_path].ToString();
+
+
 			cbRecursive.Enabled = false;
 		}
 
@@ -65,7 +68,7 @@ namespace picturefort
 		/// Writes each color designation key and value to the settings hashtable
 		/// </summary>
 		/// <returns></returns>
-		public bool save_palette()
+		public void save_palette()
 		{
 
 			foreach (TextBox txt in listColorDesignations.Controls)
@@ -74,8 +77,13 @@ namespace picturefort
 				string value = txt.Text;
 				pf.set_setting(key, value);
 			}
+		}
+
+		public void save_settings()
+		{
+			save_palette();
+			pf.set_setting(setting.csv_path, txtOutPath.Text);
 			p.write_settings();
-			return true;
 		}
 
 		/// <summary>
@@ -191,8 +199,6 @@ namespace picturefort
 		{
 			if (p.loaded_images.Count == 0) return;
 
-			save_palette();
-
 			string filename = txtOutFilePath.Text.Replace("#mode-", "");
 
 			if (cbDig.Checked)
@@ -218,6 +224,8 @@ namespace picturefort
 
 			filename = p.loaded_images[0].csv_file;
 			txtOutFilePath.Text = "#mode-" + filename;
+
+			save_settings();
 		}
 
 		private void btnMultiCSV_Click(object sender, EventArgs e)
@@ -225,8 +233,6 @@ namespace picturefort
 			//TODO: per image descriptions -- pass in array of descriptions
 
 			if (p.loaded_images.Count == 0) return;
-
-			save_palette();
 
 			if (cbDig.Checked)
 			{
@@ -251,6 +257,8 @@ namespace picturefort
 
 			string path = p.loaded_images[0].csv_filepath.Replace(p.loaded_images[0].csv_file, "");
 			txtOutPath.Text = path;
+
+			save_settings();
 		}
 
 		private void cbStartPos_SelectedIndexChanged(object sender, EventArgs e)

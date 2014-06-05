@@ -325,7 +325,11 @@ namespace picturefort
 					else
 					{
 						//check manual settings
-						foreach (setting s in settings) load_setting(s, line);
+						Array settinglist = Enum.GetValues(typeof(setting));
+						foreach (setting s in settinglist)
+						{
+							load_setting(s, line);
+						}
 					}
 
 				}
