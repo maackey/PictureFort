@@ -194,6 +194,9 @@ namespace picturefort
 
 		private void btnSingleCSV_Click(object sender, EventArgs e)
 		{
+
+			save_palette();
+
 			if (p.loaded_images.Count == 0) return;
 
 			string filename = txtOutFilePath.Text.Replace("#mode-", "");
@@ -228,6 +231,8 @@ namespace picturefort
 		private void btnMultiCSV_Click(object sender, EventArgs e)
 		{
 			//TODO: per image descriptions -- pass in array of descriptions
+
+			save_palette();
 
 			if (p.loaded_images.Count == 0) return;
 
