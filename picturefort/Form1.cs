@@ -189,37 +189,43 @@ namespace picturefort
 
 		private void btnSingleCSV_Click(object sender, EventArgs e)
 		{
+			if (p.loaded_images.Count == 0) return;
+
 			save_palette();
+
+			string filename = txtOutFilePath.Text.Replace("#mode-", "");
 
 			if (cbDig.Checked)
 			{
 				string description = string.Format("{0} {1} {2}", "#dig", txtStartPos.Text, txtCommentDig.Text);
-				p.multi_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+				p.build_csv(p.loaded_images, txtOutPath.Text, filename, description, progress_bar, status);
 			}
 			if (cbBuild.Checked)
 			{
 				string description = string.Format("{0} {1} {2}", "#build", txtStartPos.Text, txtCommentBuild.Text);
-				p.multi_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+				p.build_csv(p.loaded_images, txtOutPath.Text, filename, description, progress_bar, status);
 			}
 			if (cbPlace.Checked)
 			{
 				string description = string.Format("{0} {1} {2}", "#place", txtStartPos.Text, txtCommentPlace.Text);
-				p.multi_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+				p.build_csv(p.loaded_images, txtOutPath.Text, filename, description, progress_bar, status);
 			}
 			if (cbQuery.Checked)
 			{
 				string description = string.Format("{0} {1} {2}", "#query", txtStartPos.Text, txtCommentQuery.Text);
-				p.multi_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
+				p.build_csv(p.loaded_images, txtOutPath.Text, filename, description, progress_bar, status);
 			}
 
-			string filepath = p.loaded_images[0].csv_filepath;
-			txtOutFilePath.Text = filepath;
+			filename = p.loaded_images[0].csv_file;
+			txtOutFilePath.Text = "#mode-" + filename;
 		}
 
 		private void btnMultiCSV_Click(object sender, EventArgs e)
 		{
 			//TODO: per image descriptions -- pass in array of descriptions
-			
+
+			if (p.loaded_images.Count == 0) return;
+
 			save_palette();
 
 			if (cbDig.Checked)
@@ -249,6 +255,9 @@ namespace picturefort
 
 		private void cbStartPos_SelectedIndexChanged(object sender, EventArgs e)
 		{
+
+			if (p.loaded_images.Count == 0) return;
+
 			if (cbStartPos.SelectedIndex == 0) txtStartPos.Enabled = true;
 			else txtStartPos.Enabled = false;
 			
@@ -269,7 +278,7 @@ namespace picturefort
 		{
 			//TODO: open directory
 			OpenFileDialog d = new OpenFileDialog();
-			if (d.ShowDialog() == DialogResult.OK) txtOutPath.Text = d.FileName;
+			if (d.ShowDialog() == DialogResult.OK) txtOutPath.Text = d.SafeFileName;
 		}
 
 		private void txtOutPath_DoubleClick(object sender, EventArgs e)

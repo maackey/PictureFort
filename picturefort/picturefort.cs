@@ -471,27 +471,29 @@ namespace picturefort
 		{
 			List<byte_image> imagelist =  new List<byte_image>();
 			imagelist.Add(image);
-			return multi_csv(imagelist, csv_filepath, description, progress, label);
+			return build_csv(imagelist, csv_filepath, image.csv_file, description, progress, label);
 		}
 
 		/// <summary>
 		/// Creates a multi-z-level template with the provided list of images.
 		/// </summary>
 		/// <param name="images">List of images -- one for each z-level. Must be the same dimensions</param>
-		/// <param name="csv_filepath">Output file path for the template</param>
+		/// <param name="csv_path">Output file path for the template</param>
 		/// <param name="progress">ProgressBar object to track the function's progress</param>
 		/// <param name="status">Label object to provide a visual indicator of the function's status</param>
 		/// <returns></returns>
-		public bool multi_csv(List<byte_image> images, string csv_filepath, string description, ProgressBar progress = null, Label status = null)
+		public bool build_csv(List<byte_image> images, string csv_path, string filename, string description, ProgressBar progress = null, Label status = null)
 		{
 
 			if (images == null || images.Count == 0) return false;
 
 			string status_message;
+			int prediction = images[0].image.Width * images[0].image.Height;
+			string template_type = description.Substring(0, description.IndexOf(" ")).Replace("#", "") + "-";
 
 			//check images to make sure they are the same size, prepare progressbar for multiple images
-			int prediction = images[0].image.Width * images[0].image.Height;
 			#region if multiple images
+
 			if (images.Count > 1)
 			{
 				byte_image previous = null;
@@ -528,8 +530,10 @@ namespace picturefort
 
 				}
 			}
+
 			#endregion
 
+			#region generate csv
 
 			//generate csv -- use stringbuilder to create file contents before writing to file
 			status_message = "Generating CSV";
@@ -597,6 +601,10 @@ namespace picturefort
 
 			//Console.WriteLine(csv_builder.ToString());
 
+			#endregion generate csv
+
+			#region write file
+
 			//write file
 			status_message = "Writing File";
 			if (status != null)
@@ -607,7 +615,19 @@ namespace picturefort
 
 			try
 			{
-				if (csv_filepath == "") csv_filepath = images[0].csv_filepath;
+
+				if (csv_path == "") csv_path = ".";
+				csv_path = csv_path.TrimEnd('/').TrimEnd('\\');
+
+				if (!Directory.Exists(csv_path)) Directory.CreateDirectory(csv_path);
+
+				if (filename == "") filename = images[0].csv_file;
+
+				//to prevent dig/build/place/query templates from overwriting eachother
+				if (filename.StartsWith(template_type)) filename.Replace(template_type, "");
+				filename = string.Format("{0}{1}", template_type, filename);
+				images[0].csv_file = filename.Replace(template_type, "");
+				string csv_filepath = string.Format("{0}/{1}", csv_path, filename);
 
 				Console.WriteLine(status_message + ": " + csv_filepath);
 				StreamWriter f = new StreamWriter(csv_filepath);
@@ -617,11 +637,13 @@ namespace picturefort
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show(string.Format("File:{0} could not be written", csv_filepath));
+				MessageBox.Show(string.Format("File:{0}/{1} could not be written", csv_path, filename));
 				Console.WriteLine(e.Message);
 				return false;
 			}
-			
+
+			#endregion write file
+
 			return true;
 		}
 
