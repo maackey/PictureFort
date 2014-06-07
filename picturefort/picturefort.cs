@@ -20,8 +20,7 @@ namespace picturefort
 		restore_directory,
 
 	}
-
-
+	
 	static class picturefort
 	{
 		/// <summary>
@@ -490,6 +489,8 @@ namespace picturefort
 
 			if (images == null || images.Count == 0) return false;
 
+			StringBuilder csv_builder = new StringBuilder();
+			int image_index = 1;
 			string status_message;
 			int prediction = images[0].image.Width * images[0].image.Height;
 			string template_type = description.Substring(0, description.IndexOf(" ")).Replace("#", "") + "-";
@@ -548,11 +549,8 @@ namespace picturefort
 				progress.Value = 0;
 			}
 
-			StringBuilder csv_builder = new StringBuilder();
-
+			//write first line -> template type, start position, comments
 			csv_builder.Append(string.Format("{0}\n", description));
-
-			int image_index = 1;
 
 			foreach (byte_image current in images)
 			{
@@ -575,10 +573,29 @@ namespace picturefort
 							progress.Refresh();
 						}
 
+						//write the setting value of the color based on the template type
+						//handle unkown values by writing blanks
+						string designation = " ";
 						string key = convert_color(color_queue.Dequeue());
-						//handle unkown values by writing blanks, otherwise write the setting value of the color
-						if (settings[key] == null || settings[key].ToString() == "") csv_builder.Append(" ,");
-						else csv_builder.Append(string.Format("{0},", settings[key]));
+
+						if (settings[key] != null && settings[key].ToString() != "")
+						{
+							string[] colorcodes = settings[key].ToString().Split('|');
+							if (colorcodes.Length == 4)
+							{
+								switch (template_type)
+								{
+									case "dig-": designation = colorcodes[0]; break;
+									case "build-": designation = colorcodes[1]; break;
+									case "place-": designation = colorcodes[2]; break;
+									case "query-": designation = colorcodes[3]; break;
+									default: break;
+								}
+								if (designation == "") designation = " ";
+							}
+						}
+
+						csv_builder.Append(string.Format("{0},", designation));
 					}
 					//remove last ,
 					csv_builder = csv_builder.Remove(csv_builder.Length - 1, 1);
