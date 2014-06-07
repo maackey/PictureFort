@@ -591,8 +591,13 @@ namespace picturefort
 									case "query-": designation = colorcodes[3]; break;
 									default: break;
 								}
-								if (designation == "") designation = " ";
 							}
+							else
+							{
+								//they have the wrong format, just grab the first string item
+								designation = colorcodes[0];
+							}
+							if (designation == "") designation = " ";
 						}
 
 						csv_builder.Append(string.Format("{0},", designation));

@@ -8,6 +8,14 @@ Download: [http://dffd.wimbli.com/file.php?id=8564]
 Changelog
 ---------
 
+Version 2.0.1 - many critical bugfixes
+- Fixed batch images output filepath
+- Fixed multiple template types in one conversion. Uses pipe separated values (dig|build|place|query)
+- Fixed saving the path settings & updating form with those settings
+- Fixed missing start position from CSV
+- Fixed various typos
+- Updated start position: Center to use the ceiling, rather than truncate, to get the actual center
+
 Version 2 - Major overhaul of UI and feature additions
 - Changed WPF to WinForms enabling support on Linux/Mac with Mono
 - Added multi-Level templates
@@ -37,6 +45,7 @@ How to use
 2. Run picturefort.exe, click "Load Image(s)". Select the image (or images) that you want to convert.
 
 3. The "Color Designations" tab will generate a list of entries from the currently loaded images where you can enter your designations per color.
+To use the same color for multiple types of designations eg. you want to dig in dig mode, and also place a bed in query mode, you can use pipe separated values in the format "dig|build|place|query" so that bed would be designated as "d|b||"
 
 4. Select which type of template(s) to create (dig, build, place, query) and add any respective comments each one should have. 
 
