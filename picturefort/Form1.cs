@@ -257,8 +257,7 @@ namespace picturefort
 				p.batch_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
 			}
 
-			string path = p.loaded_images[0].csv_filepath.Replace(p.loaded_images[0].csv_file, "");
-			txtOutPath.Text = path;
+			txtOutPath.Text = pf.settings[setting.csv_path].ToString();
 
 			save_settings();
 		}

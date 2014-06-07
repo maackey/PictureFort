@@ -621,6 +621,7 @@ namespace picturefort
 
 				if (csv_path == "") csv_path = ".";
 				csv_path = csv_path.TrimEnd('/').TrimEnd('\\');
+				set_setting(setting.csv_path, csv_path);
 
 				if (!Directory.Exists(csv_path)) Directory.CreateDirectory(csv_path);
 
