@@ -275,11 +275,11 @@ namespace picturefort
 			switch (cbStartPos.SelectedValue.ToString())
 			{
 				case "Custom": break;
-				case "Center": txtStartPos.Text = String.Format("start ({0};{1}; Start: Center)", Math.Ceiling((double) img.Width/2), Math.Ceiling((double) img.Height/2)); break;
-				case "Top-Left": txtStartPos.Text = String.Format("start ({0};{1}; Start: Top-Left)", 0, 0); break;
-				case "Top-Right": txtStartPos.Text = String.Format("start ({0};{1}; Start: Top-Right)", img.Width, 0); break;
-				case "Bottom-Left": txtStartPos.Text = String.Format("start ({0};{1}; Start: Bottom-Left)", 0, img.Height); break;
-				case "Bottom-Right": txtStartPos.Text = String.Format("start ({0};{1}; Start: Bottom-Right)", img.Width, img.Height); break;
+				case "Center": txtStartPos.Text = String.Format("start({0};{1}; Start: Center)", Math.Ceiling((double) img.Width/2), Math.Ceiling((double) img.Height/2)); break;
+				case "Top-Left": txtStartPos.Text = String.Format("start({0};{1}; Start: Top-Left)", 0, 0); break;
+				case "Top-Right": txtStartPos.Text = String.Format("start({0};{1}; Start: Top-Right)", img.Width, 0); break;
+				case "Bottom-Left": txtStartPos.Text = String.Format("start({0};{1}; Start: Bottom-Left)", 0, img.Height); break;
+				case "Bottom-Right": txtStartPos.Text = String.Format("start({0};{1}; Start: Bottom-Right)", img.Width, img.Height); break;
 				default: break;
 			}
 		}

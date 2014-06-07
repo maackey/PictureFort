@@ -450,8 +450,7 @@ namespace picturefort
 
 				foreach (byte_image image in images)
 				{
-					string filepath = string.Format("{0}/{1}", csv_path.Trim('/').Trim('\\'), image.csv_file);
-					single_csv(image, filepath, description, progress, status);
+					single_csv(image, csv_path, description, progress, status);
 				}
 				return true;
 			}
@@ -467,15 +466,15 @@ namespace picturefort
 		/// Creates a template for a single image.
 		/// </summary>
 		/// <param name="image"></param>
-		/// <param name="csv_filepath"></param>
+		/// <param name="csv_path"></param>
 		/// <param name="progress"></param>
 		/// <param name="label"></param>
 		/// <returns></returns>
-		public bool single_csv(byte_image image, string csv_filepath, string description, ProgressBar progress = null, Label label = null)
+		public bool single_csv(byte_image image, string csv_path, string description, ProgressBar progress = null, Label label = null)
 		{
 			List<byte_image> imagelist =  new List<byte_image>();
 			imagelist.Add(image);
-			return build_csv(imagelist, csv_filepath, image.csv_file, description, progress, label);
+			return build_csv(imagelist, csv_path, image.csv_file, description, progress, label);
 		}
 
 		/// <summary>
