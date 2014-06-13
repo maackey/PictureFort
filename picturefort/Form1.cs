@@ -70,7 +70,7 @@ namespace picturefort
 
 			foreach (TextBox txt in listColorDesignations.Controls)
 			{
-				string key = pf.convert_color(txt.BackColor);
+				string key = pf.color_string(txt.BackColor);
 				string value = txt.Text;
 				pf.set_setting(key, value);
 			}
@@ -136,8 +136,8 @@ namespace picturefort
 				TextBox temp = new TextBox();
 				temp.BackColor = c;
 				if (c.R < 32 || c.G < 32 || c.B < 32) temp.ForeColor = Color.White;
-				if (pf.settings[pf.convert_color(c)] != null)
-					temp.Text = pf.settings[pf.convert_color(c)].ToString();
+				if (pf.settings[pf.color_string(c)] != null)
+					temp.Text = pf.settings[pf.color_string(c)].ToString();
 
 				listColorDesignations.Controls.Add(temp);
 			}
@@ -297,13 +297,12 @@ namespace picturefort
 			if (d.ShowDialog() == DialogResult.OK) txtOutPath.Text = d.SelectedPath;
 		}
 
-
-
-		#endregion Event Handlers
-
 		private void txtStartPos_TextChanged(object sender, EventArgs e)
 		{
 			//TODO: validate text
 		}
+
+		#endregion Event Handlers
+
 	}
 }

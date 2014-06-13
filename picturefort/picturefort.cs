@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Security.Cryptography;
 
 namespace picturefort
 {
@@ -260,7 +261,7 @@ namespace picturefort
 		/// </summary>
 		/// <param name="c"></param>
 		/// <returns></returns>
-		public static string convert_color(Color c)
+		public static string color_string(Color c)
 		{
 			return string.Format("#{0}{1}{2}{3}", c.A.ToString("X2"), c.R.ToString("X2"), c.G.ToString("X2"), c.B.ToString("X2"));
 		}
@@ -285,6 +286,24 @@ namespace picturefort
 
 			return formatted_name;
 		}
+
+		/// <summary>
+		/// creates an MD5 hash of the input string
+		/// </summary>
+		/// <param name="inputstring">input string to be hashed</param>
+		/// <returns>hash of the input as a hexadecimal string</returns>
+		static string createHash(string inputstring)
+		{
+			string hash = "";
+			byte[] input = Encoding.UTF8.GetBytes(inputstring);
+			byte[] data = MD5.Create().ComputeHash(input);
+
+			//format byte as hexadecimal string
+			foreach (byte b in data) hash += b.ToString("x2");
+
+			return hash;
+		}
+
 
 		#endregion
 
@@ -339,12 +358,12 @@ namespace picturefort
 			}
 			catch (FileNotFoundException e)
 			{
-				Console.WriteLine("File not found. Continue on." + e.Message);
+				Debug.Log("File not found. Coninue on.", e);
 				return false;
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("Exception: " + e.Message);
+				Debug.Log(e);
 				return false;
 			}
 		}
@@ -358,13 +377,13 @@ namespace picturefort
 			try
 			{
 				StreamWriter f = new StreamWriter(settingsfilepath);
-				Console.WriteLine("Writing settings");
+				Debug.Log("Writing settings");
 				foreach (DictionaryEntry s in settings)
 				{
 					string key = s.Key + ": ";
 					if (key.StartsWith("#")) f.WriteLine(key + s.Value);
 					else f.WriteLine(string.Format("{0, -20} {1}", key, s.Value));
-					Console.WriteLine(string.Format("key:{0}- value:{1}-", s.Key, s.Value));
+					Debug.Log(string.Format("key:{0}- value:{1}-", s.Key, s.Value));
 				}
 
 				f.Close();
@@ -373,7 +392,7 @@ namespace picturefort
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("Exception: " + e.Message);
+				Debug.Log(e);
 				return false;
 			}
 		}
@@ -456,7 +475,7 @@ namespace picturefort
 			catch (Exception e)
 			{
 				MessageBox.Show("Error in batch_csv using path: " + csv_path);
-				Console.WriteLine(e.Message);
+				Debug.Log(e);
 				return false;
 			}
 		}
@@ -527,7 +546,7 @@ namespace picturefort
 					if (previous.image.Size != current.image.Size)
 					{
 						MessageBox.Show("Images must be the same size for multilevel templates");
-						Console.WriteLine("images do not match dimensions");
+						Debug.Log("images do not match dimensions");
 						if (progress != null) progress.Value = 0;
 						return false;
 					}
@@ -541,7 +560,7 @@ namespace picturefort
 
 			//generate csv -- use stringbuilder to create file contents before writing to file
 			status_message = "Generating CSV";
-			Console.WriteLine(status_message);
+			Debug.Log(status_message);
 
 			if (progress != null)
 			{
@@ -576,7 +595,7 @@ namespace picturefort
 						//write the setting value of the color based on the template type
 						//handle unkown values by writing blanks
 						string designation = " ";
-						string key = convert_color(color_queue.Dequeue());
+						string key = color_string(color_queue.Dequeue());
 
 						if (settings[key] != null && settings[key].ToString() != "")
 						{
@@ -624,7 +643,7 @@ namespace picturefort
 
 			}
 
-			//Console.WriteLine(csv_builder.ToString());
+			//Debug.log(csv_builder.ToString());
 
 			#endregion generate csv
 
@@ -655,7 +674,7 @@ namespace picturefort
 				images[0].csv_file = filename.Replace(template_type, "");
 				string csv_filepath = string.Format("{0}/{1}", csv_path, filename);
 
-				Console.WriteLine(status_message + ": " + csv_filepath);
+				Debug.Log(status_message + ": " + csv_filepath);
 				StreamWriter f = new StreamWriter(csv_filepath);
 				f.Write(csv_builder.ToString());
 				f.Close();
@@ -664,7 +683,7 @@ namespace picturefort
 			catch (Exception e)
 			{
 				MessageBox.Show(string.Format("File:{0}/{1} could not be written", csv_path, filename));
-				Console.WriteLine(e.Message);
+				Debug.Log(e);
 				return false;
 			}
 
@@ -681,6 +700,10 @@ namespace picturefort
 			public Bitmap image;
 			public List<Color> palette = new List<Color>();
 			public Queue<Color> image_array = new Queue<Color>();
+			public string image_hash;
+			public string image_filepath;
+			public string image_file;
+			public string image_extension;
 			public string csv_filepath;
 			public string csv_file;
 
@@ -690,41 +713,49 @@ namespace picturefort
 			/// and a default path & filename for any csv created with the image.
 			/// </summary>
 			/// <param name="raw_image"></param>
-			/// <param name="image_filepath"></param>
-			/// <param name="csv_path"></param>
+			/// <param name="img_filepath"></param>
+			/// <param name="path"></param>
 			/// <param name="p"></param>
 			/// <param name="l"></param>
-			public byte_image(Image raw_image, string image_filepath, string csv_path = null, ProgressBar p = null, Label l = null)
+			public byte_image(Image raw_image, string img_filepath, string path = null, ProgressBar p = null, Label l = null)
 			{
-				int fstart = image_filepath.LastIndexOf("/");
-				if (fstart == -1) fstart = image_filepath.LastIndexOf("\\");
+				int fstart = img_filepath.LastIndexOf("/");
+				if (fstart == -1) fstart = img_filepath.LastIndexOf("\\");
 
-				string image_file = image_filepath.Substring(fstart + 1);
-				string image_extension = image_file.Substring(image_file.LastIndexOf("."));
+				image_filepath = img_filepath;
+				image_file = img_filepath.Substring(fstart + 1);
+				image_extension = image_file.Substring(image_file.LastIndexOf("."));
 
+				//set csv name to image name
 				csv_file = image_file.Replace(image_extension, ".csv");
 
-				if (csv_path == null || csv_path == "")
+				if (path == null || path == "")
 				{
 					//if provided path is null, csv_file will be created in same directory as image
-					csv_filepath = image_filepath.Replace(image_file, csv_file);
+					csv_filepath = img_filepath.Replace(image_file, csv_file);
 				}
 				else
 				{
 					//otherwise, create the new directory and create the csv_file in the provided directory
-					if (!Directory.Exists(csv_path)) Directory.CreateDirectory(csv_path);
-					csv_path = csv_path.TrimEnd('/').TrimEnd('\\');
-					csv_filepath = string.Format("{0}/{1}", csv_path, csv_file);
+					if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+					path = path.TrimEnd('/').TrimEnd('\\');
+					csv_filepath = string.Format("{0}/{1}", path, csv_file);
 				}
 
-				//Console.WriteLine(string.Format("image file:{0}, csv file:{1}, image filepath:{2}", image_file, csv_file, image_filepath));
-				Console.WriteLine(csv_filepath);
+				//Debug.log(string.Format("image file:{0}, csv file:{1}, image filepath:{2}", image_file, csv_file, image_filepath));
+				Debug.Log(csv_filepath);
 
 				image = new Bitmap(raw_image);
-				get_pixel_data(p);
+				load_pixel_data(p);
+
+				//build unique identifier string for the image
+				string the_colors = "";
+				foreach (Color c in image_array) the_colors += color_string(c).Replace("#", "");
+				image_hash = createHash(string.Format("({0}x{1})-{2}", image.Width, image.Height, the_colors));
+
 			}
 
-			public bool get_pixel_data(ProgressBar progress = null)
+			public bool load_pixel_data(ProgressBar progress = null)
 			{
 
 				if (progress != null)

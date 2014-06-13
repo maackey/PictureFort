@@ -28,7 +28,7 @@ namespace picturefort
 		private void color_designation_Load(object sender, EventArgs e)
 		{
 			txtColor.BackColor = mycolor;
-			txtColor.Text = pf.convert_color(mycolor);
+			txtColor.Text = pf.color_string(mycolor);
 			txtColor.ReadOnly = true;
 
 			AutoCompleteStringCollection source_dig = new AutoCompleteStringCollection();
