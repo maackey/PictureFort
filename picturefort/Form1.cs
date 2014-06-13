@@ -102,21 +102,27 @@ namespace picturefort
 
 				foreach (string image_filepath in d.FileNames)
 				{
+					status.Text = string.Format("Loading Pixel Data ({0}/{1})", loading_number, d.FileNames.Count());
+					status.Refresh();
+
 					pf.byte_image temp = new pf.byte_image(
 						Image.FromFile(image_filepath),
 						image_filepath,
 						(string)pf.settings[setting.csv_path],
-						progress_bar);
+						progress_bar,
+						status);
 
 					p.loaded_images.Add(temp);
-
-					status.Text = string.Format("Loading Pixel Data ({0}/{1})", loading_number, d.FileNames.Count());
-					status.Refresh();
 
 					loading_number++;
 				}
 
-				if (p.loaded_images.Count > 0) display_image(p.loaded_images[0].image, preview);
+				if (p.loaded_images.Count > 0)
+				{
+					status.Text = "Images Loaded";
+					status.Refresh();
+					display_image(p.loaded_images[0].image, preview);
+				}
 
 			}
 
@@ -135,13 +141,13 @@ namespace picturefort
 
 				TextBox temp = new TextBox();
 				temp.BackColor = c;
-				if (c.R < 32 || c.G < 32 || c.B < 32) temp.ForeColor = Color.White;
+				if (c.R < 32 && c.G < 32 && c.B < 32) temp.ForeColor = Color.White;
 				if (pf.settings[pf.color_string(c)] != null)
 					temp.Text = pf.settings[pf.color_string(c)].ToString();
 
 				listColorDesignations.Controls.Add(temp);
 			}
-			Console.WriteLine("controls: " + listColorDesignations.Controls.Count);
+			Debug.Log("controls: " + listColorDesignations.Controls.Count);
 			return true;
 		}
 
@@ -159,6 +165,24 @@ namespace picturefort
 			cbStartPos.SelectedIndex = 1;
 			
 			return true;
+		}
+
+		private void update_start_positions()
+		{
+			if (cbStartPos.SelectedIndex == 0) txtStartPos.Enabled = true;
+			else txtStartPos.Enabled = false;
+
+			Image img = p.loaded_images[0].image;
+			switch (cbStartPos.SelectedValue.ToString())
+			{
+				case "Custom": break;
+				case "Center": txtStartPos.Text = String.Format("start({0};{1}; Start: Center)", Math.Ceiling((double)img.Width / 2), Math.Ceiling((double)img.Height / 2)); break;
+				case "Top-Left": txtStartPos.Text = String.Format("start({0};{1}; Start: Top-Left)", 0, 0); break;
+				case "Top-Right": txtStartPos.Text = String.Format("start({0};{1}; Start: Top-Right)", img.Width, 0); break;
+				case "Bottom-Left": txtStartPos.Text = String.Format("start({0};{1}; Start: Bottom-Left)", 0, img.Height); break;
+				case "Bottom-Right": txtStartPos.Text = String.Format("start({0};{1}; Start: Bottom-Right)", img.Width, img.Height); break;
+				default: break;
+			}
 		}
 
 		/// <summary>
@@ -179,6 +203,7 @@ namespace picturefort
 
 		}
 
+
 		#region Event Handlers
 
 		private void btnImageChooser_Click(object sender, EventArgs e)
@@ -187,6 +212,7 @@ namespace picturefort
 			load_palettes();
 			create_designations();
 			create_start_positions();
+			update_start_positions();
 
 			txtOutFilePath.Text = "";
 			txtOutPath.Text = pf.settings[setting.csv_path].ToString();
@@ -266,21 +292,7 @@ namespace picturefort
 		{
 
 			if (p.loaded_images.Count == 0) return;
-
-			if (cbStartPos.SelectedIndex == 0) txtStartPos.Enabled = true;
-			else txtStartPos.Enabled = false;
-			
-			Image img = p.loaded_images[0].image;
-			switch (cbStartPos.SelectedValue.ToString())
-			{
-				case "Custom": break;
-				case "Center": txtStartPos.Text = String.Format("start({0};{1}; Start: Center)", Math.Ceiling((double) img.Width/2), Math.Ceiling((double) img.Height/2)); break;
-				case "Top-Left": txtStartPos.Text = String.Format("start({0};{1}; Start: Top-Left)", 0, 0); break;
-				case "Top-Right": txtStartPos.Text = String.Format("start({0};{1}; Start: Top-Right)", img.Width, 0); break;
-				case "Bottom-Left": txtStartPos.Text = String.Format("start({0};{1}; Start: Bottom-Left)", 0, img.Height); break;
-				case "Bottom-Right": txtStartPos.Text = String.Format("start({0};{1}; Start: Bottom-Right)", img.Width, img.Height); break;
-				default: break;
-			}
+			update_start_positions();
 		}
 		
 		private void txtOutFilePath_DoubleClick(object sender, EventArgs e)
@@ -300,6 +312,19 @@ namespace picturefort
 		private void txtStartPos_TextChanged(object sender, EventArgs e)
 		{
 			//TODO: validate text
+		}
+
+		private void btnTest_Click(object sender, EventArgs e)
+		{
+			if (tableImagePreview.ColumnStyles[0].Width == 0)
+			{
+				tableImagePreview.ColumnStyles[0].Width = 200;
+			}
+			else
+			{
+				tableImagePreview.ColumnStyles[0].Width = 0;
+			}
+
 		}
 
 		#endregion Event Handlers

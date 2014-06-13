@@ -301,7 +301,7 @@ namespace picturefort
 			//format byte as hexadecimal string
 			foreach (byte b in data) hash += b.ToString("x2");
 
-			return hash;
+			return hash.ToUpper();
 		}
 
 
@@ -453,28 +453,28 @@ namespace picturefort
 		/// Creates a template for each image in the list, in the designated directory. 
 		/// </summary>
 		/// <param name="images">List of images to be converted</param>
-		/// <param name="csv_path">Path where the generated files will be placed</param>
+		/// <param name="path">Path where the generated files will be placed</param>
 		/// <param name="progress">ProgressBar object to track the function's progress</param>
 		/// <param name="status">Label object to provide a visual indicator of the function's status</param>
 		/// <returns></returns>
-		public bool batch_csv(List<byte_image> images, string csv_path, string description, ProgressBar progress = null, Label status = null)
+		public bool batch_csv(List<byte_image> images, string path, string description, ProgressBar progress = null, Label status = null)
 		{
 			try
 			{
 				//if path doesn't exist, use the path of the first image
-				if (csv_path == "") csv_path = images[0].csv_filepath.Replace(images[0].csv_file, "");
+				if (path == "") path = images[0].csv_filepath.Replace(images[0].csv_file, "");
 				//create the directory if it doesn't exist
-				if (!Directory.Exists(csv_path)) Directory.CreateDirectory(csv_path);
+				if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
 				foreach (byte_image image in images)
 				{
-					single_csv(image, csv_path, description, progress, status);
+					single_csv(image, path, description, progress, status);
 				}
 				return true;
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show("Error in batch_csv using path: " + csv_path);
+				MessageBox.Show("Error in batch_csv using path: " + path);
 				Debug.Log(e);
 				return false;
 			}
@@ -484,26 +484,26 @@ namespace picturefort
 		/// Creates a template for a single image.
 		/// </summary>
 		/// <param name="image"></param>
-		/// <param name="csv_path"></param>
+		/// <param name="path"></param>
 		/// <param name="progress"></param>
 		/// <param name="label"></param>
 		/// <returns></returns>
-		public bool single_csv(byte_image image, string csv_path, string description, ProgressBar progress = null, Label label = null)
+		public bool single_csv(byte_image image, string path, string description, ProgressBar progress = null, Label label = null)
 		{
 			List<byte_image> imagelist =  new List<byte_image>();
 			imagelist.Add(image);
-			return build_csv(imagelist, csv_path, image.csv_file, description, progress, label);
+			return build_csv(imagelist, path, image.csv_file, description, progress, label);
 		}
 
 		/// <summary>
 		/// Creates a multi-z-level template with the provided list of images.
 		/// </summary>
 		/// <param name="images">List of images -- one for each z-level. Must be the same dimensions</param>
-		/// <param name="csv_path">Output file path for the template</param>
+		/// <param name="path">Output file path for the template</param>
 		/// <param name="progress">ProgressBar object to track the function's progress</param>
 		/// <param name="status">Label object to provide a visual indicator of the function's status</param>
 		/// <returns></returns>
-		public bool build_csv(List<byte_image> images, string csv_path, string filename, string description, ProgressBar progress = null, Label status = null)
+		public bool build_csv(List<byte_image> images, string path, string filename, string description, ProgressBar progress = null, Label status = null)
 		{
 
 			if (images == null || images.Count == 0) return false;
@@ -660,11 +660,13 @@ namespace picturefort
 			try
 			{
 
-				if (csv_path == "") csv_path = ".";
-				csv_path = csv_path.TrimEnd('/').TrimEnd('\\');
-				set_setting(setting.csv_path, csv_path);
+				//if path doesn't exist, use the path of the first image
+				if (path == "") path = images[0].csv_filepath.Replace(images[0].csv_file, "");
 
-				if (!Directory.Exists(csv_path)) Directory.CreateDirectory(csv_path);
+				path = path.TrimEnd('/').TrimEnd('\\');
+				set_setting(setting.csv_path, path);
+
+				if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
 				if (filename == "") filename = images[0].csv_file;
 
@@ -672,7 +674,7 @@ namespace picturefort
 				if (filename.StartsWith(template_type)) filename.Replace(template_type, "");
 				filename = string.Format("{0}{1}", template_type, filename);
 				images[0].csv_file = filename.Replace(template_type, "");
-				string csv_filepath = string.Format("{0}/{1}", csv_path, filename);
+				string csv_filepath = string.Format("{0}/{1}", path, filename);
 
 				Debug.Log(status_message + ": " + csv_filepath);
 				StreamWriter f = new StreamWriter(csv_filepath);
@@ -682,7 +684,7 @@ namespace picturefort
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show(string.Format("File:{0}/{1} could not be written", csv_path, filename));
+				MessageBox.Show(string.Format("File:{0}/{1} could not be written", path, filename));
 				Debug.Log(e);
 				return false;
 			}
@@ -717,7 +719,7 @@ namespace picturefort
 			/// <param name="path"></param>
 			/// <param name="p"></param>
 			/// <param name="l"></param>
-			public byte_image(Image raw_image, string img_filepath, string path = null, ProgressBar p = null, Label l = null)
+			public byte_image(Image raw_image, string img_filepath, string path = null, ProgressBar p = null, Label status = null)
 			{
 				int fstart = img_filepath.LastIndexOf("/");
 				if (fstart == -1) fstart = img_filepath.LastIndexOf("\\");
@@ -749,10 +751,13 @@ namespace picturefort
 				load_pixel_data(p);
 
 				//build unique identifier string for the image
+				status.Text = "Creating Image Hash";
+				status.Refresh();
+
 				string the_colors = "";
 				foreach (Color c in image_array) the_colors += color_string(c).Replace("#", "");
 				image_hash = createHash(string.Format("({0}x{1})-{2}", image.Width, image.Height, the_colors));
-
+				Debug.Log(image_hash);
 			}
 
 			public bool load_pixel_data(ProgressBar progress = null)
