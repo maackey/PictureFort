@@ -19,6 +19,7 @@ namespace picturefort
 		csv_path,
 		image_batch_path,
 		restore_directory,
+		clean,
 
 	}
 	
@@ -316,7 +317,9 @@ namespace picturefort
 		public bool read_settings()
 		{
 			settings.Clear();
+			//set defaults
 			set_setting(setting.csv_path, "");
+			set_setting(setting.clean, "false");
 
 			try
 			{
@@ -339,6 +342,11 @@ namespace picturefort
 					{
 						//check color designations
 						load_colorsetting(line);
+					}
+					else if (line.Trim().StartsWith("image:"))
+					{
+						//check image settings
+
 					}
 					else
 					{
@@ -374,17 +382,37 @@ namespace picturefort
 		/// <returns></returns>
 		public bool write_settings()
 		{
+			Debug.Log("Writing settings");
 			try
 			{
+				bool clean = settings[setting.clean].ToString().ToLower() == "true";
+				if (!clean) settings[setting.clean] = "false";
+
 				StreamWriter f = new StreamWriter(settingsfilepath);
-				Debug.Log("Writing settings");
+				StringBuilder colors = new StringBuilder();
+				StringBuilder images = new StringBuilder();
+				StringBuilder manual = new StringBuilder();
+
 				foreach (DictionaryEntry s in settings)
 				{
-					string key = s.Key + ": ";
-					if (key.StartsWith("#")) f.WriteLine(key + s.Value);
-					else f.WriteLine(string.Format("{0, -20} {1}", key, s.Value));
-					Debug.Log(string.Format("key:{0}- value:{1}-", s.Key, s.Value));
+					string value = s.Value.ToString();
+					string key = s.Key.ToString();
+					if (value != "" || !clean)
+					{
+						if (key.StartsWith("#")) colors.Append(string.Format("{0}: {1\n", key, value));
+						else if (key.StartsWith("MD5=")) /* call routine which builds string for image */;
+						else manual.Append(string.Format("{0, -20}: {1}\n", key, value));
+
+						Debug.Log(string.Format("key:{0}- value:{1}-", key, value));
+					}
 				}
+
+				f.WriteLine("//Preamble");
+				f.Write(manual.ToString());
+				f.WriteLine("//Color Designations");
+				f.Write(colors.ToString());
+				f.WriteLine("//Image Specific Settings");
+				f.Write(images.ToString());
 
 				f.Close();
 				f.Dispose();
@@ -443,6 +471,12 @@ namespace picturefort
 				return true;
 			}
 			return false;
+		}
+
+		private bool load_imagesetting(string line)
+		{
+
+			return true;
 		}
 
 		#endregion
@@ -787,6 +821,13 @@ namespace picturefort
 
 				return true;
 			}
+
+		}
+
+		public class image_settings
+		{
+			public string image_hash;
+			public string start_pos;
 
 		}
 

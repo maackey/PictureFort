@@ -16,3 +16,8 @@ public static class Debug
 		Log("", e, stacktrace);
 	}
 }
+
+public static class util
+{
+
+}

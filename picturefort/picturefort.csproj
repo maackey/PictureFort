@@ -54,7 +54,7 @@
     <Compile Include="color_designation.Designer.cs">
       <DependentUpon>color_designation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Debug.cs" />
+    <Compile Include="Utilities.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

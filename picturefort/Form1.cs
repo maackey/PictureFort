@@ -38,15 +38,15 @@ namespace picturefort
 			p.read_settings();
 			txtOutPath.Text = pf.settings[setting.csv_path].ToString();
 
-
 			cbRecursive.Enabled = false;
+			cbRecursive.Visible = false;
 		}
 
 		/// <summary>
 		/// Generates a list of all the different colors for all the currently loaded images
 		/// </summary>
 		/// <returns></returns>
-		public bool load_palettes()
+		public void load_palettes()
 		{
 			p.palette.Clear();
 			listColorDesignations.Controls.Clear();
@@ -60,7 +60,6 @@ namespace picturefort
 					}
 				}
 			}
-			return true;
 		}
 
 		/// <summary>
@@ -78,6 +77,9 @@ namespace picturefort
 			}
 		}
 
+		/// <summary>
+		/// saves all the various settings and writes them to a file
+		/// </summary>
 		public void save_settings()
 		{
 			save_palette();
@@ -89,7 +91,7 @@ namespace picturefort
 		/// Creates a file chooser dialog, loads necessary data from each image (byte_image.get_pixel_data), and displays the top image in the preview window
 		/// </summary>
 		/// <returns></returns>
-		public bool load_images()
+		public void load_images()
 		{
 			side_previews.Controls.Clear();
 			selected_image = null;
@@ -140,7 +142,7 @@ namespace picturefort
 						{
 							PictureBox temp = new PictureBox();
 							temp.Tag = p.loaded_images[i];
-							temp.Click += side_preview_click;
+							temp.Click += side_preview_Click;
 							temp.Width = side_previews.Width - scrollbar_width;
 							temp.Height = side_previews.Width - scrollbar_width;
 
@@ -150,16 +152,13 @@ namespace picturefort
 					}
 				}
 			}
-
-			return true;
 		}
-
 
 		/// <summary>
 		/// Creates the possible color designations for all the currently loaded images
 		/// </summary>
 		/// <returns></returns>
-		public bool create_designations()
+		public void create_designations()
 		{
 			foreach (Color c in p.palette)
 			{
@@ -174,14 +173,13 @@ namespace picturefort
 				listColorDesignations.Controls.Add(temp);
 			}
 			Debug.Log("total colors loaded: " + listColorDesignations.Controls.Count);
-			return true;
 		}
 
 		/// <summary>
 		/// Creates some pre-defined starting positions for the preview image
 		/// </summary>
 		/// <returns></returns>
-		public bool create_start_positions()
+		public void create_start_positions()
 		{
 
 			AutoCompleteStringCollection source_startpos = new AutoCompleteStringCollection();
@@ -190,9 +188,11 @@ namespace picturefort
 			cbStartPos.AutoCompleteCustomSource = source_startpos;
 			cbStartPos.SelectedIndex = 1;
 			
-			return true;
 		}
 
+		/// <summary>
+		/// Sets & fills start position combobox & text with appropriate values
+		/// </summary>
 		private void update_start_positions()
 		{
 			if (selected_image == null) return;
@@ -255,6 +255,7 @@ namespace picturefort
 
 			string filename = txtOutFilePath.Text.Replace("#mode-", "");
 
+			//description: #mode | start(x;y;start comment) | mode comment
 			if (cbDig.Checked)
 			{
 				string description = string.Format("{0} {1} {2}", "#dig", txtStartPos.Text, txtCommentDig.Text);
@@ -290,6 +291,7 @@ namespace picturefort
 
 			if (p.loaded_images.Count == 0) return;
 
+			//description: #mode | start(x;y;start comment) | mode comment
 			if (cbDig.Checked)
 			{
 				string description = string.Format("{0} {1} {2}", "#dig", "", "");
@@ -316,25 +318,24 @@ namespace picturefort
 			save_settings();
 		}
 
-		void side_preview_click(object sender, EventArgs e)
+		private void side_preview_Click(object sender, EventArgs e)
 		{
 			PictureBox p = (PictureBox)sender;
 			pf.byte_image selected = (pf.byte_image)p.Tag;
 			selected_image = selected;
 			display_image(selected.image, preview);
 			Debug.Log(selected.image_file + " selected. hash: " + selected.image_hash);
+			update_start_positions();
 		}
 
 		private void cbStartPos_SelectedIndexChanged(object sender, EventArgs e)
 		{
-
 			if (p.loaded_images.Count == 0) return;
 			update_start_positions();
 		}
 		
 		private void txtOutFilePath_DoubleClick(object sender, EventArgs e)
 		{
-			//TODO: open directory
 			OpenFileDialog d = new OpenFileDialog();
 			if (d.ShowDialog() == DialogResult.OK) txtOutPath.Text = d.SafeFileName;
 		}

@@ -62,6 +62,8 @@
 			this.side_previews = new System.Windows.Forms.FlowLayoutPanel();
 			this.tableImagePreview = new System.Windows.Forms.TableLayoutPanel();
 			this.btnTest = new System.Windows.Forms.Button();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
 			this.grid.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.panelTemplateType.SuspendLayout();
@@ -119,8 +121,8 @@
 			// 
 			// panelTemplateType
 			// 
-			this.panelTemplateType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelTemplateType.Controls.Add(this.label5);
+			this.panelTemplateType.Controls.Add(this.label4);
 			this.panelTemplateType.Controls.Add(this.cbDig);
 			this.panelTemplateType.Controls.Add(this.cbBuild);
 			this.panelTemplateType.Controls.Add(this.cbPlace);
@@ -129,9 +131,10 @@
 			this.panelTemplateType.Controls.Add(this.txtCommentPlace);
 			this.panelTemplateType.Controls.Add(this.txtCommentBuild);
 			this.panelTemplateType.Controls.Add(this.txtCommentDig);
-			this.panelTemplateType.Location = new System.Drawing.Point(3, 22);
+			this.panelTemplateType.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelTemplateType.Location = new System.Drawing.Point(0, 95);
 			this.panelTemplateType.Name = "panelTemplateType";
-			this.panelTemplateType.Size = new System.Drawing.Size(206, 97);
+			this.panelTemplateType.Size = new System.Drawing.Size(212, 123);
 			this.panelTemplateType.TabIndex = 12;
 			// 
 			// cbDig
@@ -139,7 +142,7 @@
 			this.cbDig.AutoSize = true;
 			this.cbDig.Checked = true;
 			this.cbDig.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cbDig.Location = new System.Drawing.Point(3, 3);
+			this.cbDig.Location = new System.Drawing.Point(3, 26);
 			this.cbDig.Margin = new System.Windows.Forms.Padding(0);
 			this.cbDig.Name = "cbDig";
 			this.cbDig.Size = new System.Drawing.Size(42, 17);
@@ -150,7 +153,7 @@
 			// cbBuild
 			// 
 			this.cbBuild.AutoSize = true;
-			this.cbBuild.Location = new System.Drawing.Point(3, 26);
+			this.cbBuild.Location = new System.Drawing.Point(3, 49);
 			this.cbBuild.Margin = new System.Windows.Forms.Padding(0);
 			this.cbBuild.Name = "cbBuild";
 			this.cbBuild.Size = new System.Drawing.Size(49, 17);
@@ -161,7 +164,7 @@
 			// cbPlace
 			// 
 			this.cbPlace.AutoSize = true;
-			this.cbPlace.Location = new System.Drawing.Point(3, 49);
+			this.cbPlace.Location = new System.Drawing.Point(3, 72);
 			this.cbPlace.Margin = new System.Windows.Forms.Padding(0);
 			this.cbPlace.Name = "cbPlace";
 			this.cbPlace.Size = new System.Drawing.Size(53, 17);
@@ -172,7 +175,7 @@
 			// cbQuery
 			// 
 			this.cbQuery.AutoSize = true;
-			this.cbQuery.Location = new System.Drawing.Point(3, 73);
+			this.cbQuery.Location = new System.Drawing.Point(3, 96);
 			this.cbQuery.Margin = new System.Windows.Forms.Padding(0);
 			this.cbQuery.Name = "cbQuery";
 			this.cbQuery.Size = new System.Drawing.Size(54, 17);
@@ -182,60 +185,59 @@
 			// 
 			// txtCommentQuery
 			// 
-			this.txtCommentQuery.Location = new System.Drawing.Point(57, 71);
+			this.txtCommentQuery.Location = new System.Drawing.Point(57, 94);
 			this.txtCommentQuery.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentQuery.Name = "txtCommentQuery";
-			this.txtCommentQuery.Size = new System.Drawing.Size(143, 20);
+			this.txtCommentQuery.Size = new System.Drawing.Size(152, 20);
 			this.txtCommentQuery.TabIndex = 11;
 			// 
 			// txtCommentPlace
 			// 
-			this.txtCommentPlace.Location = new System.Drawing.Point(57, 47);
+			this.txtCommentPlace.Location = new System.Drawing.Point(57, 70);
 			this.txtCommentPlace.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentPlace.Name = "txtCommentPlace";
-			this.txtCommentPlace.Size = new System.Drawing.Size(143, 20);
+			this.txtCommentPlace.Size = new System.Drawing.Size(152, 20);
 			this.txtCommentPlace.TabIndex = 10;
 			// 
 			// txtCommentBuild
 			// 
-			this.txtCommentBuild.Location = new System.Drawing.Point(57, 24);
+			this.txtCommentBuild.Location = new System.Drawing.Point(57, 47);
 			this.txtCommentBuild.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentBuild.Name = "txtCommentBuild";
-			this.txtCommentBuild.Size = new System.Drawing.Size(143, 20);
+			this.txtCommentBuild.Size = new System.Drawing.Size(152, 20);
 			this.txtCommentBuild.TabIndex = 9;
 			// 
 			// txtCommentDig
 			// 
-			this.txtCommentDig.Location = new System.Drawing.Point(57, 1);
+			this.txtCommentDig.Location = new System.Drawing.Point(57, 24);
 			this.txtCommentDig.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentDig.Name = "txtCommentDig";
-			this.txtCommentDig.Size = new System.Drawing.Size(143, 20);
+			this.txtCommentDig.Size = new System.Drawing.Size(152, 20);
 			this.txtCommentDig.TabIndex = 8;
 			// 
 			// panelStartPos
 			// 
-			this.panelStartPos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.panelStartPos.Controls.Add(this.txtStartPos);
 			this.panelStartPos.Controls.Add(this.label3);
 			this.panelStartPos.Controls.Add(this.cbStartPos);
-			this.panelStartPos.Location = new System.Drawing.Point(3, 318);
+			this.panelStartPos.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelStartPos.Location = new System.Drawing.Point(0, 20);
 			this.panelStartPos.Name = "panelStartPos";
-			this.panelStartPos.Size = new System.Drawing.Size(206, 75);
+			this.panelStartPos.Size = new System.Drawing.Size(212, 75);
 			this.panelStartPos.TabIndex = 7;
 			// 
 			// txtStartPos
 			// 
-			this.txtStartPos.Location = new System.Drawing.Point(3, 43);
+			this.txtStartPos.Location = new System.Drawing.Point(3, 49);
 			this.txtStartPos.Name = "txtStartPos";
-			this.txtStartPos.Size = new System.Drawing.Size(197, 20);
+			this.txtStartPos.Size = new System.Drawing.Size(206, 20);
 			this.txtStartPos.TabIndex = 8;
 			this.txtStartPos.TextChanged += new System.EventHandler(this.txtStartPos_TextChanged);
 			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(3, 0);
+			this.label3.Location = new System.Drawing.Point(3, 5);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(56, 13);
 			this.label3.TabIndex = 7;
@@ -245,9 +247,9 @@
 			// 
 			this.cbStartPos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbStartPos.FormattingEnabled = true;
-			this.cbStartPos.Location = new System.Drawing.Point(3, 16);
+			this.cbStartPos.Location = new System.Drawing.Point(3, 22);
 			this.cbStartPos.Name = "cbStartPos";
-			this.cbStartPos.Size = new System.Drawing.Size(197, 21);
+			this.cbStartPos.Size = new System.Drawing.Size(206, 21);
 			this.cbStartPos.TabIndex = 6;
 			this.cbStartPos.SelectedIndexChanged += new System.EventHandler(this.cbStartPos_SelectedIndexChanged);
 			// 
@@ -453,13 +455,32 @@
 			// 
 			// btnTest
 			// 
-			this.btnTest.Location = new System.Drawing.Point(6, 125);
+			this.btnTest.Dock = System.Windows.Forms.DockStyle.Top;
+			this.btnTest.Location = new System.Drawing.Point(0, 218);
 			this.btnTest.Name = "btnTest";
-			this.btnTest.Size = new System.Drawing.Size(195, 61);
+			this.btnTest.Size = new System.Drawing.Size(212, 61);
 			this.btnTest.TabIndex = 14;
 			this.btnTest.Text = "TEST";
 			this.btnTest.UseVisualStyleBackColor = true;
 			this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(3, 3);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(34, 13);
+			this.label4.TabIndex = 12;
+			this.label4.Text = "Mode";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(54, 3);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(51, 13);
+			this.label5.TabIndex = 13;
+			this.label5.Text = "Comment";
 			// 
 			// Form1
 			// 
@@ -523,6 +544,8 @@
 		private System.Windows.Forms.TableLayoutPanel tableImagePreview;
 		private System.Windows.Forms.FlowLayoutPanel side_previews;
 		private System.Windows.Forms.Button btnTest;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label4;
 
 	}
 }
