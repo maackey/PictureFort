@@ -24,7 +24,9 @@ namespace picturefort
 {
 	public partial class Form1 : Form
 	{
+		public const int scrollbar_width = 24;
 		pf p;
+		pf.byte_image selected_image;
 
 		public Form1()
 		{
@@ -89,6 +91,8 @@ namespace picturefort
 		/// <returns></returns>
 		public bool load_images()
 		{
+			side_previews.Controls.Clear();
+			selected_image = null;
 			OpenFileDialog d = new OpenFileDialog();
 
 			d.Multiselect = true;
@@ -121,13 +125,35 @@ namespace picturefort
 				{
 					status.Text = "Images Loaded";
 					status.Refresh();
-					display_image(p.loaded_images[0].image, preview);
-				}
 
+					if (p.loaded_images.Count <= 1) tableImagePreview.ColumnStyles[0].Width = 0;
+					else tableImagePreview.ColumnStyles[0].Width = 200;
+
+					for (int i = 0; i < p.loaded_images.Count; i++)
+					{
+						if (i == 0)
+						{
+							display_image(p.loaded_images[i].image, preview);
+							selected_image = p.loaded_images[i];
+						}
+						if (p.loaded_images.Count > 1)
+						{
+							PictureBox temp = new PictureBox();
+							temp.Tag = p.loaded_images[i];
+							temp.Click += side_preview_click;
+							temp.Width = side_previews.Width - scrollbar_width;
+							temp.Height = side_previews.Width - scrollbar_width;
+
+							side_previews.Controls.Add(temp);
+							display_image(p.loaded_images[i].image, temp);
+						}
+					}
+				}
 			}
 
 			return true;
 		}
+
 
 		/// <summary>
 		/// Creates the possible color designations for all the currently loaded images
@@ -147,7 +173,7 @@ namespace picturefort
 
 				listColorDesignations.Controls.Add(temp);
 			}
-			Debug.Log("controls: " + listColorDesignations.Controls.Count);
+			Debug.Log("total colors loaded: " + listColorDesignations.Controls.Count);
 			return true;
 		}
 
@@ -169,10 +195,12 @@ namespace picturefort
 
 		private void update_start_positions()
 		{
+			if (selected_image == null) return;
+
 			if (cbStartPos.SelectedIndex == 0) txtStartPos.Enabled = true;
 			else txtStartPos.Enabled = false;
 
-			Image img = p.loaded_images[0].image;
+			Image img = selected_image.image;
 			switch (cbStartPos.SelectedValue.ToString())
 			{
 				case "Custom": break;
@@ -248,7 +276,7 @@ namespace picturefort
 				p.build_csv(p.loaded_images, txtOutPath.Text, filename, description, progress_bar, status);
 			}
 
-			filename = p.loaded_images[0].csv_file;
+			filename = selected_image.csv_file;
 			txtOutFilePath.Text = "#mode-" + filename;
 
 			save_settings();
@@ -288,6 +316,15 @@ namespace picturefort
 			save_settings();
 		}
 
+		void side_preview_click(object sender, EventArgs e)
+		{
+			PictureBox p = (PictureBox)sender;
+			pf.byte_image selected = (pf.byte_image)p.Tag;
+			selected_image = selected;
+			display_image(selected.image, preview);
+			Debug.Log(selected.image_file + " selected. hash: " + selected.image_hash);
+		}
+
 		private void cbStartPos_SelectedIndexChanged(object sender, EventArgs e)
 		{
 
@@ -316,15 +353,7 @@ namespace picturefort
 
 		private void btnTest_Click(object sender, EventArgs e)
 		{
-			if (tableImagePreview.ColumnStyles[0].Width == 0)
-			{
-				tableImagePreview.ColumnStyles[0].Width = 200;
-			}
-			else
-			{
-				tableImagePreview.ColumnStyles[0].Width = 0;
-			}
-
+			
 		}
 
 		#endregion Event Handlers

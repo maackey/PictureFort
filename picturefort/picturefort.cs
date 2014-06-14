@@ -744,9 +744,6 @@ namespace picturefort
 					csv_filepath = string.Format("{0}/{1}", path, csv_file);
 				}
 
-				//Debug.log(string.Format("image file:{0}, csv file:{1}, image filepath:{2}", image_file, csv_file, image_filepath));
-				Debug.Log(csv_filepath);
-
 				image = new Bitmap(raw_image);
 				load_pixel_data(p);
 
@@ -757,7 +754,7 @@ namespace picturefort
 				string the_colors = "";
 				foreach (Color c in image_array) the_colors += color_string(c).Replace("#", "");
 				image_hash = createHash(string.Format("({0}x{1})-{2}", image.Width, image.Height, the_colors));
-				Debug.Log(image_hash);
+				Debug.Log(string.Format("Image Loaded:{0}; path:{1}; hash:{2}", image_filepath, path, image_hash));
 			}
 
 			public bool load_pixel_data(ProgressBar progress = null)

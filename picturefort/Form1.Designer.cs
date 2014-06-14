@@ -329,7 +329,7 @@
 			this.preview.Location = new System.Drawing.Point(200, 0);
 			this.preview.Margin = new System.Windows.Forms.Padding(0);
 			this.preview.Name = "preview";
-			this.preview.Size = new System.Drawing.Size(347, 344);
+			this.preview.Size = new System.Drawing.Size(347, 364);
 			this.preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.preview.TabIndex = 0;
 			this.preview.TabStop = false;
@@ -422,13 +422,17 @@
 			// 
 			// side_previews
 			// 
-			this.side_previews.BackColor = System.Drawing.Color.Black;
+			this.side_previews.AutoScroll = true;
+			this.side_previews.AutoSize = true;
+			this.side_previews.BackColor = System.Drawing.Color.Gray;
 			this.side_previews.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.side_previews.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.side_previews.Location = new System.Drawing.Point(0, 0);
 			this.side_previews.Margin = new System.Windows.Forms.Padding(0);
 			this.side_previews.Name = "side_previews";
-			this.side_previews.Size = new System.Drawing.Size(200, 344);
+			this.side_previews.Size = new System.Drawing.Size(200, 364);
 			this.side_previews.TabIndex = 13;
+			this.side_previews.WrapContents = false;
 			// 
 			// tableImagePreview
 			// 
@@ -441,7 +445,7 @@
 			this.tableImagePreview.Location = new System.Drawing.Point(3, 3);
 			this.tableImagePreview.Margin = new System.Windows.Forms.Padding(0);
 			this.tableImagePreview.Name = "tableImagePreview";
-			this.tableImagePreview.RowCount = 2;
+			this.tableImagePreview.RowCount = 1;
 			this.tableImagePreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableImagePreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableImagePreview.Size = new System.Drawing.Size(547, 364);
@@ -479,6 +483,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
 			this.tabColorDesignations.ResumeLayout(false);
 			this.tableImagePreview.ResumeLayout(false);
+			this.tableImagePreview.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
