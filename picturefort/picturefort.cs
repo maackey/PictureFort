@@ -16,11 +16,8 @@ namespace picturefort
 
 	public enum setting
 	{
-		csv_path,
-		image_batch_path,
-		restore_directory,
+		output_path,
 		clean,
-
 	}
 	
 	static class picturefort
@@ -45,7 +42,6 @@ namespace picturefort
 		public static Hashtable settings = new Hashtable();
 
 		public List<byte_image> loaded_images = new List<byte_image>();
-		public List<Color> palette = new List<Color>();
 
 		public List<string> start_positions = new List<string>();
 
@@ -318,7 +314,7 @@ namespace picturefort
 		{
 			settings.Clear();
 			//set defaults
-			set_setting(setting.csv_path, "");
+			set_setting(setting.output_path, "");
 			set_setting(setting.clean, "false");
 
 			try
@@ -343,19 +339,16 @@ namespace picturefort
 						//check color designations
 						load_colorsetting(line);
 					}
-					else if (line.Trim().StartsWith("image:"))
+					else if (line.Trim().ToLower().StartsWith("image:"))
 					{
 						//check image settings
-
+						load_imagesetting(line);
 					}
 					else
 					{
 						//check manual settings
 						Array settinglist = Enum.GetValues(typeof(setting));
-						foreach (setting s in settinglist)
-						{
-							load_setting(s, line);
-						}
+						foreach (setting s in settinglist) load_setting(s, line);
 					}
 
 				}
@@ -473,9 +466,15 @@ namespace picturefort
 			return false;
 		}
 
+		/// <summary>
+		/// Checks if line has image settings. If so, it will set the image settings in memory
+		/// </summary>
+		/// <param name="line"></param>
+		/// <returns></returns>
 		private bool load_imagesetting(string line)
 		{
-
+			line = line.ToUpper();
+			Regex hash = new Regex("IMAGE:[0-9A-F]{32}:");
 			return true;
 		}
 
@@ -698,7 +697,7 @@ namespace picturefort
 				if (path == "") path = images[0].csv_filepath.Replace(images[0].csv_file, "");
 
 				path = path.TrimEnd('/').TrimEnd('\\');
-				set_setting(setting.csv_path, path);
+				set_setting(setting.output_path, path);
 
 				if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
@@ -827,7 +826,32 @@ namespace picturefort
 		public class image_settings
 		{
 			public string image_hash;
-			public string start_pos;
+			public string StartPos;
+			public string StartString;
+			public bool dig;
+			public bool build;
+			public bool place;
+			public bool query;
+			public string digComment;
+			public string buildComment;
+			public string placeComment;
+			public string queryComment;
+
+			public image_settings(string hash, string description)
+			{
+
+			}
+
+			public override bool Equals(object obj)
+			{
+				if (obj.ToString() == image_hash) return true;
+				else return false;
+			}
+
+			public override string ToString()
+			{
+				return image_hash;
+			}
 
 		}
 

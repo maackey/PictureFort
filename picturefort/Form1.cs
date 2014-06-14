@@ -15,8 +15,8 @@ using System.Threading;
 /*
  ------------------------------* Completed
  ---------------------* default color designations (dropdown comboboxes)
- --* multi image previews (side panel with smaller images)
- --* per-image persistent descriptions
+ ------------------------------* multi image previews (side panel with smaller images)
+ ---------------------* per-image persistent descriptions
  * image/csv rotation
  */
 
@@ -28,63 +28,21 @@ namespace picturefort
 		pf p;
 		pf.byte_image selected_image;
 
+		#region loading
+
 		public Form1()
 		{
 			InitializeComponent();
 		}
+
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			p = new pf(progress_bar);
 			p.read_settings();
-			txtOutPath.Text = pf.settings[setting.csv_path].ToString();
+			txtOutPath.Text = pf.settings[setting.output_path].ToString();
 
 			cbRecursive.Enabled = false;
 			cbRecursive.Visible = false;
-		}
-
-		/// <summary>
-		/// Generates a list of all the different colors for all the currently loaded images
-		/// </summary>
-		/// <returns></returns>
-		public void load_palettes()
-		{
-			p.palette.Clear();
-			listColorDesignations.Controls.Clear();
-			if (p.loaded_images != null && p.loaded_images.Count > 0)
-			{
-				foreach (pf.byte_image image in p.loaded_images)
-				{
-					foreach (Color c in image.palette)
-					{
-						if (!p.palette.Contains(c)) p.palette.Add(c);
-					}
-				}
-			}
-		}
-
-		/// <summary>
-		/// Writes each color designation key and value to the settings hashtable
-		/// </summary>
-		/// <returns></returns>
-		public void save_palette()
-		{
-
-			foreach (TextBox txt in listColorDesignations.Controls)
-			{
-				string key = pf.color_string(txt.BackColor);
-				string value = txt.Text;
-				pf.set_setting(key, value);
-			}
-		}
-
-		/// <summary>
-		/// saves all the various settings and writes them to a file
-		/// </summary>
-		public void save_settings()
-		{
-			save_palette();
-			pf.set_setting(setting.csv_path, txtOutPath.Text);
-			p.write_settings();
 		}
 
 		/// <summary>
@@ -93,12 +51,12 @@ namespace picturefort
 		/// <returns></returns>
 		public void load_images()
 		{
+			//clear controls & open dialog for user to select images
 			side_previews.Controls.Clear();
 			selected_image = null;
 			OpenFileDialog d = new OpenFileDialog();
-
 			d.Multiselect = true;
-			//TODO: remove all files, provide more extensive list of image types
+			//TODO: remove "All files", provide more extensive list of supported image types
 			d.Filter = "Images|*.png;*.bmp;*.jpg;|All files|*";
 
 			if (d.ShowDialog() == DialogResult.OK)
@@ -106,6 +64,7 @@ namespace picturefort
 				int loading_number = 1;
 				p.loaded_images.Clear();
 
+				//load all images into a list containing image data & metadata
 				foreach (string image_filepath in d.FileNames)
 				{
 					status.Text = string.Format("Loading Pixel Data ({0}/{1})", loading_number, d.FileNames.Count());
@@ -114,7 +73,7 @@ namespace picturefort
 					pf.byte_image temp = new pf.byte_image(
 						Image.FromFile(image_filepath),
 						image_filepath,
-						(string)pf.settings[setting.csv_path],
+						(string)pf.settings[setting.output_path],
 						progress_bar,
 						status);
 
@@ -123,21 +82,25 @@ namespace picturefort
 					loading_number++;
 				}
 
+				//display images in preview window(s)
 				if (p.loaded_images.Count > 0)
 				{
 					status.Text = "Images Loaded";
 					status.Refresh();
 
+					//hide side panel if only one image is loaded
 					if (p.loaded_images.Count <= 1) tableImagePreview.ColumnStyles[0].Width = 0;
 					else tableImagePreview.ColumnStyles[0].Width = 200;
 
 					for (int i = 0; i < p.loaded_images.Count; i++)
 					{
+						//display the first image in the main preview area
 						if (i == 0)
 						{
 							display_image(p.loaded_images[i].image, preview);
 							selected_image = p.loaded_images[i];
 						}
+						//display all loaded images in the side panel
 						if (p.loaded_images.Count > 1)
 						{
 							PictureBox temp = new PictureBox();
@@ -150,17 +113,60 @@ namespace picturefort
 							display_image(p.loaded_images[i].image, temp);
 						}
 					}
+					
+					//load palette info & update ui with start positions list
+					load_palettes();
+					create_start_positions();
 				}
 			}
+		}
+
+		/// <summary>
+		/// Displays provided image into preview window, scaling it up as appropriate.
+		/// </summary>
+		/// <param name="image">Image to be displayed</param>
+		/// <param name="p">PictureBox image will be displayed in</param>
+		private void display_image(Image image, PictureBox p)
+		{
+			Bitmap bmp = new Bitmap(p.Width, p.Height);
+			using (Graphics g = Graphics.FromImage(bmp))
+			{
+				g.InterpolationMode = InterpolationMode.NearestNeighbor;
+				g.PixelOffsetMode = PixelOffsetMode.Half;
+				g.DrawImage(image, new Rectangle(Point.Empty, bmp.Size));
+			}
+			p.Image = bmp;
+
+		}
+
+		/// <summary>
+		/// Generates a list of all the different colors for all the currently loaded images
+		/// </summary>
+		/// <returns></returns>
+		public void load_palettes()
+		{
+			List<Color> palette = new List<Color>();
+			listColorDesignations.Controls.Clear();
+			if (p.loaded_images != null && p.loaded_images.Count > 0)
+			{
+				foreach (pf.byte_image image in p.loaded_images)
+				{
+					foreach (Color c in image.palette)
+					{
+						if (!palette.Contains(c)) palette.Add(c);
+					}
+				}
+			}
+			create_designations(palette);
 		}
 
 		/// <summary>
 		/// Creates the possible color designations for all the currently loaded images
 		/// </summary>
 		/// <returns></returns>
-		public void create_designations()
+		public void create_designations(List<Color> palette)
 		{
-			foreach (Color c in p.palette)
+			foreach (Color c in palette)
 			{
 				if (c.A != 255) continue; //skip transparent colors
 
@@ -187,6 +193,7 @@ namespace picturefort
 			cbStartPos.DataSource = p.start_positions;
 			cbStartPos.AutoCompleteCustomSource = source_startpos;
 			cbStartPos.SelectedIndex = 1;
+			update_start_positions();
 			
 		}
 
@@ -213,43 +220,51 @@ namespace picturefort
 			}
 		}
 
-		/// <summary>
-		/// Displays provided image into preview window, scaling it up as appropriate.
-		/// </summary>
-		/// <param name="image">Image to be displayed</param>
-		/// <param name="p">PictureBox image will be displayed in</param>
-		private void display_image(Image image, PictureBox p)
-		{
-			Bitmap bmp = new Bitmap(p.Width, p.Height);
-			using (Graphics g = Graphics.FromImage(bmp))
-			{
-				g.InterpolationMode = InterpolationMode.NearestNeighbor;
-				g.PixelOffsetMode = PixelOffsetMode.Half;
-				g.DrawImage(image, new Rectangle(Point.Empty, bmp.Size));
-			}
-			p.Image = bmp;
+		#endregion loading
 
+		#region saving
+
+		/// <summary>
+		/// Writes each color designation key and value to the settings hashtable
+		/// </summary>
+		/// <returns></returns>
+		public void save_palette()
+		{
+
+			foreach (TextBox txt in listColorDesignations.Controls)
+			{
+				string key = pf.color_string(txt.BackColor);
+				string value = txt.Text;
+				pf.set_setting(key, value);
+			}
 		}
 
+		/// <summary>
+		/// saves all the various settings and writes them to a file
+		/// </summary>
+		public void save_settings()
+		{
+			save_palette();
+			pf.set_setting(setting.output_path, txtOutPath.Text);
+			p.write_settings();
+		}
 
-		#region Event Handlers
+		#endregion saving
+
+		#region event handlers
 
 		private void btnImageChooser_Click(object sender, EventArgs e)
 		{
 			load_images();
-			load_palettes();
-			create_designations();
-			create_start_positions();
-			update_start_positions();
 
 			txtOutFilePath.Text = "";
-			txtOutPath.Text = pf.settings[setting.csv_path].ToString();
+			txtOutPath.Text = pf.settings[setting.output_path].ToString();
 		}
 
 		private void btnSingleCSV_Click(object sender, EventArgs e)
 		{
 
-			save_palette();
+			//save_palette(); use text changed property to update settings in memory
 
 			if (p.loaded_images.Count == 0) return;
 
@@ -287,7 +302,7 @@ namespace picturefort
 		{
 			//TODO: per image descriptions -- pass in array of descriptions
 
-			save_palette();
+			//save_palette(); use text changed property to update settings in memory
 
 			if (p.loaded_images.Count == 0) return;
 
@@ -313,7 +328,7 @@ namespace picturefort
 				p.batch_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
 			}
 
-			txtOutPath.Text = pf.settings[setting.csv_path].ToString();
+			txtOutPath.Text = pf.settings[setting.output_path].ToString();
 
 			save_settings();
 		}
@@ -357,7 +372,7 @@ namespace picturefort
 			
 		}
 
-		#endregion Event Handlers
+		#endregion event handlers
 
 	}
 }
