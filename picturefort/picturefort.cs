@@ -1,15 +1,15 @@
 ﻿using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace picturefort
 {
@@ -339,7 +339,7 @@ namespace picturefort
 						//check color designations
 						load_colorsetting(line);
 					}
-					else if (line.Trim().ToLower().StartsWith("image:"))
+					else if (line.Trim().ToLower().StartsWith("image"))
 					{
 						//check image settings
 						load_imagesetting(line);
@@ -388,23 +388,40 @@ namespace picturefort
 
 				foreach (DictionaryEntry s in settings)
 				{
-					string value = s.Value.ToString();
 					string key = s.Key.ToString();
+					string value = s.Value.ToString();
 					if (value != "" || !clean)
 					{
-						if (key.StartsWith("#")) colors.Append(string.Format("{0}: {1\n", key, value));
-						else if (key.StartsWith("MD5=")) /* call routine which builds string for image */;
-						else manual.Append(string.Format("{0, -20}: {1}\n", key, value));
+						string writeline = "";
+						if (key.StartsWith("#")) 
+						{
+							writeline = string.Format("{0}: {1}\n", key, value);
+							colors.Append(writeline);
+						}
+							
+						else if (key.Length == 32)
+						{
+							image_settings set = (image_settings)settings[key];
+							string image_file = set.image_file;
+							writeline = string.Format("image({2}) {0}:{1}\n", key, value, image_file);
+							images.Append(writeline);
+						}
+						else
+						{
+							writeline = string.Format("{0, -20} {1}\n", key + ":", value);
+							manual.Append(writeline);
+						}
 
-						Debug.Log(string.Format("key:{0}- value:{1}-", key, value));
+						//Debug.Log(string.Format("key:{0}- value:{1}-", key, value));
+						//Debug.Log("writing:" + writeline.TrimEnd('\n'));
 					}
 				}
 
-				f.WriteLine("//Preamble");
+				f.Write("\n//Preamble\n\n");
 				f.Write(manual.ToString());
-				f.WriteLine("//Color Designations");
+				f.Write("\n//Color Designations\n\n");
 				f.Write(colors.ToString());
-				f.WriteLine("//Image Specific Settings");
+				f.Write("\n//Image Specific Settings\n\n");
 				f.Write(images.ToString());
 
 				f.Close();
@@ -436,13 +453,12 @@ namespace picturefort
 		/// <param name="s"></param>
 		/// <param name="line"></param>
 		/// <returns></returns>
-		private bool load_setting(setting s, string line)
+		private bool load_setting(setting key, string line)
 		{
-			string key = s.ToString() + ":";
-			if (line.Trim().StartsWith(key))
+			if (line.Trim().StartsWith(key + ":"))
 			{
-				string value = line.Replace(key, "").Trim();
-				set_setting(s, value);
+				string value = line.Replace(key + ":", "").Trim();
+				set_setting(key, value);
 				return true;
 			}
 			return false;
@@ -455,7 +471,7 @@ namespace picturefort
 		/// <returns></returns>
 		private bool load_colorsetting(string line)
 		{
-			Regex regcolor = new Regex("#[0-9a-fA-F]{8}:");
+			Regex regcolor = new Regex("#[0-9A-F]{8}:", RegexOptions.IgnoreCase);
 			if (regcolor.Match(line).Success)
 			{
 				string key = line.Substring(0, line.IndexOf(":")).ToUpper().Trim();
@@ -473,9 +489,17 @@ namespace picturefort
 		/// <returns></returns>
 		private bool load_imagesetting(string line)
 		{
-			line = line.ToUpper();
-			Regex hash = new Regex("IMAGE:[0-9A-F]{32}:");
-			return true;
+			Regex hash = new Regex("image(.*) [0-9A-F]{32}:", RegexOptions.IgnoreCase);
+			if (hash.Match(line).Success)
+			{
+				line = line.Substring(line.IndexOf(')') + 1).Trim();
+				string key = line.Substring(0, 32).ToUpper(); //32 is length of hash string
+				string description = line.Substring(line.IndexOf(":") + 1).Trim();
+				image_settings value = new image_settings(key, description);
+				set_setting(key, value);
+				return true;
+			}
+			return false;
 		}
 
 		#endregion
@@ -490,7 +514,7 @@ namespace picturefort
 		/// <param name="progress">ProgressBar object to track the function's progress</param>
 		/// <param name="status">Label object to provide a visual indicator of the function's status</param>
 		/// <returns></returns>
-		public bool batch_csv(List<byte_image> images, string path, string description, ProgressBar progress = null, Label status = null)
+		public bool batch_csv(List<byte_image> images, string path, ProgressBar progress = null, Label status = null)
 		{
 			try
 			{
@@ -499,10 +523,8 @@ namespace picturefort
 				//create the directory if it doesn't exist
 				if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
-				foreach (byte_image image in images)
-				{
-					single_csv(image, path, description, progress, status);
-				}
+				foreach (byte_image image in images) single_csv(image, path, progress, status);
+
 				return true;
 			}
 			catch (Exception e)
@@ -519,13 +541,23 @@ namespace picturefort
 		/// <param name="image"></param>
 		/// <param name="path"></param>
 		/// <param name="progress"></param>
-		/// <param name="label"></param>
+		/// <param name="status"></param>
 		/// <returns></returns>
-		public bool single_csv(byte_image image, string path, string description, ProgressBar progress = null, Label label = null)
+		public bool single_csv(byte_image image, string path, ProgressBar progress = null, Label status = null)
 		{
-			List<byte_image> imagelist =  new List<byte_image>();
+			image_settings s = (image_settings)settings[image.image_hash];
+			List<byte_image> imagelist = new List<byte_image>();
 			imagelist.Add(image);
-			return build_csv(imagelist, path, image.csv_file, description, progress, label);
+
+			pf.image_settings img_settings = (pf.image_settings)pf.settings[image.image_hash];
+			foreach (KeyValuePair<string, string> kvp in img_settings.modelist)
+			{
+				string mode = kvp.Key;
+				string description = kvp.Value;
+				build_csv(imagelist, path, image.csv_file, mode, description, progress, status);
+			}
+
+			return true;
 		}
 
 		/// <summary>
@@ -533,10 +565,13 @@ namespace picturefort
 		/// </summary>
 		/// <param name="images">List of images -- one for each z-level. Must be the same dimensions</param>
 		/// <param name="path">Output file path for the template</param>
+		/// <param name="filename">name of desired output file.</param>
+		/// <param name="mode">what kind of template which is being generated</param>
+		/// <param name="description">Image settings which have deisgnation info</param>
 		/// <param name="progress">ProgressBar object to track the function's progress</param>
 		/// <param name="status">Label object to provide a visual indicator of the function's status</param>
 		/// <returns></returns>
-		public bool build_csv(List<byte_image> images, string path, string filename, string description, ProgressBar progress = null, Label status = null)
+		public bool build_csv(List<byte_image> images, string path, string filename, string mode, string description, ProgressBar progress = null, Label status = null)
 		{
 
 			if (images == null || images.Count == 0) return false;
@@ -545,7 +580,6 @@ namespace picturefort
 			int image_index = 1;
 			string status_message;
 			int prediction = images[0].image.Width * images[0].image.Height;
-			string template_type = description.Substring(0, description.IndexOf(" ")).Replace("#", "") + "-";
 
 			//check images to make sure they are the same size, prepare progressbar for multiple images
 			#region if multiple images
@@ -635,12 +669,12 @@ namespace picturefort
 							string[] colorcodes = settings[key].ToString().Split('|');
 							if (colorcodes.Length == 4)
 							{
-								switch (template_type)
+								switch (mode)
 								{
-									case "dig-": designation = colorcodes[0]; break;
-									case "build-": designation = colorcodes[1]; break;
-									case "place-": designation = colorcodes[2]; break;
-									case "query-": designation = colorcodes[3]; break;
+									case "dig": designation = colorcodes[0]; break;
+									case "build": designation = colorcodes[1]; break;
+									case "place": designation = colorcodes[2]; break;
+									case "query": designation = colorcodes[3]; break;
 									default: break;
 								}
 							}
@@ -693,20 +727,22 @@ namespace picturefort
 			try
 			{
 
-				//if path doesn't exist, use the path of the first image
+				//if path is nothing, use the path of the first image, if path doesn't exist, create it
 				if (path == "") path = images[0].csv_filepath.Replace(images[0].csv_file, "");
-
+				if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 				path = path.TrimEnd('/').TrimEnd('\\');
 				set_setting(setting.output_path, path);
 
-				if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
+				//if file doesn't exist, use the file name of the first image
 				if (filename == "") filename = images[0].csv_file;
 
 				//to prevent dig/build/place/query templates from overwriting eachother
-				if (filename.StartsWith(template_type)) filename.Replace(template_type, "");
-				filename = string.Format("{0}{1}", template_type, filename);
-				images[0].csv_file = filename.Replace(template_type, "");
+				char pathmaker = '-'; // use / for mode subfolder, use - for mode prefix
+				if (filename.StartsWith(mode)) filename.Replace(mode + pathmaker, "");
+				filename = string.Format("{0}{2}{1}", mode, filename, pathmaker);
+				images[0].csv_file = filename.Replace(mode + pathmaker, "");
+
 				string csv_filepath = string.Format("{0}/{1}", path, filename);
 
 				Debug.Log(status_message + ": " + csv_filepath);
@@ -736,13 +772,13 @@ namespace picturefort
 			public List<Color> palette = new List<Color>();
 			public Queue<Color> image_array = new Queue<Color>();
 			public string image_hash;
+			public string image_path;
 			public string image_filepath;
 			public string image_file;
 			public string image_extension;
 			public string csv_filepath;
 			public string csv_file;
-
-
+			
 			/// <summary>
 			/// Creates an image object which contains the image, a color palette, the image as an list of colors
 			/// and a default path & filename for any csv created with the image.
@@ -759,6 +795,7 @@ namespace picturefort
 
 				image_filepath = img_filepath;
 				image_file = img_filepath.Substring(fstart + 1);
+				image_path = image_filepath.Replace(image_file, "");
 				image_extension = image_file.Substring(image_file.LastIndexOf("."));
 
 				//set csv name to image name
@@ -825,8 +862,16 @@ namespace picturefort
 
 		public class image_settings
 		{
+			//save in memory
+			public string image_filepath;
+			public string image_file;
+			public string image_extension;
+			public string csv_filepath;
+			public string csv_file;
+			
+			//write to file
 			public string image_hash;
-			public string StartPos;
+			public int StartPosIndex;
 			public string StartString;
 			public bool dig;
 			public bool build;
@@ -837,22 +882,97 @@ namespace picturefort
 			public string placeComment;
 			public string queryComment;
 
+			public Dictionary<string, string> modelist = new Dictionary<string, string>();
+
 			public image_settings(string hash, string description)
 			{
-
+				image_hash = hash;
+				string[] modes = description.Split('|');
+				StartPosIndex = int.Parse(modes[0]);
+				StartString = util.decode(modes[1]);
+				foreach (string mode in modes)
+				{
+					if (mode.Contains("#dig"))
+					{
+						digComment = util.decode(mode.Replace("#dig", "")).Trim();
+						dig = true;
+						modelist.Add("dig", digDescription());
+					}
+					else if (mode.Contains("#build"))
+					{
+						buildComment = util.decode(mode.Replace("#build", "")).Trim();
+						build = true;
+						modelist.Add("build", buildDescription());
+					}
+					else if (mode.Contains("#place"))
+					{
+						placeComment = util.decode(mode.Replace("#place", "")).Trim();
+						place = true;
+						modelist.Add("place", placeDescription());
+					}
+					else if (mode.Contains("#query"))
+					{
+						queryComment = util.decode(mode.Replace("#query", "")).Trim();
+						query = true;
+						modelist.Add("query", queryDescription());
+					}
+				}
 			}
 
-			public override bool Equals(object obj)
+			public void load_image_data(byte_image img)
 			{
-				if (obj.ToString() == image_hash) return true;
-				else return false;
+				this.image_filepath = img.image_filepath;
+				this.image_file = img.image_file;
+				this.image_extension = img.image_extension;
+				this.csv_filepath = img.csv_filepath;
+				this.csv_file = img.csv_file;
+			}
+
+			private string digDescription()
+			{
+				return string.Format("#dig {0} {1}", StartString, digComment);
+			}
+			private string buildDescription()
+			{
+				return string.Format("#build {0} {1}", StartString, buildComment);
+			}
+			private string placeDescription()
+			{
+				return string.Format("#place {0} {1}", StartString, placeComment);
+			}
+			private string queryDescription()
+			{
+				return string.Format("#query {0} {1}", StartString, queryComment);
 			}
 
 			public override string ToString()
 			{
-				return image_hash;
+				StringBuilder description = new StringBuilder();
+				description.Append(string.Format("{0}|{1}|", StartPosIndex, util.encode(StartString)));
+				if (dig) description.Append(string.Format("#dig {0}|", util.encode(digComment)));
+				if (build) description.Append(string.Format("#build {0}|", util.encode(buildComment)));
+				if (place) description.Append(string.Format("#place {0}|", util.encode(placeComment)));
+				if (query) description.Append(string.Format("#query {0}|", util.encode(queryComment)));
+
+				return description.ToString().TrimEnd('|');
 			}
 
+			public override bool Equals(object obj)
+			{
+				if (obj.GetType() == this.GetType())
+				{
+					image_settings s = (image_settings)obj;
+					if (s.image_hash == image_hash) return true;
+				}
+				else if (obj.ToString() == image_hash) return true;
+				
+				return false;
+			}
+
+			public override int GetHashCode()
+			{
+				return int.Parse(image_hash); //TODO: test this? for curiosity if nothing else
+			}
 		}
 
 	}

@@ -19,5 +19,23 @@ public static class Debug
 
 public static class util
 {
+	/// <summary>
+	/// encodes a string with pipe separated values
+	/// </summary>
+	/// <param name="input"></param>
+	/// <returns></returns>
+	public static string encode(string input)
+	{
+		return input.Replace("%", "%25").Replace("|", "%7C");
+	}
 
+	/// <summary>
+	/// decodes a string with pipe separated values
+	/// </summary>
+	/// <param name="input"></param>
+	/// <returns></returns>
+	public static string decode(string input)
+	{
+		return input.Replace("%7C", "|").Replace("%25", "%");
+	}
 }

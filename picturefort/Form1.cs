@@ -26,7 +26,7 @@ namespace picturefort
 	{
 		public const int scrollbar_width = 24;
 		pf p;
-		pf.byte_image selected_image;
+		public static pf.byte_image selected_image;
 
 		#region loading
 
@@ -35,7 +35,7 @@ namespace picturefort
 			InitializeComponent();
 		}
 
-		private void Form1_Load(object sender, EventArgs e)
+		void Form1_Load(object sender, EventArgs e)
 		{
 			p = new pf(progress_bar);
 			p.read_settings();
@@ -49,7 +49,7 @@ namespace picturefort
 		/// Creates a file chooser dialog, loads necessary data from each image (byte_image.get_pixel_data), and displays the top image in the preview window
 		/// </summary>
 		/// <returns></returns>
-		public void load_images()
+		void load_images()
 		{
 			//clear controls & open dialog for user to select images
 			side_previews.Controls.Clear();
@@ -113,10 +113,10 @@ namespace picturefort
 							display_image(p.loaded_images[i].image, temp);
 						}
 					}
-					
-					//load palette info & update ui with start positions list
+
 					load_palettes();
 					create_start_positions();
+					foreach (pf.byte_image image in p.loaded_images) load_image_settings(image);
 				}
 			}
 		}
@@ -126,7 +126,7 @@ namespace picturefort
 		/// </summary>
 		/// <param name="image">Image to be displayed</param>
 		/// <param name="p">PictureBox image will be displayed in</param>
-		private void display_image(Image image, PictureBox p)
+		void display_image(Image image, PictureBox p)
 		{
 			Bitmap bmp = new Bitmap(p.Width, p.Height);
 			using (Graphics g = Graphics.FromImage(bmp))
@@ -136,14 +136,49 @@ namespace picturefort
 				g.DrawImage(image, new Rectangle(Point.Empty, bmp.Size));
 			}
 			p.Image = bmp;
+		}
 
+		/// <summary>
+		/// Loads various UI elements with last saved image values.
+		/// </summary>
+		/// <param name="selected">selected image</param>
+		void load_image_settings(pf.byte_image selected)
+		{
+			if (selected == null) return;
+			Debug.Log("Loading image settings...");
+
+			string key = selected.image_hash;
+			if(pf.settings[key] == null) return;
+
+			pf.image_settings s = new pf.image_settings(key, pf.settings[key].ToString());
+
+
+			cbStartPos.SelectedIndex = s.StartPosIndex;
+			txtStartPos.Text = s.StartString;
+
+			cbDig.Checked = s.dig;
+			cbBuild.Checked = s.build;
+			cbPlace.Checked = s.place;
+			cbQuery.Checked = s.query;
+
+			txtCommentDig.Text = s.digComment;
+			txtCommentBuild.Text = s.buildComment;
+			txtCommentPlace.Text = s.placeComment;
+			txtCommentQuery.Text = s.queryComment;
+
+			txtOutFilePath.Text = selected.csv_file;
+			txtOutPath.Text = selected.csv_filepath.Replace(selected.csv_file, "");
+
+			//save image metadata to settings in memory
+			s.load_image_data(selected);
+			pf.set_setting(key, s);
 		}
 
 		/// <summary>
 		/// Generates a list of all the different colors for all the currently loaded images
 		/// </summary>
 		/// <returns></returns>
-		public void load_palettes()
+		void load_palettes()
 		{
 			List<Color> palette = new List<Color>();
 			listColorDesignations.Controls.Clear();
@@ -164,7 +199,7 @@ namespace picturefort
 		/// Creates the possible color designations for all the currently loaded images
 		/// </summary>
 		/// <returns></returns>
-		public void create_designations(List<Color> palette)
+		void create_designations(List<Color> palette)
 		{
 			foreach (Color c in palette)
 			{
@@ -172,6 +207,7 @@ namespace picturefort
 
 				TextBox temp = new TextBox();
 				temp.BackColor = c;
+				temp.TextChanged += colorDesignation_TextChanged;
 				if (c.R < 32 && c.G < 32 && c.B < 32) temp.ForeColor = Color.White;
 				if (pf.settings[pf.color_string(c)] != null)
 					temp.Text = pf.settings[pf.color_string(c)].ToString();
@@ -185,7 +221,7 @@ namespace picturefort
 		/// Creates some pre-defined starting positions for the preview image
 		/// </summary>
 		/// <returns></returns>
-		public void create_start_positions()
+		void create_start_positions()
 		{
 
 			AutoCompleteStringCollection source_startpos = new AutoCompleteStringCollection();
@@ -200,7 +236,7 @@ namespace picturefort
 		/// <summary>
 		/// Sets & fills start position combobox & text with appropriate values
 		/// </summary>
-		private void update_start_positions()
+		void update_start_positions()
 		{
 			if (selected_image == null) return;
 
@@ -223,30 +259,29 @@ namespace picturefort
 		#endregion loading
 
 		#region saving
-
-		/// <summary>
-		/// Writes each color designation key and value to the settings hashtable
-		/// </summary>
-		/// <returns></returns>
-		public void save_palette()
-		{
-
-			foreach (TextBox txt in listColorDesignations.Controls)
-			{
-				string key = pf.color_string(txt.BackColor);
-				string value = txt.Text;
-				pf.set_setting(key, value);
-			}
-		}
-
+		
 		/// <summary>
 		/// saves all the various settings and writes them to a file
 		/// </summary>
-		public void save_settings()
+		void save_settings()
 		{
-			save_palette();
 			pf.set_setting(setting.output_path, txtOutPath.Text);
 			p.write_settings();
+		}
+
+		void save_image_settings(pf.byte_image i)
+		{
+			StringBuilder description = new StringBuilder();
+			description.Append(string.Format("{0}|{1}|", cbStartPos.SelectedIndex, util.encode(txtStartPos.Text)));
+			if (cbDig.Checked) description.Append(string.Format("#dig {0}|", util.encode(txtCommentDig.Text)));
+			if (cbBuild.Checked) description.Append(string.Format("#build {0}|", util.encode(txtCommentBuild.Text)));
+			if (cbPlace.Checked) description.Append(string.Format("#place {0}|", util.encode(txtCommentPlace.Text)));
+			if (cbQuery.Checked) description.Append(string.Format("#query {0}|", util.encode(txtCommentQuery.Text)));
+
+			//save image metadata to settings in memory
+			pf.image_settings value = new pf.image_settings(i.image_hash, description.ToString());
+			value.load_image_data(i);
+			pf.set_setting(i.image_hash, value);
 		}
 
 		#endregion saving
@@ -263,84 +298,48 @@ namespace picturefort
 
 		private void btnSingleCSV_Click(object sender, EventArgs e)
 		{
-
-			//save_palette(); use text changed property to update settings in memory
-
 			if (p.loaded_images.Count == 0) return;
 
-			string filename = txtOutFilePath.Text.Replace("#mode-", "");
+			//save any last changes made before clicking
+			save_image_settings(selected_image);
 
-			//description: #mode | start(x;y;start comment) | mode comment
-			if (cbDig.Checked)
+			pf.image_settings img_settings = (pf.image_settings)pf.settings[selected_image.image_hash];
+			foreach (KeyValuePair<string, string> kvp in img_settings.modelist)
 			{
-				string description = string.Format("{0} {1} {2}", "#dig", txtStartPos.Text, txtCommentDig.Text);
-				p.build_csv(p.loaded_images, txtOutPath.Text, filename, description, progress_bar, status);
-			}
-			if (cbBuild.Checked)
-			{
-				string description = string.Format("{0} {1} {2}", "#build", txtStartPos.Text, txtCommentBuild.Text);
-				p.build_csv(p.loaded_images, txtOutPath.Text, filename, description, progress_bar, status);
-			}
-			if (cbPlace.Checked)
-			{
-				string description = string.Format("{0} {1} {2}", "#place", txtStartPos.Text, txtCommentPlace.Text);
-				p.build_csv(p.loaded_images, txtOutPath.Text, filename, description, progress_bar, status);
-			}
-			if (cbQuery.Checked)
-			{
-				string description = string.Format("{0} {1} {2}", "#query", txtStartPos.Text, txtCommentQuery.Text);
-				p.build_csv(p.loaded_images, txtOutPath.Text, filename, description, progress_bar, status);
+				string mode = kvp.Key;
+				string description = kvp.Value;
+				p.build_csv(p.loaded_images, txtOutPath.Text, selected_image.csv_file, mode, description, progress_bar, status);
 			}
 
-			filename = selected_image.csv_file;
-			txtOutFilePath.Text = "#mode-" + filename;
+			//txtOutFilePath.Text = "#mode-" + selected_image.csv_file;
 
 			save_settings();
 		}
 
 		private void btnMultiCSV_Click(object sender, EventArgs e)
 		{
-			//TODO: per image descriptions -- pass in array of descriptions
-
-			//save_palette(); use text changed property to update settings in memory
-
 			if (p.loaded_images.Count == 0) return;
 
-			//description: #mode | start(x;y;start comment) | mode comment
-			if (cbDig.Checked)
-			{
-				string description = string.Format("{0} {1} {2}", "#dig", "", "");
-				p.batch_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
-			}
-			if (cbBuild.Checked)
-			{
-				string description = string.Format("{0} {1} {2}", "#build", "", "");
-				p.batch_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
-			}
-			if (cbPlace.Checked)
-			{
-				string description = string.Format("{0} {1} {2}", "#place", "", "");
-				p.batch_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
-			}
-			if (cbQuery.Checked)
-			{
-				string description = string.Format("{0} {1} {2}", "#query", "", "");
-				p.batch_csv(p.loaded_images, txtOutPath.Text, description, progress_bar, status);
-			}
+			//save any last changes made before clicking
+			save_image_settings(selected_image);
 
-			txtOutPath.Text = pf.settings[setting.output_path].ToString();
+			p.batch_csv(p.loaded_images, txtOutPath.Text, progress_bar, status);
+
+			//txtOutPath.Text = pf.settings[setting.output_path].ToString();
 
 			save_settings();
 		}
 
 		private void side_preview_Click(object sender, EventArgs e)
 		{
+			save_image_settings(selected_image);
 			PictureBox p = (PictureBox)sender;
 			pf.byte_image selected = (pf.byte_image)p.Tag;
 			selected_image = selected;
 			display_image(selected.image, preview);
-			Debug.Log(selected.image_file + " selected. hash: " + selected.image_hash);
+			Debug.Log(selected.image_path + " selected. hash: " + selected.image_hash);
 			update_start_positions();
+			load_image_settings(selected_image);
 		}
 
 		private void cbStartPos_SelectedIndexChanged(object sender, EventArgs e)
@@ -367,9 +366,38 @@ namespace picturefort
 			//TODO: validate text
 		}
 
+		private void colorDesignation_TextChanged(object sender, EventArgs e)
+		{
+			//TODO: replace with better designation input
+			TextBox t = (TextBox)sender;
+			Color c = t.BackColor;
+			pf.set_setting(pf.color_string(c), t.Text);
+		}
+
 		private void btnTest_Click(object sender, EventArgs e)
 		{
-			
+			string test1 = "this is my | pipe | separated % string.";
+			string test2;
+			string test3;
+			string test4;
+			string test5;
+			string test6;
+			string test7;
+
+			test2 = util.encode(test1) + " with more %%%| pipes |";
+			test3 = util.encode(test2) + " and some | more just | to be | safe ||";
+			test4 = util.encode(test3);
+			test5 = util.decode(test4);
+			test6 = util.decode(test5);
+			test7 = null;
+
+			Debug.Log(test1);
+			Debug.Log(test2);
+			Debug.Log(test3);
+			Debug.Log(test4);
+			Debug.Log(test5);
+			Debug.Log(test6);
+			Debug.Log(test7);
 		}
 
 		#endregion event handlers
