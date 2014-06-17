@@ -12,10 +12,10 @@ namespace picturefort
 	public partial class color_designation : UserControl
 	{
 		public Color mycolor;
-		string dig;
-		string build;
-		string place;
-		string query;
+		string dig = "";
+		string build = "";
+		string place = "";
+		string query = "";
 		public string designation
 		{
 			get
@@ -294,9 +294,12 @@ namespace picturefort
 			}
 			else
 			{
-				//if we're NOT building something, default dig mode back to nothing
-				cbModeDig.SelectedIndex = 0; //nothing
-				build = "";
+				if (build != "")
+				{
+					//if we're NOT building something, default dig mode back to nothing
+					cbModeDig.SelectedIndex = 0; //nothing
+					build = "";
+				}
 			}
 			save_designations();
 		}
@@ -312,9 +315,12 @@ namespace picturefort
 			}
 			else
 			{
-				//if we're NOT placing a stockpile, default dig mode back to nothing
-				cbModeDig.SelectedIndex = 0; //nothing
-				place = "";
+				if (place != "")
+				{
+					//if we're NOT placing a stockpile, default dig mode back to nothing
+					cbModeDig.SelectedIndex = 0; //nothing
+					place = "";
+				}
 			}
 			save_designations();
 		}

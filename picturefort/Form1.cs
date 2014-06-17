@@ -14,7 +14,7 @@ using System.Threading;
 //TODO
 /*
  ------------------------------* Completed
- ---------------------* default color designations (dropdown comboboxes)
+ -------------------------* default color designations (dropdown comboboxes)
  * custom output filenames
  * image/csv rotation
  */
@@ -32,6 +32,11 @@ namespace picturefort
 		public Form1()
 		{
 			InitializeComponent();
+
+			btnTest.Visible = false;
+#if DEBUG
+			btnTest.Visible = true;
+#endif
 		}
 
 		void Form1_Load(object sender, EventArgs e)
