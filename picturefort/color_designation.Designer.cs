@@ -42,7 +42,7 @@
 			this.txtColor.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.txtColor.Location = new System.Drawing.Point(3, 3);
 			this.txtColor.Name = "txtColor";
-			this.txtColor.Size = new System.Drawing.Size(54, 20);
+			this.txtColor.Size = new System.Drawing.Size(103, 20);
 			this.txtColor.TabIndex = 4;
 			// 
 			// cbModeDig
@@ -52,9 +52,9 @@
 			this.cbModeDig.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cbModeDig.DropDownWidth = 150;
 			this.cbModeDig.FormattingEnabled = true;
-			this.cbModeDig.Location = new System.Drawing.Point(63, 3);
+			this.cbModeDig.Location = new System.Drawing.Point(112, 3);
 			this.cbModeDig.Name = "cbModeDig";
-			this.cbModeDig.Size = new System.Drawing.Size(54, 21);
+			this.cbModeDig.Size = new System.Drawing.Size(103, 21);
 			this.cbModeDig.TabIndex = 5;
 			this.cbModeDig.SelectedIndexChanged += new System.EventHandler(this.cbModeDig_SelectedIndexChanged);
 			// 
@@ -65,9 +65,9 @@
 			this.cbModeBuild.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cbModeBuild.DropDownWidth = 150;
 			this.cbModeBuild.FormattingEnabled = true;
-			this.cbModeBuild.Location = new System.Drawing.Point(123, 3);
+			this.cbModeBuild.Location = new System.Drawing.Point(221, 3);
 			this.cbModeBuild.Name = "cbModeBuild";
-			this.cbModeBuild.Size = new System.Drawing.Size(54, 21);
+			this.cbModeBuild.Size = new System.Drawing.Size(103, 21);
 			this.cbModeBuild.TabIndex = 6;
 			this.cbModeBuild.SelectedIndexChanged += new System.EventHandler(this.cbModeBuild_SelectedIndexChanged);
 			// 
@@ -78,9 +78,9 @@
 			this.cbModePlace.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cbModePlace.DropDownWidth = 150;
 			this.cbModePlace.FormattingEnabled = true;
-			this.cbModePlace.Location = new System.Drawing.Point(183, 3);
+			this.cbModePlace.Location = new System.Drawing.Point(330, 3);
 			this.cbModePlace.Name = "cbModePlace";
-			this.cbModePlace.Size = new System.Drawing.Size(54, 21);
+			this.cbModePlace.Size = new System.Drawing.Size(103, 21);
 			this.cbModePlace.TabIndex = 7;
 			this.cbModePlace.SelectedIndexChanged += new System.EventHandler(this.cbModePlace_SelectedIndexChanged);
 			// 
@@ -91,9 +91,9 @@
 			this.cbModeQuery.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cbModeQuery.DropDownWidth = 150;
 			this.cbModeQuery.FormattingEnabled = true;
-			this.cbModeQuery.Location = new System.Drawing.Point(243, 3);
+			this.cbModeQuery.Location = new System.Drawing.Point(439, 3);
 			this.cbModeQuery.Name = "cbModeQuery";
-			this.cbModeQuery.Size = new System.Drawing.Size(54, 21);
+			this.cbModeQuery.Size = new System.Drawing.Size(103, 21);
 			this.cbModeQuery.TabIndex = 8;
 			this.cbModeQuery.SelectedIndexChanged += new System.EventHandler(this.cbModeQuery_SelectedIndexChanged);
 			// 
@@ -117,7 +117,7 @@
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(300, 28);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(545, 28);
 			this.tableLayoutPanel1.TabIndex = 9;
 			// 
 			// color_designation
@@ -129,9 +129,9 @@
 			this.BackColor = System.Drawing.Color.White;
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Margin = new System.Windows.Forms.Padding(0);
-			this.MinimumSize = new System.Drawing.Size(300, 28);
+			this.MinimumSize = new System.Drawing.Size(545, 28);
 			this.Name = "color_designation";
-			this.Size = new System.Drawing.Size(300, 28);
+			this.Size = new System.Drawing.Size(545, 28);
 			this.Load += new System.EventHandler(this.color_designation_Load);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();

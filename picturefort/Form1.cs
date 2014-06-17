@@ -146,6 +146,9 @@ namespace picturefort
 			if (selected == null) return;
 			Debug.Log("Loading image settings...");
 
+			//load up UI elements with settings
+			lblSelectedPicture.Text = selected.image_file;
+
 			string key = selected.image_hash;
 			if(pf.settings[key] == null) return;
 
@@ -154,9 +157,6 @@ namespace picturefort
 			//save image metadata to settings in memory
 			s.load_image_data(selected);
 			pf.set_setting(key, s);
-
-			//load up UI elements with settings
-			lblSelectedPicture.Text = s.image_file;
 
 			cbStartPos.SelectedIndex = s.StartPosIndex;
 			txtStartPos.Text = s.StartString;
@@ -201,13 +201,29 @@ namespace picturefort
 		/// <returns></returns>
 		void create_designations(List<Color> palette)
 		{
-			int color_max = 32;
-			int color_count = palette.Count;
-			progress_bar.Value = 0;
-			progress_bar.Maximum = color_count;
 			color_designation temp;
+			int color_max = 32;
+			int color_count = 0;
+
+			if (palette.Count >= color_max)
+			{
+				string message = string.Format("You've loaded an image with lots of unique colors ({1}). It could severely impact the performance of the program. Do you want to cap the total number of colors at {0}?", color_max, palette.Count);
+				DialogResult result = MessageBox.Show(message, "You've delved too greedily and too deep.", MessageBoxButtons.YesNoCancel);
+
+				if (result == DialogResult.No)
+				{
+					color_max = palette.Count;
+				}
+				else if (result == DialogResult.Cancel)
+				{
+					return;
+				}
+			}
+
+			progress_bar.Value = 0;
+			progress_bar.Maximum = color_max;
+
 			listDesignations.Controls.Clear();
-			listDesignations
 
 			foreach (Color c in palette)
 			{
@@ -217,20 +233,21 @@ namespace picturefort
 					if (c.A != 255) continue; //skip transparent colors (will throw off count)
 
 					temp = new color_designation(c);
-					//temp.Dock = DockStyle.Fill;
+					
+					listDesignations.Controls.Add(temp);
 
-					TextBox temp2 = new TextBox();
-					temp2.BackColor = c;
-
-					listDesignations.Items.Add(temp2);
-
-					progress_bar.Value += 1;
-
-					status.Text = string.Format("Loading designation {0}/{1}", progress_bar.Value, color_count);
+					status.Text = string.Format("Loading designation {0}/{1}", ++color_count, color_max);
 					status.Refresh();
 
+					progress_bar.Value += 1;
 				}
+
 			}
+
+			progress_bar.Value = progress_bar.Maximum;
+			status.Text = "Images Loaded";
+			status.Refresh();
+
 			Debug.Log("test: ");
 			Debug.Log("total colors loaded: " + progress_bar.Value);
 		}

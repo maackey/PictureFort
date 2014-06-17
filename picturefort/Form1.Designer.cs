@@ -64,7 +64,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.cbRecursive = new System.Windows.Forms.CheckBox();
 			this.lblSelectedPicture = new System.Windows.Forms.Label();
-			this.listDesignations = new System.Windows.Forms.ListBox();
+			this.listDesignations = new System.Windows.Forms.FlowLayoutPanel();
 			this.grid.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.panelTemplateType.SuspendLayout();
@@ -104,7 +104,7 @@
 			this.grid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.grid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.grid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.grid.Size = new System.Drawing.Size(776, 461);
+			this.grid.Size = new System.Drawing.Size(784, 461);
 			this.grid.TabIndex = 0;
 			// 
 			// panel1
@@ -115,7 +115,7 @@
 			this.panel1.Controls.Add(this.lblSelectedPicture);
 			this.panel1.Controls.Add(this.btnImageChooser);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(562, 1);
+			this.panel1.Location = new System.Drawing.Point(570, 1);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(213, 396);
@@ -299,7 +299,7 @@
 			// btnMultiCSV
 			// 
 			this.btnMultiCSV.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnMultiCSV.Location = new System.Drawing.Point(562, 419);
+			this.btnMultiCSV.Location = new System.Drawing.Point(570, 419);
 			this.btnMultiCSV.Margin = new System.Windows.Forms.Padding(0);
 			this.btnMultiCSV.Name = "btnMultiCSV";
 			this.btnMultiCSV.Size = new System.Drawing.Size(213, 20);
@@ -311,7 +311,7 @@
 			// btnSingleCSV
 			// 
 			this.btnSingleCSV.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnSingleCSV.Location = new System.Drawing.Point(562, 398);
+			this.btnSingleCSV.Location = new System.Drawing.Point(570, 398);
 			this.btnSingleCSV.Margin = new System.Windows.Forms.Padding(0);
 			this.btnSingleCSV.Name = "btnSingleCSV";
 			this.btnSingleCSV.Size = new System.Drawing.Size(213, 20);
@@ -326,7 +326,7 @@
 			this.progress_bar.Location = new System.Drawing.Point(152, 440);
 			this.progress_bar.Margin = new System.Windows.Forms.Padding(0);
 			this.progress_bar.Name = "progress_bar";
-			this.progress_bar.Size = new System.Drawing.Size(409, 20);
+			this.progress_bar.Size = new System.Drawing.Size(417, 20);
 			this.progress_bar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.progress_bar.TabIndex = 3;
 			this.progress_bar.Value = 100;
@@ -341,7 +341,7 @@
 			this.tabPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.tabPanel.Name = "tabPanel";
 			this.tabPanel.SelectedIndex = 0;
-			this.tabPanel.Size = new System.Drawing.Size(560, 396);
+			this.tabPanel.Size = new System.Drawing.Size(568, 396);
 			this.tabPanel.TabIndex = 5;
 			// 
 			// tabImagePreview
@@ -404,7 +404,7 @@
 			this.tabColorDesignations.Location = new System.Drawing.Point(4, 22);
 			this.tabColorDesignations.Margin = new System.Windows.Forms.Padding(0);
 			this.tabColorDesignations.Name = "tabColorDesignations";
-			this.tabColorDesignations.Size = new System.Drawing.Size(552, 370);
+			this.tabColorDesignations.Size = new System.Drawing.Size(560, 370);
 			this.tabColorDesignations.TabIndex = 1;
 			this.tabColorDesignations.Text = "Color Designations";
 			this.tabColorDesignations.UseVisualStyleBackColor = true;
@@ -413,7 +413,7 @@
 			// 
 			this.status.AutoSize = true;
 			this.status.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.status.Location = new System.Drawing.Point(565, 440);
+			this.status.Location = new System.Drawing.Point(573, 440);
 			this.status.Name = "status";
 			this.status.Size = new System.Drawing.Size(207, 20);
 			this.status.TabIndex = 7;
@@ -426,7 +426,7 @@
 			this.txtOutFilePath.Location = new System.Drawing.Point(152, 398);
 			this.txtOutFilePath.Margin = new System.Windows.Forms.Padding(0);
 			this.txtOutFilePath.Name = "txtOutFilePath";
-			this.txtOutFilePath.Size = new System.Drawing.Size(409, 20);
+			this.txtOutFilePath.Size = new System.Drawing.Size(417, 20);
 			this.txtOutFilePath.TabIndex = 8;
 			this.txtOutFilePath.DoubleClick += new System.EventHandler(this.txtOutFilePath_DoubleClick);
 			// 
@@ -436,7 +436,7 @@
 			this.txtOutPath.Location = new System.Drawing.Point(152, 419);
 			this.txtOutPath.Margin = new System.Windows.Forms.Padding(0);
 			this.txtOutPath.Name = "txtOutPath";
-			this.txtOutPath.Size = new System.Drawing.Size(409, 20);
+			this.txtOutPath.Size = new System.Drawing.Size(417, 20);
 			this.txtOutPath.TabIndex = 9;
 			this.txtOutPath.DoubleClick += new System.EventHandler(this.txtOutPath_DoubleClick);
 			// 
@@ -489,18 +489,18 @@
 			// 
 			// listDesignations
 			// 
+			this.listDesignations.AutoScroll = true;
 			this.listDesignations.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listDesignations.FormattingEnabled = true;
 			this.listDesignations.Location = new System.Drawing.Point(0, 0);
 			this.listDesignations.Name = "listDesignations";
-			this.listDesignations.Size = new System.Drawing.Size(552, 370);
+			this.listDesignations.Size = new System.Drawing.Size(560, 370);
 			this.listDesignations.TabIndex = 0;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(776, 461);
+			this.ClientSize = new System.Drawing.Size(784, 461);
 			this.Controls.Add(this.grid);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "Form1";
@@ -561,7 +561,7 @@
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label lblSelectedPicture;
-		private System.Windows.Forms.ListBox listDesignations;
+		private System.Windows.Forms.FlowLayoutPanel listDesignations;
 
 	}
 }
