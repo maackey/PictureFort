@@ -42,7 +42,7 @@
 			this.txtColor.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.txtColor.Location = new System.Drawing.Point(3, 3);
 			this.txtColor.Name = "txtColor";
-			this.txtColor.Size = new System.Drawing.Size(144, 20);
+			this.txtColor.Size = new System.Drawing.Size(54, 20);
 			this.txtColor.TabIndex = 4;
 			// 
 			// cbModeDig
@@ -51,10 +51,11 @@
 			this.cbModeDig.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
 			this.cbModeDig.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cbModeDig.FormattingEnabled = true;
-			this.cbModeDig.Location = new System.Drawing.Point(153, 3);
+			this.cbModeDig.Location = new System.Drawing.Point(63, 3);
 			this.cbModeDig.Name = "cbModeDig";
-			this.cbModeDig.Size = new System.Drawing.Size(144, 21);
+			this.cbModeDig.Size = new System.Drawing.Size(54, 21);
 			this.cbModeDig.TabIndex = 5;
+			this.cbModeDig.SelectedIndexChanged += new System.EventHandler(this.cbModeDig_SelectedIndexChanged);
 			// 
 			// cbModeBuild
 			// 
@@ -62,10 +63,11 @@
 			this.cbModeBuild.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
 			this.cbModeBuild.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cbModeBuild.FormattingEnabled = true;
-			this.cbModeBuild.Location = new System.Drawing.Point(303, 3);
+			this.cbModeBuild.Location = new System.Drawing.Point(123, 3);
 			this.cbModeBuild.Name = "cbModeBuild";
-			this.cbModeBuild.Size = new System.Drawing.Size(144, 21);
+			this.cbModeBuild.Size = new System.Drawing.Size(54, 21);
 			this.cbModeBuild.TabIndex = 6;
+			this.cbModeBuild.SelectedIndexChanged += new System.EventHandler(this.cbModeBuild_SelectedIndexChanged);
 			// 
 			// cbModePlace
 			// 
@@ -73,10 +75,11 @@
 			this.cbModePlace.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
 			this.cbModePlace.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cbModePlace.FormattingEnabled = true;
-			this.cbModePlace.Location = new System.Drawing.Point(453, 3);
+			this.cbModePlace.Location = new System.Drawing.Point(183, 3);
 			this.cbModePlace.Name = "cbModePlace";
-			this.cbModePlace.Size = new System.Drawing.Size(144, 21);
+			this.cbModePlace.Size = new System.Drawing.Size(54, 21);
 			this.cbModePlace.TabIndex = 7;
+			this.cbModePlace.SelectedIndexChanged += new System.EventHandler(this.cbModePlace_SelectedIndexChanged);
 			// 
 			// cbModeQuery
 			// 
@@ -84,35 +87,32 @@
 			this.cbModeQuery.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
 			this.cbModeQuery.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.cbModeQuery.FormattingEnabled = true;
-			this.cbModeQuery.Location = new System.Drawing.Point(603, 3);
+			this.cbModeQuery.Location = new System.Drawing.Point(243, 3);
 			this.cbModeQuery.Name = "cbModeQuery";
-			this.cbModeQuery.Size = new System.Drawing.Size(148, 21);
+			this.cbModeQuery.Size = new System.Drawing.Size(54, 21);
 			this.cbModeQuery.TabIndex = 8;
+			this.cbModeQuery.SelectedIndexChanged += new System.EventHandler(this.cbModeQuery_SelectedIndexChanged);
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.ColumnCount = 5;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 154F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
 			this.tableLayoutPanel1.Controls.Add(this.cbModeQuery, 4, 0);
 			this.tableLayoutPanel1.Controls.Add(this.cbModePlace, 3, 0);
 			this.tableLayoutPanel1.Controls.Add(this.cbModeBuild, 2, 0);
 			this.tableLayoutPanel1.Controls.Add(this.cbModeDig, 1, 0);
 			this.tableLayoutPanel1.Controls.Add(this.txtColor, 0, 0);
+			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(754, 29);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(300, 28);
 			this.tableLayoutPanel1.TabIndex = 9;
 			// 
 			// color_designation
@@ -121,9 +121,10 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.OrangeRed;
 			this.Controls.Add(this.tableLayoutPanel1);
-			this.MinimumSize = new System.Drawing.Size(600, 32);
+			this.Margin = new System.Windows.Forms.Padding(0);
+			this.MinimumSize = new System.Drawing.Size(300, 28);
 			this.Name = "color_designation";
-			this.Size = new System.Drawing.Size(757, 32);
+			this.Size = new System.Drawing.Size(300, 28);
 			this.Load += new System.EventHandler(this.color_designation_Load);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();

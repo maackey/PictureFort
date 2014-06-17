@@ -15,8 +15,7 @@ using System.Threading;
 /*
  ------------------------------* Completed
  ---------------------* default color designations (dropdown comboboxes)
- ------------------------------* multi image previews (side panel with smaller images)
- ---------------------* per-image persistent descriptions
+ * custom output filenames
  * image/csv rotation
  */
 
@@ -205,12 +204,8 @@ namespace picturefort
 			{
 				if (c.A != 255) continue; //skip transparent colors
 
-				TextBox temp = new TextBox();
-				temp.BackColor = c;
-				temp.TextChanged += colorDesignation_TextChanged;
-				if (c.R < 32 && c.G < 32 && c.B < 32) temp.ForeColor = Color.White;
-				if (pf.settings[pf.color_string(c)] != null)
-					temp.Text = pf.settings[pf.color_string(c)].ToString();
+				color_designation temp = new color_designation(c);
+				temp.Width = listColorDesignations.Width;
 
 				listColorDesignations.Controls.Add(temp);
 			}
@@ -261,7 +256,7 @@ namespace picturefort
 		#region saving
 		
 		/// <summary>
-		/// saves all the various settings and writes them to a file
+		/// saves last output path to the settings hashfile, then writes all settings to a file
 		/// </summary>
 		void save_settings()
 		{
@@ -269,6 +264,10 @@ namespace picturefort
 			p.write_settings();
 		}
 
+		/// <summary>
+		/// saves per-image settings to the settings hashtable
+		/// </summary>
+		/// <param name="i"></param>
 		void save_image_settings(pf.byte_image i)
 		{
 			StringBuilder description = new StringBuilder();
@@ -366,38 +365,20 @@ namespace picturefort
 			//TODO: validate text
 		}
 
-		private void colorDesignation_TextChanged(object sender, EventArgs e)
+		private void listColorDesignations_SizeChanged(object sender, EventArgs e)
 		{
-			//TODO: replace with better designation input
-			TextBox t = (TextBox)sender;
-			Color c = t.BackColor;
-			pf.set_setting(pf.color_string(c), t.Text);
+			FlowLayoutPanel f = (FlowLayoutPanel)sender;
+
+			foreach (color_designation c in f.Controls)
+			{
+				c.Width = f.Width;
+			}
 		}
 
 		private void btnTest_Click(object sender, EventArgs e)
 		{
-			string test1 = "this is my | pipe | separated % string.";
-			string test2;
-			string test3;
-			string test4;
-			string test5;
-			string test6;
-			string test7;
-
-			test2 = util.encode(test1) + " with more %%%| pipes |";
-			test3 = util.encode(test2) + " and some | more just | to be | safe ||";
-			test4 = util.encode(test3);
-			test5 = util.decode(test4);
-			test6 = util.decode(test5);
-			test7 = null;
-
-			Debug.Log(test1);
-			Debug.Log(test2);
-			Debug.Log(test3);
-			Debug.Log(test4);
-			Debug.Log(test5);
-			Debug.Log(test6);
-			Debug.Log(test7);
+			load_images();
+			tabPanel.SelectedIndex = 1; //switch to color designation tab
 		}
 
 		#endregion event handlers
