@@ -151,6 +151,12 @@ namespace picturefort
 
 			pf.image_settings s = new pf.image_settings(key, pf.settings[key].ToString());
 
+			//save image metadata to settings in memory
+			s.load_image_data(selected);
+			pf.set_setting(key, s);
+
+			//load up UI elements with settings
+			lblSelectedPicture.Text = s.image_file;
 
 			cbStartPos.SelectedIndex = s.StartPosIndex;
 			txtStartPos.Text = s.StartString;
@@ -167,10 +173,6 @@ namespace picturefort
 
 			txtOutFilePath.Text = selected.csv_file;
 			txtOutPath.Text = selected.csv_filepath.Replace(selected.csv_file, "");
-
-			//save image metadata to settings in memory
-			s.load_image_data(selected);
-			pf.set_setting(key, s);
 		}
 
 		/// <summary>
@@ -180,7 +182,6 @@ namespace picturefort
 		void load_palettes()
 		{
 			List<Color> palette = new List<Color>();
-			listColorDesignations.Controls.Clear();
 			if (p.loaded_images != null && p.loaded_images.Count > 0)
 			{
 				foreach (pf.byte_image image in p.loaded_images)
@@ -200,16 +201,38 @@ namespace picturefort
 		/// <returns></returns>
 		void create_designations(List<Color> palette)
 		{
+			int color_max = 32;
+			int color_count = palette.Count;
+			progress_bar.Value = 0;
+			progress_bar.Maximum = color_count;
+			color_designation temp;
+			listDesignations.Controls.Clear();
+			listDesignations
+
 			foreach (Color c in palette)
 			{
-				if (c.A != 255) continue; //skip transparent colors
+				if (progress_bar.Value < color_max)
+				{
 
-				color_designation temp = new color_designation(c);
-				temp.Width = listColorDesignations.Width;
+					if (c.A != 255) continue; //skip transparent colors (will throw off count)
 
-				listColorDesignations.Controls.Add(temp);
+					temp = new color_designation(c);
+					//temp.Dock = DockStyle.Fill;
+
+					TextBox temp2 = new TextBox();
+					temp2.BackColor = c;
+
+					listDesignations.Items.Add(temp2);
+
+					progress_bar.Value += 1;
+
+					status.Text = string.Format("Loading designation {0}/{1}", progress_bar.Value, color_count);
+					status.Refresh();
+
+				}
 			}
-			Debug.Log("total colors loaded: " + listColorDesignations.Controls.Count);
+			Debug.Log("test: ");
+			Debug.Log("total colors loaded: " + progress_bar.Value);
 		}
 
 		/// <summary>
@@ -290,6 +313,7 @@ namespace picturefort
 		private void btnImageChooser_Click(object sender, EventArgs e)
 		{
 			load_images();
+			load_image_settings(selected_image);
 
 			txtOutFilePath.Text = "";
 			txtOutPath.Text = pf.settings[setting.output_path].ToString();
@@ -367,12 +391,12 @@ namespace picturefort
 
 		private void listColorDesignations_SizeChanged(object sender, EventArgs e)
 		{
-			FlowLayoutPanel f = (FlowLayoutPanel)sender;
+			//FlowLayoutPanel f = (FlowLayoutPanel)sender;
 
-			foreach (color_designation c in f.Controls)
-			{
-				c.Width = f.Width;
-			}
+			//foreach (color_designation c in f.Controls)
+			//{
+			//	c.Width = f.Width;
+			//}
 		}
 
 		private void btnTest_Click(object sender, EventArgs e)

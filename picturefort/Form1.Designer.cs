@@ -63,7 +63,8 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.cbRecursive = new System.Windows.Forms.CheckBox();
-			this.listColorDesignations = new System.Windows.Forms.FlowLayoutPanel();
+			this.lblSelectedPicture = new System.Windows.Forms.Label();
+			this.listDesignations = new System.Windows.Forms.ListBox();
 			this.grid.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.panelTemplateType.SuspendLayout();
@@ -111,6 +112,7 @@
 			this.panel1.Controls.Add(this.btnTest);
 			this.panel1.Controls.Add(this.panelTemplateType);
 			this.panel1.Controls.Add(this.panelStartPos);
+			this.panel1.Controls.Add(this.lblSelectedPicture);
 			this.panel1.Controls.Add(this.btnImageChooser);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(562, 1);
@@ -122,7 +124,7 @@
 			// btnTest
 			// 
 			this.btnTest.Dock = System.Windows.Forms.DockStyle.Top;
-			this.btnTest.Location = new System.Drawing.Point(0, 218);
+			this.btnTest.Location = new System.Drawing.Point(0, 237);
 			this.btnTest.Name = "btnTest";
 			this.btnTest.Size = new System.Drawing.Size(213, 61);
 			this.btnTest.TabIndex = 14;
@@ -143,7 +145,7 @@
 			this.panelTemplateType.Controls.Add(this.txtCommentBuild);
 			this.panelTemplateType.Controls.Add(this.txtCommentDig);
 			this.panelTemplateType.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelTemplateType.Location = new System.Drawing.Point(0, 95);
+			this.panelTemplateType.Location = new System.Drawing.Point(0, 114);
 			this.panelTemplateType.Name = "panelTemplateType";
 			this.panelTemplateType.Size = new System.Drawing.Size(213, 123);
 			this.panelTemplateType.TabIndex = 12;
@@ -250,7 +252,7 @@
 			this.panelStartPos.Controls.Add(this.label3);
 			this.panelStartPos.Controls.Add(this.cbStartPos);
 			this.panelStartPos.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelStartPos.Location = new System.Drawing.Point(0, 20);
+			this.panelStartPos.Location = new System.Drawing.Point(0, 39);
 			this.panelStartPos.Name = "panelStartPos";
 			this.panelStartPos.Size = new System.Drawing.Size(213, 75);
 			this.panelStartPos.TabIndex = 7;
@@ -398,7 +400,7 @@
 			// 
 			// tabColorDesignations
 			// 
-			this.tabColorDesignations.Controls.Add(this.listColorDesignations);
+			this.tabColorDesignations.Controls.Add(this.listDesignations);
 			this.tabColorDesignations.Location = new System.Drawing.Point(4, 22);
 			this.tabColorDesignations.Margin = new System.Windows.Forms.Padding(0);
 			this.tabColorDesignations.Name = "tabColorDesignations";
@@ -472,19 +474,27 @@
 			this.cbRecursive.Text = "Recursive Directories?";
 			this.cbRecursive.UseVisualStyleBackColor = true;
 			// 
-			// listColorDesignations
+			// lblSelectedPicture
 			// 
-			this.listColorDesignations.AutoSize = true;
-			this.listColorDesignations.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.listColorDesignations.BackColor = System.Drawing.Color.DarkRed;
-			this.listColorDesignations.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listColorDesignations.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.listColorDesignations.Location = new System.Drawing.Point(0, 0);
-			this.listColorDesignations.Margin = new System.Windows.Forms.Padding(0);
-			this.listColorDesignations.Name = "listColorDesignations";
-			this.listColorDesignations.Size = new System.Drawing.Size(552, 370);
-			this.listColorDesignations.TabIndex = 5;
-			this.listColorDesignations.SizeChanged += new System.EventHandler(this.listColorDesignations_SizeChanged);
+			this.lblSelectedPicture.AutoSize = true;
+			this.lblSelectedPicture.Dock = System.Windows.Forms.DockStyle.Top;
+			this.lblSelectedPicture.Location = new System.Drawing.Point(0, 20);
+			this.lblSelectedPicture.Margin = new System.Windows.Forms.Padding(10);
+			this.lblSelectedPicture.Name = "lblSelectedPicture";
+			this.lblSelectedPicture.Padding = new System.Windows.Forms.Padding(3);
+			this.lblSelectedPicture.Size = new System.Drawing.Size(102, 19);
+			this.lblSelectedPicture.TabIndex = 15;
+			this.lblSelectedPicture.Text = "No Picture Loaded";
+			this.lblSelectedPicture.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// listDesignations
+			// 
+			this.listDesignations.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listDesignations.FormattingEnabled = true;
+			this.listDesignations.Location = new System.Drawing.Point(0, 0);
+			this.listDesignations.Name = "listDesignations";
+			this.listDesignations.Size = new System.Drawing.Size(552, 370);
+			this.listDesignations.TabIndex = 0;
 			// 
 			// Form1
 			// 
@@ -499,6 +509,7 @@
 			this.grid.ResumeLayout(false);
 			this.grid.PerformLayout();
 			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.panelTemplateType.ResumeLayout(false);
 			this.panelTemplateType.PerformLayout();
 			this.panelStartPos.ResumeLayout(false);
@@ -509,7 +520,6 @@
 			this.tableImagePreview.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
 			this.tabColorDesignations.ResumeLayout(false);
-			this.tabColorDesignations.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -550,7 +560,8 @@
 		private System.Windows.Forms.Button btnTest;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.FlowLayoutPanel listColorDesignations;
+		private System.Windows.Forms.Label lblSelectedPicture;
+		private System.Windows.Forms.ListBox listDesignations;
 
 	}
 }

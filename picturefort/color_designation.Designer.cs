@@ -50,6 +50,7 @@
 			this.cbModeDig.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cbModeDig.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
 			this.cbModeDig.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cbModeDig.DropDownWidth = 150;
 			this.cbModeDig.FormattingEnabled = true;
 			this.cbModeDig.Location = new System.Drawing.Point(63, 3);
 			this.cbModeDig.Name = "cbModeDig";
@@ -62,6 +63,7 @@
 			this.cbModeBuild.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cbModeBuild.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
 			this.cbModeBuild.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cbModeBuild.DropDownWidth = 150;
 			this.cbModeBuild.FormattingEnabled = true;
 			this.cbModeBuild.Location = new System.Drawing.Point(123, 3);
 			this.cbModeBuild.Name = "cbModeBuild";
@@ -74,6 +76,7 @@
 			this.cbModePlace.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cbModePlace.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
 			this.cbModePlace.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cbModePlace.DropDownWidth = 150;
 			this.cbModePlace.FormattingEnabled = true;
 			this.cbModePlace.Location = new System.Drawing.Point(183, 3);
 			this.cbModePlace.Name = "cbModePlace";
@@ -86,6 +89,7 @@
 			this.cbModeQuery.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
 			this.cbModeQuery.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
 			this.cbModeQuery.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.cbModeQuery.DropDownWidth = 150;
 			this.cbModeQuery.FormattingEnabled = true;
 			this.cbModeQuery.Location = new System.Drawing.Point(243, 3);
 			this.cbModeQuery.Name = "cbModeQuery";
@@ -95,6 +99,7 @@
 			// 
 			// tableLayoutPanel1
 			// 
+			this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
 			this.tableLayoutPanel1.ColumnCount = 5;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -119,7 +124,9 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.OrangeRed;
+			this.AutoSize = true;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.BackColor = System.Drawing.Color.White;
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Margin = new System.Windows.Forms.Padding(0);
 			this.MinimumSize = new System.Drawing.Size(300, 28);
