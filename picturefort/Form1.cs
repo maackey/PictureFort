@@ -353,7 +353,7 @@ namespace picturefort
 			{
 				string mode = kvp.Key;
 				string description = kvp.Value;
-				p.build_csv(p.loaded_images, txtOutPath.Text, selected_image.csv_file, mode, description, progress_bar, status);
+				p.build_csv(p.loaded_images, txtOutPath.Text, selected_image.csv_file, txtOutputFormat.Text, mode, description, progress_bar, status);
 			}
 
 			//txtOutFilePath.Text = "#mode-" + selected_image.csv_file;
@@ -368,7 +368,7 @@ namespace picturefort
 			//save any last changes made before clicking
 			save_image_settings(selected_image);
 
-			p.batch_csv(p.loaded_images, txtOutPath.Text, progress_bar, status);
+			p.batch_csv(p.loaded_images, txtOutPath.Text, txtOutputFormat.Text, progress_bar, status);
 
 			//txtOutPath.Text = pf.settings[setting.output_path].ToString();
 

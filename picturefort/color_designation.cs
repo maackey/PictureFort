@@ -24,10 +24,10 @@ namespace picturefort
 			}
 		}
 
-		public Dictionary<string, string> designations_dig = new Dictionary<string, string>();
-		public Dictionary<string, string> designations_build = new Dictionary<string, string>();
-		public Dictionary<string, string> designations_place = new Dictionary<string, string>();
-		public Dictionary<string, string> designations_query = new Dictionary<string, string>();
+		Dictionary<string, string> designations_dig = new Dictionary<string, string>();
+		Dictionary<string, string> designations_build = new Dictionary<string, string>();
+		Dictionary<string, string> designations_place = new Dictionary<string, string>();
+		Dictionary<string, string> designations_query = new Dictionary<string, string>();
 
 		public color_designation(Color c)
 		{
@@ -274,7 +274,15 @@ namespace picturefort
 			string key = cbModeDig.SelectedValue.ToString();
 			if (key != "")
 			{
-				dig = designations_dig[key];
+				//Use pre-defined combobox values if possible, otherwise read raw text
+				if (designations_dig.ContainsKey(key))
+				{
+					dig = designations_dig[key];
+				}
+				else
+				{
+					dig = key;
+				}
 			}
 			else
 			{
@@ -290,7 +298,16 @@ namespace picturefort
 			{
 				//if we're building something, default dig mode to Mine to clear space
 				cbModeDig.SelectedIndex = 1; //mine
-				build = designations_build[key];
+
+				//Use pre-defined combobox values if possible, otherwise read raw text
+				if (designations_build.ContainsKey(key))
+				{
+					build = designations_build[key];
+				}
+				else
+				{
+					build = key;
+				}
 			}
 			else
 			{
@@ -311,7 +328,16 @@ namespace picturefort
 			{
 				//if we're placing a stockpile, default dig mode to Mine to clear space
 				cbModeDig.SelectedIndex = 1; //mine
-				place = designations_place[key];
+
+				//Use pre-defined combobox values if possible, otherwise read raw text
+				if (designations_place.ContainsKey(key))
+				{
+					place = designations_place[key];
+				}
+				else
+				{
+					place = key;
+				}
 			}
 			else
 			{
@@ -330,7 +356,15 @@ namespace picturefort
 			string key = cbModeQuery.SelectedValue.ToString();
 			if (key != "")
 			{
-				query = designations_query[key];
+				//Use pre-defined combobox values if possible, otherwise read raw text
+				if (designations_query.ContainsKey(key))
+				{
+					query = designations_query[key];
+				}
+				else
+				{
+					query = key;
+				}
 			}
 			else
 			{
