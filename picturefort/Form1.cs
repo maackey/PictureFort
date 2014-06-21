@@ -120,7 +120,7 @@ namespace picturefort
 
 					load_palettes();
 					create_start_positions();
-					foreach (pf.byte_image image in p.loaded_images) load_image_settings(image);
+					foreach (pf.byte_image image in p.loaded_images) load_settings(image);
 				}
 			}
 		}
@@ -146,7 +146,7 @@ namespace picturefort
 		/// Loads various UI elements with last saved image values.
 		/// </summary>
 		/// <param name="selected">selected image</param>
-		void load_image_settings(pf.byte_image selected)
+		void load_settings(pf.byte_image selected)
 		{
 			if (selected == null) return;
 			Debug.Log("Loading image settings...");
@@ -178,6 +178,8 @@ namespace picturefort
 
 			txtOutFilePath.Text = selected.csv_file;
 			txtOutPath.Text = selected.csv_filepath.Replace(selected.csv_file, "");
+
+			if (pf.settings[setting.file_format] != null) txtOutputFormat.Text = pf.settings[setting.file_format].ToString();
 		}
 
 		/// <summary>
@@ -306,6 +308,7 @@ namespace picturefort
 		void save_settings()
 		{
 			pf.set_setting(setting.output_path, txtOutPath.Text);
+			pf.set_setting(setting.file_format, txtOutputFormat.Text);
 			p.write_settings();
 		}
 
@@ -335,7 +338,7 @@ namespace picturefort
 		private void btnImageChooser_Click(object sender, EventArgs e)
 		{
 			load_images();
-			load_image_settings(selected_image);
+			load_settings(selected_image);
 
 			txtOutFilePath.Text = "";
 			txtOutPath.Text = pf.settings[setting.output_path].ToString();
@@ -384,7 +387,7 @@ namespace picturefort
 			display_image(selected.image, preview);
 			Debug.Log(selected.image_path + " selected. hash: " + selected.image_hash);
 			update_start_positions();
-			load_image_settings(selected_image);
+			load_settings(selected_image);
 		}
 
 		private void cbStartPos_SelectedIndexChanged(object sender, EventArgs e)

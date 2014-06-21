@@ -8,6 +8,20 @@ Download: [http://dffd.wimbli.com/file.php?id=8564]
 Changelog
 ---------
 
+Version 2.1 - even more critical-er bugfixes
+ - fixed single image saving in root directory if not specified
+ - added designation dropdown boxes. Any manually entered text (text other than the dropdown items) will be treated as a custom designation.
+ - added preview pane for multiple images. They can be clicked to change active image.
+ - added custom output filename format
+ 	- [name] -> The name in the Output File textbox, or if not specified, the name of the active image.
+ 	- [mode] -> Either "dig", "build", "place", or "query" based on the mode of the template
+ 	- [size] -> Dimensions of the image. "(X-Size x Y-Size)"
+ 	- [levels] -> How many z-levels the template has
+ 	- "/" -> will create a subfolder. eg. [mode]/[name] will create the image in that subfolder (root_path/mode/filename.csv)
+ - added an option: clear to persistent settings. If set to true, it will remove empty settings. 
+ - added an option: file_format to persistent settings. It will remember your custom file name format.
+ - added per-image settings to persistent settings. These will remember the start position, modes, and comments of each image you have edited. 
+
 Version 2.0.1 - many critical bugfixes
 - Fixed batch images output filepath
 - Fixed multiple template types in one conversion. Uses pipe separated values (dig|build|place|query)
@@ -45,11 +59,10 @@ How to use
 2. Run picturefort.exe, click "Load Image(s)". Select the image (or images) that you want to convert.
 
 3. The "Color Designations" tab will generate a list of entries from the currently loaded images where you can enter your designations per color.
-To use the same color for multiple types of designations eg. you want to dig in dig mode, and also place a bed in query mode, you can use pipe separated values in the format "dig|build|place|query" so that bed would be designated as "d|b||"
 
-4. Select which type of template(s) to create (dig, build, place, query) and add any respective comments each one should have. 
+4. Select the drawing start position.
 
-5. Select the drawing start position.
+5. Select which type of template(s) to create (dig, build, place, query) and add any respective comments each one should have. 
 
 6. Save your template(s):
     - The "Output File" textbox will specify the name of the file. If left blank, the template will have the same name as the originating image.

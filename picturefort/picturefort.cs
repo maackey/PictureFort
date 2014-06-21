@@ -17,6 +17,7 @@ namespace picturefort
 	public enum setting
 	{
 		output_path,
+		file_format,
 		clean,
 	}
 	
@@ -229,7 +230,7 @@ namespace picturefort
 					}
 				}
 
-				f.Write("\n//Preamble\n\n");
+				f.Write("\n//General Settings\n\n");
 				f.Write(manual.ToString());
 				f.Write("\n//Color Designations\n\n");
 				f.Write(colors.ToString());

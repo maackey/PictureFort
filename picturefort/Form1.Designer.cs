@@ -423,7 +423,7 @@
 			this.tabColorDesignations.Location = new System.Drawing.Point(4, 22);
 			this.tabColorDesignations.Margin = new System.Windows.Forms.Padding(0);
 			this.tabColorDesignations.Name = "tabColorDesignations";
-			this.tabColorDesignations.Size = new System.Drawing.Size(560, 370);
+			this.tabColorDesignations.Size = new System.Drawing.Size(559, 370);
 			this.tabColorDesignations.TabIndex = 1;
 			this.tabColorDesignations.Text = "Color Designations";
 			this.tabColorDesignations.UseVisualStyleBackColor = true;
@@ -434,7 +434,7 @@
 			this.listDesignations.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listDesignations.Location = new System.Drawing.Point(0, 0);
 			this.listDesignations.Name = "listDesignations";
-			this.listDesignations.Size = new System.Drawing.Size(560, 370);
+			this.listDesignations.Size = new System.Drawing.Size(559, 370);
 			this.listDesignations.TabIndex = 0;
 			// 
 			// status
@@ -537,6 +537,7 @@
 			this.textBox1.Location = new System.Drawing.Point(3, 45);
 			this.textBox1.Multiline = true;
 			this.textBox1.Name = "textBox1";
+			this.textBox1.ReadOnly = true;
 			this.textBox1.Size = new System.Drawing.Size(206, 40);
 			this.textBox1.TabIndex = 2;
 			this.textBox1.Text = "Keywords: \r\n\"[name]\" \"[mode]\" \"[size]\" \"[levels]\" \"/\"";
