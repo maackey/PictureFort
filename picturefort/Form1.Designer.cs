@@ -1,6 +1,6 @@
 ﻿namespace picturefort
 {
-	partial class Form1
+	partial class MainWindow
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,10 +28,24 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-			this.grid = new System.Windows.Forms.TableLayoutPanel();
-			this.panel1 = new System.Windows.Forms.Panel();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
+			this.tableImagePreview = new System.Windows.Forms.TableLayoutPanel();
+			this.listDesignations = new System.Windows.Forms.FlowLayoutPanel();
+			this.side_previews = new System.Windows.Forms.FlowLayoutPanel();
+			this.preview = new System.Windows.Forms.PictureBox();
+			this.panelInput = new System.Windows.Forms.Panel();
+			this.buttonConvert = new System.Windows.Forms.Button();
 			this.btnTest = new System.Windows.Forms.Button();
+			this.panelMultiImageMode = new System.Windows.Forms.Panel();
+			this.radioMultiLevel = new System.Windows.Forms.RadioButton();
+			this.radioBatch = new System.Windows.Forms.RadioButton();
+			this.panelCustomFileString = new System.Windows.Forms.Panel();
+			this.txtKeywords = new System.Windows.Forms.TextBox();
+			this.txtOutputFormat = new System.Windows.Forms.TextBox();
+			this.label6 = new System.Windows.Forms.Label();
+			this.panel3 = new System.Windows.Forms.Panel();
+			this.label7 = new System.Windows.Forms.Label();
+			this.txtOutPath = new System.Windows.Forms.TextBox();
 			this.panelTemplateType = new System.Windows.Forms.Panel();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
@@ -49,94 +63,220 @@
 			this.cbStartPos = new System.Windows.Forms.ComboBox();
 			this.lblSelectedPicture = new System.Windows.Forms.Label();
 			this.btnImageChooser = new System.Windows.Forms.Button();
-			this.btnMultiCSV = new System.Windows.Forms.Button();
-			this.btnSingleCSV = new System.Windows.Forms.Button();
-			this.progress_bar = new System.Windows.Forms.ProgressBar();
-			this.tabPanel = new System.Windows.Forms.TabControl();
-			this.tabImagePreview = new System.Windows.Forms.TabPage();
-			this.tableImagePreview = new System.Windows.Forms.TableLayoutPanel();
-			this.side_previews = new System.Windows.Forms.FlowLayoutPanel();
-			this.preview = new System.Windows.Forms.PictureBox();
-			this.tabColorDesignations = new System.Windows.Forms.TabPage();
-			this.listDesignations = new System.Windows.Forms.FlowLayoutPanel();
+			this.panelStatus = new System.Windows.Forms.Panel();
 			this.status = new System.Windows.Forms.Label();
-			this.txtOutFilePath = new System.Windows.Forms.TextBox();
-			this.txtOutPath = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.cbRecursive = new System.Windows.Forms.CheckBox();
-			this.panelCustomFileString = new System.Windows.Forms.Panel();
-			this.label6 = new System.Windows.Forms.Label();
-			this.txtOutputFormat = new System.Windows.Forms.TextBox();
+			this.progress_bar = new System.Windows.Forms.ProgressBar();
 			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.grid.SuspendLayout();
-			this.panel1.SuspendLayout();
-			this.panelTemplateType.SuspendLayout();
-			this.panelStartPos.SuspendLayout();
-			this.tabPanel.SuspendLayout();
-			this.tabImagePreview.SuspendLayout();
 			this.tableImagePreview.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
-			this.tabColorDesignations.SuspendLayout();
+			this.panelInput.SuspendLayout();
+			this.panelMultiImageMode.SuspendLayout();
 			this.panelCustomFileString.SuspendLayout();
+			this.panel3.SuspendLayout();
+			this.panelTemplateType.SuspendLayout();
+			this.panelStartPos.SuspendLayout();
+			this.panelStatus.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// grid
+			// tableImagePreview
 			// 
-			this.grid.BackColor = System.Drawing.Color.Transparent;
-			this.grid.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-			this.grid.ColumnCount = 3;
-			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.grid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 214F));
-			this.grid.Controls.Add(this.panel1, 2, 0);
-			this.grid.Controls.Add(this.btnMultiCSV, 2, 2);
-			this.grid.Controls.Add(this.btnSingleCSV, 2, 1);
-			this.grid.Controls.Add(this.progress_bar, 1, 3);
-			this.grid.Controls.Add(this.tabPanel, 0, 0);
-			this.grid.Controls.Add(this.status, 2, 3);
-			this.grid.Controls.Add(this.txtOutFilePath, 1, 1);
-			this.grid.Controls.Add(this.txtOutPath, 1, 2);
-			this.grid.Controls.Add(this.label1, 0, 1);
-			this.grid.Controls.Add(this.label2, 0, 2);
-			this.grid.Controls.Add(this.cbRecursive, 0, 3);
-			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.grid.Location = new System.Drawing.Point(0, 0);
-			this.grid.Margin = new System.Windows.Forms.Padding(0);
-			this.grid.Name = "grid";
-			this.grid.RowCount = 4;
-			this.grid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.grid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.grid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.grid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.grid.Size = new System.Drawing.Size(784, 461);
-			this.grid.TabIndex = 0;
+			this.tableImagePreview.BackColor = System.Drawing.Color.Black;
+			this.tableImagePreview.ColumnCount = 2;
+			this.tableImagePreview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+			this.tableImagePreview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableImagePreview.Controls.Add(this.listDesignations, 0, 1);
+			this.tableImagePreview.Controls.Add(this.side_previews, 0, 0);
+			this.tableImagePreview.Controls.Add(this.preview, 1, 0);
+			this.tableImagePreview.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableImagePreview.Location = new System.Drawing.Point(0, 0);
+			this.tableImagePreview.Margin = new System.Windows.Forms.Padding(0);
+			this.tableImagePreview.Name = "tableImagePreview";
+			this.tableImagePreview.RowCount = 2;
+			this.tableImagePreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
+			this.tableImagePreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+			this.tableImagePreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableImagePreview.Size = new System.Drawing.Size(567, 747);
+			this.tableImagePreview.TabIndex = 1;
 			// 
-			// panel1
+			// listDesignations
 			// 
-			this.panel1.Controls.Add(this.btnTest);
-			this.panel1.Controls.Add(this.panelCustomFileString);
-			this.panel1.Controls.Add(this.panelTemplateType);
-			this.panel1.Controls.Add(this.panelStartPos);
-			this.panel1.Controls.Add(this.lblSelectedPicture);
-			this.panel1.Controls.Add(this.btnImageChooser);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(569, 1);
-			this.panel1.Margin = new System.Windows.Forms.Padding(0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(214, 396);
-			this.panel1.TabIndex = 1;
+			this.listDesignations.AutoScroll = true;
+			this.tableImagePreview.SetColumnSpan(this.listDesignations, 2);
+			this.listDesignations.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listDesignations.Location = new System.Drawing.Point(3, 525);
+			this.listDesignations.Name = "listDesignations";
+			this.listDesignations.Size = new System.Drawing.Size(561, 219);
+			this.listDesignations.TabIndex = 0;
+			// 
+			// side_previews
+			// 
+			this.side_previews.AutoScroll = true;
+			this.side_previews.AutoSize = true;
+			this.side_previews.BackColor = System.Drawing.Color.Gray;
+			this.side_previews.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.side_previews.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.side_previews.Location = new System.Drawing.Point(0, 0);
+			this.side_previews.Margin = new System.Windows.Forms.Padding(0);
+			this.side_previews.Name = "side_previews";
+			this.side_previews.Size = new System.Drawing.Size(200, 522);
+			this.side_previews.TabIndex = 13;
+			this.side_previews.WrapContents = false;
+			// 
+			// preview
+			// 
+			this.preview.BackColor = System.Drawing.Color.Gray;
+			this.preview.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.preview.Location = new System.Drawing.Point(200, 0);
+			this.preview.Margin = new System.Windows.Forms.Padding(0);
+			this.preview.Name = "preview";
+			this.preview.Size = new System.Drawing.Size(367, 522);
+			this.preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.preview.TabIndex = 0;
+			this.preview.TabStop = false;
+			this.preview.MouseClick += new System.Windows.Forms.MouseEventHandler(this.preview_MouseClick);
+			// 
+			// panelInput
+			// 
+			this.panelInput.Controls.Add(this.buttonConvert);
+			this.panelInput.Controls.Add(this.panelMultiImageMode);
+			this.panelInput.Controls.Add(this.panelCustomFileString);
+			this.panelInput.Controls.Add(this.panel3);
+			this.panelInput.Controls.Add(this.panelTemplateType);
+			this.panelInput.Controls.Add(this.panelStartPos);
+			this.panelInput.Controls.Add(this.lblSelectedPicture);
+			this.panelInput.Controls.Add(this.btnImageChooser);
+			this.panelInput.Controls.Add(this.btnTest);
+			this.panelInput.Dock = System.Windows.Forms.DockStyle.Right;
+			this.panelInput.Location = new System.Drawing.Point(567, 0);
+			this.panelInput.Margin = new System.Windows.Forms.Padding(0);
+			this.panelInput.Name = "panelInput";
+			this.panelInput.Size = new System.Drawing.Size(217, 747);
+			this.panelInput.TabIndex = 1;
+			// 
+			// buttonConvert
+			// 
+			this.buttonConvert.Dock = System.Windows.Forms.DockStyle.Top;
+			this.buttonConvert.Location = new System.Drawing.Point(0, 626);
+			this.buttonConvert.Name = "buttonConvert";
+			this.buttonConvert.Size = new System.Drawing.Size(217, 23);
+			this.buttonConvert.TabIndex = 19;
+			this.buttonConvert.Text = "Convert";
+			this.buttonConvert.UseVisualStyleBackColor = true;
+			this.buttonConvert.Click += new System.EventHandler(this.buttonConvert_Click);
 			// 
 			// btnTest
 			// 
 			this.btnTest.Dock = System.Windows.Forms.DockStyle.Top;
-			this.btnTest.Location = new System.Drawing.Point(0, 328);
+			this.btnTest.Location = new System.Drawing.Point(0, 0);
 			this.btnTest.Name = "btnTest";
-			this.btnTest.Size = new System.Drawing.Size(214, 61);
+			this.btnTest.Size = new System.Drawing.Size(217, 30);
 			this.btnTest.TabIndex = 14;
 			this.btnTest.Text = "TEST";
 			this.btnTest.UseVisualStyleBackColor = true;
 			this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+			// 
+			// panelMultiImageMode
+			// 
+			this.panelMultiImageMode.Controls.Add(this.textBox1);
+			this.panelMultiImageMode.Controls.Add(this.radioMultiLevel);
+			this.panelMultiImageMode.Controls.Add(this.radioBatch);
+			this.panelMultiImageMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelMultiImageMode.Location = new System.Drawing.Point(0, 510);
+			this.panelMultiImageMode.Name = "panelMultiImageMode";
+			this.panelMultiImageMode.Size = new System.Drawing.Size(217, 116);
+			this.panelMultiImageMode.TabIndex = 17;
+			// 
+			// radioMultiLevel
+			// 
+			this.radioMultiLevel.AutoSize = true;
+			this.radioMultiLevel.Checked = true;
+			this.radioMultiLevel.Location = new System.Drawing.Point(62, 3);
+			this.radioMultiLevel.Name = "radioMultiLevel";
+			this.radioMultiLevel.Size = new System.Drawing.Size(126, 17);
+			this.radioMultiLevel.TabIndex = 1;
+			this.radioMultiLevel.TabStop = true;
+			this.radioMultiLevel.Text = "Multiple Level Design";
+			this.radioMultiLevel.UseVisualStyleBackColor = true;
+			// 
+			// radioBatch
+			// 
+			this.radioBatch.AutoSize = true;
+			this.radioBatch.Location = new System.Drawing.Point(3, 3);
+			this.radioBatch.Name = "radioBatch";
+			this.radioBatch.Size = new System.Drawing.Size(53, 17);
+			this.radioBatch.TabIndex = 0;
+			this.radioBatch.Text = "Batch";
+			this.radioBatch.UseVisualStyleBackColor = true;
+			// 
+			// panelCustomFileString
+			// 
+			this.panelCustomFileString.Controls.Add(this.txtKeywords);
+			this.panelCustomFileString.Controls.Add(this.txtOutputFormat);
+			this.panelCustomFileString.Controls.Add(this.label6);
+			this.panelCustomFileString.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelCustomFileString.Location = new System.Drawing.Point(0, 319);
+			this.panelCustomFileString.Name = "panelCustomFileString";
+			this.panelCustomFileString.Size = new System.Drawing.Size(217, 191);
+			this.panelCustomFileString.TabIndex = 16;
+			// 
+			// txtKeywords
+			// 
+			this.txtKeywords.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtKeywords.Location = new System.Drawing.Point(3, 45);
+			this.txtKeywords.Multiline = true;
+			this.txtKeywords.Name = "txtKeywords";
+			this.txtKeywords.ReadOnly = true;
+			this.txtKeywords.Size = new System.Drawing.Size(211, 140);
+			this.txtKeywords.TabIndex = 2;
+			this.txtKeywords.Text = resources.GetString("txtKeywords.Text");
+			// 
+			// txtOutputFormat
+			// 
+			this.txtOutputFormat.Location = new System.Drawing.Point(3, 19);
+			this.txtOutputFormat.Name = "txtOutputFormat";
+			this.txtOutputFormat.Size = new System.Drawing.Size(211, 20);
+			this.txtOutputFormat.TabIndex = 1;
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(3, 3);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(119, 13);
+			this.label6.TabIndex = 0;
+			this.label6.Text = "Output Filename Format";
+			// 
+			// panel3
+			// 
+			this.panel3.Controls.Add(this.label7);
+			this.panel3.Controls.Add(this.txtOutPath);
+			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panel3.Location = new System.Drawing.Point(0, 267);
+			this.panel3.Name = "panel3";
+			this.panel3.Size = new System.Drawing.Size(217, 52);
+			this.panel3.TabIndex = 18;
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(3, 3);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(96, 13);
+			this.label7.TabIndex = 10;
+			this.label7.Text = "Output Folder Path";
+			// 
+			// txtOutPath
+			// 
+			this.txtOutPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtOutPath.Location = new System.Drawing.Point(3, 26);
+			this.txtOutPath.Margin = new System.Windows.Forms.Padding(0);
+			this.txtOutPath.Name = "txtOutPath";
+			this.txtOutPath.Size = new System.Drawing.Size(211, 20);
+			this.txtOutPath.TabIndex = 9;
+			this.txtOutPath.DoubleClick += new System.EventHandler(this.txtOutPath_DoubleClick);
 			// 
 			// panelTemplateType
 			// 
@@ -151,9 +291,9 @@
 			this.panelTemplateType.Controls.Add(this.txtCommentBuild);
 			this.panelTemplateType.Controls.Add(this.txtCommentDig);
 			this.panelTemplateType.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelTemplateType.Location = new System.Drawing.Point(0, 114);
+			this.panelTemplateType.Location = new System.Drawing.Point(0, 144);
 			this.panelTemplateType.Name = "panelTemplateType";
-			this.panelTemplateType.Size = new System.Drawing.Size(214, 123);
+			this.panelTemplateType.Size = new System.Drawing.Size(217, 123);
 			this.panelTemplateType.TabIndex = 12;
 			// 
 			// label5
@@ -222,34 +362,42 @@
 			// 
 			// txtCommentQuery
 			// 
+			this.txtCommentQuery.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtCommentQuery.Location = new System.Drawing.Point(57, 94);
 			this.txtCommentQuery.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentQuery.Name = "txtCommentQuery";
-			this.txtCommentQuery.Size = new System.Drawing.Size(152, 20);
+			this.txtCommentQuery.Size = new System.Drawing.Size(157, 20);
 			this.txtCommentQuery.TabIndex = 11;
 			// 
 			// txtCommentPlace
 			// 
+			this.txtCommentPlace.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtCommentPlace.Location = new System.Drawing.Point(57, 70);
 			this.txtCommentPlace.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentPlace.Name = "txtCommentPlace";
-			this.txtCommentPlace.Size = new System.Drawing.Size(152, 20);
+			this.txtCommentPlace.Size = new System.Drawing.Size(157, 20);
 			this.txtCommentPlace.TabIndex = 10;
 			// 
 			// txtCommentBuild
 			// 
+			this.txtCommentBuild.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtCommentBuild.Location = new System.Drawing.Point(57, 47);
 			this.txtCommentBuild.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentBuild.Name = "txtCommentBuild";
-			this.txtCommentBuild.Size = new System.Drawing.Size(152, 20);
+			this.txtCommentBuild.Size = new System.Drawing.Size(157, 20);
 			this.txtCommentBuild.TabIndex = 9;
 			// 
 			// txtCommentDig
 			// 
+			this.txtCommentDig.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtCommentDig.Location = new System.Drawing.Point(57, 24);
 			this.txtCommentDig.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
 			this.txtCommentDig.Name = "txtCommentDig";
-			this.txtCommentDig.Size = new System.Drawing.Size(152, 20);
+			this.txtCommentDig.Size = new System.Drawing.Size(157, 20);
 			this.txtCommentDig.TabIndex = 8;
 			// 
 			// panelStartPos
@@ -258,16 +406,18 @@
 			this.panelStartPos.Controls.Add(this.label3);
 			this.panelStartPos.Controls.Add(this.cbStartPos);
 			this.panelStartPos.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelStartPos.Location = new System.Drawing.Point(0, 39);
+			this.panelStartPos.Location = new System.Drawing.Point(0, 69);
 			this.panelStartPos.Name = "panelStartPos";
-			this.panelStartPos.Size = new System.Drawing.Size(214, 75);
+			this.panelStartPos.Size = new System.Drawing.Size(217, 75);
 			this.panelStartPos.TabIndex = 7;
 			// 
 			// txtStartPos
 			// 
+			this.txtStartPos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtStartPos.Location = new System.Drawing.Point(3, 49);
 			this.txtStartPos.Name = "txtStartPos";
-			this.txtStartPos.Size = new System.Drawing.Size(206, 20);
+			this.txtStartPos.Size = new System.Drawing.Size(211, 20);
 			this.txtStartPos.TabIndex = 8;
 			this.txtStartPos.TextChanged += new System.EventHandler(this.txtStartPos_TextChanged);
 			// 
@@ -282,11 +432,13 @@
 			// 
 			// cbStartPos
 			// 
+			this.cbStartPos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.cbStartPos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbStartPos.FormattingEnabled = true;
 			this.cbStartPos.Location = new System.Drawing.Point(3, 22);
 			this.cbStartPos.Name = "cbStartPos";
-			this.cbStartPos.Size = new System.Drawing.Size(206, 21);
+			this.cbStartPos.Size = new System.Drawing.Size(211, 21);
 			this.cbStartPos.TabIndex = 6;
 			this.cbStartPos.SelectedIndexChanged += new System.EventHandler(this.cbStartPos_SelectedIndexChanged);
 			// 
@@ -294,7 +446,7 @@
 			// 
 			this.lblSelectedPicture.AutoSize = true;
 			this.lblSelectedPicture.Dock = System.Windows.Forms.DockStyle.Top;
-			this.lblSelectedPicture.Location = new System.Drawing.Point(0, 20);
+			this.lblSelectedPicture.Location = new System.Drawing.Point(0, 50);
 			this.lblSelectedPicture.Margin = new System.Windows.Forms.Padding(10);
 			this.lblSelectedPicture.Name = "lblSelectedPicture";
 			this.lblSelectedPicture.Padding = new System.Windows.Forms.Padding(3);
@@ -306,289 +458,102 @@
 			// btnImageChooser
 			// 
 			this.btnImageChooser.Dock = System.Windows.Forms.DockStyle.Top;
-			this.btnImageChooser.Location = new System.Drawing.Point(0, 0);
+			this.btnImageChooser.Location = new System.Drawing.Point(0, 30);
 			this.btnImageChooser.Margin = new System.Windows.Forms.Padding(0);
 			this.btnImageChooser.Name = "btnImageChooser";
-			this.btnImageChooser.Size = new System.Drawing.Size(214, 20);
+			this.btnImageChooser.Size = new System.Drawing.Size(217, 20);
 			this.btnImageChooser.TabIndex = 1;
 			this.btnImageChooser.Text = "Load Image(s)";
 			this.btnImageChooser.UseVisualStyleBackColor = true;
 			this.btnImageChooser.Click += new System.EventHandler(this.btnImageChooser_Click);
 			// 
-			// btnMultiCSV
+			// panelStatus
 			// 
-			this.btnMultiCSV.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnMultiCSV.Location = new System.Drawing.Point(569, 419);
-			this.btnMultiCSV.Margin = new System.Windows.Forms.Padding(0);
-			this.btnMultiCSV.Name = "btnMultiCSV";
-			this.btnMultiCSV.Size = new System.Drawing.Size(214, 20);
-			this.btnMultiCSV.TabIndex = 6;
-			this.btnMultiCSV.Text = "Batch Templates";
-			this.btnMultiCSV.UseVisualStyleBackColor = true;
-			this.btnMultiCSV.Click += new System.EventHandler(this.btnMultiCSV_Click);
-			// 
-			// btnSingleCSV
-			// 
-			this.btnSingleCSV.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.btnSingleCSV.Location = new System.Drawing.Point(569, 398);
-			this.btnSingleCSV.Margin = new System.Windows.Forms.Padding(0);
-			this.btnSingleCSV.Name = "btnSingleCSV";
-			this.btnSingleCSV.Size = new System.Drawing.Size(214, 20);
-			this.btnSingleCSV.TabIndex = 2;
-			this.btnSingleCSV.Text = "Single Template";
-			this.btnSingleCSV.UseVisualStyleBackColor = true;
-			this.btnSingleCSV.Click += new System.EventHandler(this.btnSingleCSV_Click);
-			// 
-			// progress_bar
-			// 
-			this.progress_bar.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.progress_bar.Location = new System.Drawing.Point(152, 440);
-			this.progress_bar.Margin = new System.Windows.Forms.Padding(0);
-			this.progress_bar.Name = "progress_bar";
-			this.progress_bar.Size = new System.Drawing.Size(416, 20);
-			this.progress_bar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-			this.progress_bar.TabIndex = 3;
-			this.progress_bar.Value = 100;
-			// 
-			// tabPanel
-			// 
-			this.grid.SetColumnSpan(this.tabPanel, 2);
-			this.tabPanel.Controls.Add(this.tabImagePreview);
-			this.tabPanel.Controls.Add(this.tabColorDesignations);
-			this.tabPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabPanel.Location = new System.Drawing.Point(1, 1);
-			this.tabPanel.Margin = new System.Windows.Forms.Padding(0);
-			this.tabPanel.Name = "tabPanel";
-			this.tabPanel.SelectedIndex = 0;
-			this.tabPanel.Size = new System.Drawing.Size(567, 396);
-			this.tabPanel.TabIndex = 5;
-			// 
-			// tabImagePreview
-			// 
-			this.tabImagePreview.Controls.Add(this.tableImagePreview);
-			this.tabImagePreview.Location = new System.Drawing.Point(4, 22);
-			this.tabImagePreview.Margin = new System.Windows.Forms.Padding(0);
-			this.tabImagePreview.Name = "tabImagePreview";
-			this.tabImagePreview.Size = new System.Drawing.Size(559, 370);
-			this.tabImagePreview.TabIndex = 0;
-			this.tabImagePreview.Text = "Image Preview";
-			this.tabImagePreview.UseVisualStyleBackColor = true;
-			// 
-			// tableImagePreview
-			// 
-			this.tableImagePreview.ColumnCount = 2;
-			this.tableImagePreview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-			this.tableImagePreview.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableImagePreview.Controls.Add(this.side_previews, 0, 0);
-			this.tableImagePreview.Controls.Add(this.preview, 1, 0);
-			this.tableImagePreview.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableImagePreview.Location = new System.Drawing.Point(0, 0);
-			this.tableImagePreview.Margin = new System.Windows.Forms.Padding(0);
-			this.tableImagePreview.Name = "tableImagePreview";
-			this.tableImagePreview.RowCount = 1;
-			this.tableImagePreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableImagePreview.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 370F));
-			this.tableImagePreview.Size = new System.Drawing.Size(559, 370);
-			this.tableImagePreview.TabIndex = 1;
-			// 
-			// side_previews
-			// 
-			this.side_previews.AutoScroll = true;
-			this.side_previews.AutoSize = true;
-			this.side_previews.BackColor = System.Drawing.Color.Gray;
-			this.side_previews.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.side_previews.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.side_previews.Location = new System.Drawing.Point(0, 0);
-			this.side_previews.Margin = new System.Windows.Forms.Padding(0);
-			this.side_previews.Name = "side_previews";
-			this.side_previews.Size = new System.Drawing.Size(200, 370);
-			this.side_previews.TabIndex = 13;
-			this.side_previews.WrapContents = false;
-			// 
-			// preview
-			// 
-			this.preview.BackColor = System.Drawing.Color.Gray;
-			this.preview.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.preview.Location = new System.Drawing.Point(200, 0);
-			this.preview.Margin = new System.Windows.Forms.Padding(0);
-			this.preview.Name = "preview";
-			this.preview.Size = new System.Drawing.Size(359, 370);
-			this.preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.preview.TabIndex = 0;
-			this.preview.TabStop = false;
-			// 
-			// tabColorDesignations
-			// 
-			this.tabColorDesignations.Controls.Add(this.listDesignations);
-			this.tabColorDesignations.Location = new System.Drawing.Point(4, 22);
-			this.tabColorDesignations.Margin = new System.Windows.Forms.Padding(0);
-			this.tabColorDesignations.Name = "tabColorDesignations";
-			this.tabColorDesignations.Size = new System.Drawing.Size(559, 370);
-			this.tabColorDesignations.TabIndex = 1;
-			this.tabColorDesignations.Text = "Color Designations";
-			this.tabColorDesignations.UseVisualStyleBackColor = true;
-			// 
-			// listDesignations
-			// 
-			this.listDesignations.AutoScroll = true;
-			this.listDesignations.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listDesignations.Location = new System.Drawing.Point(0, 0);
-			this.listDesignations.Name = "listDesignations";
-			this.listDesignations.Size = new System.Drawing.Size(559, 370);
-			this.listDesignations.TabIndex = 0;
+			this.panelStatus.BackColor = System.Drawing.Color.Transparent;
+			this.panelStatus.Controls.Add(this.status);
+			this.panelStatus.Controls.Add(this.progress_bar);
+			this.panelStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.panelStatus.Location = new System.Drawing.Point(0, 747);
+			this.panelStatus.Name = "panelStatus";
+			this.panelStatus.Size = new System.Drawing.Size(784, 30);
+			this.panelStatus.TabIndex = 13;
 			// 
 			// status
 			// 
-			this.status.AutoSize = true;
-			this.status.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.status.Location = new System.Drawing.Point(572, 440);
+			this.status.BackColor = System.Drawing.Color.Transparent;
+			this.status.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.status.Location = new System.Drawing.Point(0, 0);
+			this.status.Margin = new System.Windows.Forms.Padding(0);
 			this.status.Name = "status";
-			this.status.Size = new System.Drawing.Size(208, 20);
+			this.status.Size = new System.Drawing.Size(784, 15);
 			this.status.TabIndex = 7;
 			this.status.Text = "Ready";
-			this.status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// txtOutFilePath
+			// progress_bar
 			// 
-			this.txtOutFilePath.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtOutFilePath.Location = new System.Drawing.Point(152, 398);
-			this.txtOutFilePath.Margin = new System.Windows.Forms.Padding(0);
-			this.txtOutFilePath.Name = "txtOutFilePath";
-			this.txtOutFilePath.Size = new System.Drawing.Size(416, 20);
-			this.txtOutFilePath.TabIndex = 8;
-			this.txtOutFilePath.DoubleClick += new System.EventHandler(this.txtOutFilePath_DoubleClick);
-			// 
-			// txtOutPath
-			// 
-			this.txtOutPath.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtOutPath.Location = new System.Drawing.Point(152, 419);
-			this.txtOutPath.Margin = new System.Windows.Forms.Padding(0);
-			this.txtOutPath.Name = "txtOutPath";
-			this.txtOutPath.Size = new System.Drawing.Size(416, 20);
-			this.txtOutPath.TabIndex = 9;
-			this.txtOutPath.DoubleClick += new System.EventHandler(this.txtOutPath_DoubleClick);
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label1.Location = new System.Drawing.Point(4, 398);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(144, 20);
-			this.label1.TabIndex = 10;
-			this.label1.Text = "Ouput File";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label2.Location = new System.Drawing.Point(4, 419);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(144, 20);
-			this.label2.TabIndex = 11;
-			this.label2.Text = "Output Path";
-			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// cbRecursive
-			// 
-			this.cbRecursive.AutoSize = true;
-			this.cbRecursive.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.cbRecursive.Location = new System.Drawing.Point(6, 440);
-			this.cbRecursive.Margin = new System.Windows.Forms.Padding(5, 0, 0, 0);
-			this.cbRecursive.Name = "cbRecursive";
-			this.cbRecursive.Size = new System.Drawing.Size(145, 20);
-			this.cbRecursive.TabIndex = 12;
-			this.cbRecursive.Text = "Recursive Directories?";
-			this.cbRecursive.UseVisualStyleBackColor = true;
-			// 
-			// panelCustomFileString
-			// 
-			this.panelCustomFileString.Controls.Add(this.textBox1);
-			this.panelCustomFileString.Controls.Add(this.txtOutputFormat);
-			this.panelCustomFileString.Controls.Add(this.label6);
-			this.panelCustomFileString.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panelCustomFileString.Location = new System.Drawing.Point(0, 237);
-			this.panelCustomFileString.Name = "panelCustomFileString";
-			this.panelCustomFileString.Size = new System.Drawing.Size(214, 91);
-			this.panelCustomFileString.TabIndex = 16;
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(3, 3);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(119, 13);
-			this.label6.TabIndex = 0;
-			this.label6.Text = "Output Filename Format";
-			// 
-			// txtOutputFormat
-			// 
-			this.txtOutputFormat.Location = new System.Drawing.Point(3, 19);
-			this.txtOutputFormat.Name = "txtOutputFormat";
-			this.txtOutputFormat.Size = new System.Drawing.Size(206, 20);
-			this.txtOutputFormat.TabIndex = 1;
+			this.progress_bar.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.progress_bar.Location = new System.Drawing.Point(0, 15);
+			this.progress_bar.Margin = new System.Windows.Forms.Padding(0);
+			this.progress_bar.Name = "progress_bar";
+			this.progress_bar.Size = new System.Drawing.Size(784, 15);
+			this.progress_bar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+			this.progress_bar.TabIndex = 3;
+			this.progress_bar.Value = 100;
 			// 
 			// textBox1
 			// 
 			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox1.Location = new System.Drawing.Point(3, 45);
+			this.textBox1.Location = new System.Drawing.Point(3, 23);
 			this.textBox1.Multiline = true;
 			this.textBox1.Name = "textBox1";
 			this.textBox1.ReadOnly = true;
-			this.textBox1.Size = new System.Drawing.Size(206, 40);
-			this.textBox1.TabIndex = 2;
-			this.textBox1.Text = "Keywords: \r\n\"[name]\" \"[mode]\" \"[size]\" \"[levels]\" \"/\"";
+			this.textBox1.Size = new System.Drawing.Size(211, 87);
+			this.textBox1.TabIndex = 3;
+			this.textBox1.Text = resources.GetString("textBox1.Text");
 			// 
-			// Form1
+			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(784, 461);
-			this.Controls.Add(this.grid);
+			this.ClientSize = new System.Drawing.Size(784, 777);
+			this.Controls.Add(this.tableImagePreview);
+			this.Controls.Add(this.panelInput);
+			this.Controls.Add(this.panelStatus);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Name = "Form1";
+			this.Name = "MainWindow";
 			this.Text = "PictureFort";
 			this.Load += new System.EventHandler(this.Form1_Load);
-			this.grid.ResumeLayout(false);
-			this.grid.PerformLayout();
-			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
+			this.tableImagePreview.ResumeLayout(false);
+			this.tableImagePreview.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
+			this.panelInput.ResumeLayout(false);
+			this.panelInput.PerformLayout();
+			this.panelMultiImageMode.ResumeLayout(false);
+			this.panelMultiImageMode.PerformLayout();
+			this.panelCustomFileString.ResumeLayout(false);
+			this.panelCustomFileString.PerformLayout();
+			this.panel3.ResumeLayout(false);
+			this.panel3.PerformLayout();
 			this.panelTemplateType.ResumeLayout(false);
 			this.panelTemplateType.PerformLayout();
 			this.panelStartPos.ResumeLayout(false);
 			this.panelStartPos.PerformLayout();
-			this.tabPanel.ResumeLayout(false);
-			this.tabImagePreview.ResumeLayout(false);
-			this.tableImagePreview.ResumeLayout(false);
-			this.tableImagePreview.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
-			this.tabColorDesignations.ResumeLayout(false);
-			this.panelCustomFileString.ResumeLayout(false);
-			this.panelCustomFileString.PerformLayout();
+			this.panelStatus.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.TableLayoutPanel grid;
 		private System.Windows.Forms.Button btnImageChooser;
-		private System.Windows.Forms.Button btnSingleCSV;
 		private System.Windows.Forms.ProgressBar progress_bar;
-		private System.Windows.Forms.TabControl tabPanel;
-		private System.Windows.Forms.TabPage tabImagePreview;
 		private System.Windows.Forms.PictureBox preview;
-		private System.Windows.Forms.TabPage tabColorDesignations;
-		private System.Windows.Forms.Button btnMultiCSV;
-		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Panel panelInput;
 		private System.Windows.Forms.Label status;
-		private System.Windows.Forms.TextBox txtOutFilePath;
 		private System.Windows.Forms.TextBox txtOutPath;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Panel panelStartPos;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ComboBox cbStartPos;
@@ -601,7 +566,6 @@
 		private System.Windows.Forms.TextBox txtCommentPlace;
 		private System.Windows.Forms.TextBox txtCommentBuild;
 		private System.Windows.Forms.TextBox txtCommentDig;
-		private System.Windows.Forms.CheckBox cbRecursive;
 		private System.Windows.Forms.Panel panelTemplateType;
 		private System.Windows.Forms.TableLayoutPanel tableImagePreview;
 		private System.Windows.Forms.FlowLayoutPanel side_previews;
@@ -613,6 +577,14 @@
 		private System.Windows.Forms.Panel panelCustomFileString;
 		private System.Windows.Forms.TextBox txtOutputFormat;
 		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.TextBox txtKeywords;
+		private System.Windows.Forms.Panel panelMultiImageMode;
+		private System.Windows.Forms.RadioButton radioMultiLevel;
+		private System.Windows.Forms.RadioButton radioBatch;
+		private System.Windows.Forms.Panel panelStatus;
+		private System.Windows.Forms.Panel panel3;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Button buttonConvert;
 		private System.Windows.Forms.TextBox textBox1;
 
 	}

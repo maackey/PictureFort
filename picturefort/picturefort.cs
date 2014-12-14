@@ -31,7 +31,7 @@ namespace picturefort
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Form1());
+			Application.Run(new MainWindow());
 		}
 
 	}
@@ -85,7 +85,7 @@ namespace picturefort
 		/// <returns></returns>
 		public static string csv_name_format(byte_image image, string format, string name = "", string mode="", string levels = "", string etc = "")
 		{
-			if (format == "") format = "mode - name.csv";
+			if (format == "") format = "[mode] - [name].csv";
 
 			//sort in order from least likely to contain bad stuff to most likely to contain bad stuff
 			format = format.Replace("[mode]", mode);
@@ -319,79 +319,55 @@ namespace picturefort
 
 		#region generate csv's
 
-		/// <summary>
-		/// Creates a template for each image in the list, in the designated directory. 
-		/// </summary>
-		/// <param name="images">List of images to be converted</param>
-		/// <param name="path">Path where the generated files will be placed</param>
-		/// <param name="progress">ProgressBar object to track the function's progress</param>
-		/// <param name="status">Label object to provide a visual indicator of the function's status</param>
-		/// <returns></returns>
-		public bool batch_csv(List<byte_image> images, string path, string format, ProgressBar progress = null, Label status = null)
+		public bool convert(List<byte_image> images, string outputpath, string filename_format, bool multilevel = false, image_settings settings = null, ProgressBar progress = null, Label status = null)
 		{
-			try
+			if (multilevel)
 			{
-				//if path doesn't exist, use the path of the first image
-				if (path == "") path = images[0].csv_filepath.Replace(images[0].csv_file, "");
-				//create the directory if it doesn't exist
-				if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-
-				foreach (byte_image image in images) single_csv(image, path, format, progress, status);
-
+				if (settings == null) return false;
+				foreach (KeyValuePair<string, string> kvp in settings.modelist)
+				{
+					string mode = kvp.Key;
+					string description = kvp.Value;
+					build_csv(images, outputpath, filename_format, mode, description, progress, status);
+				}
 				return true;
 			}
-			catch (Exception e)
+			else
 			{
-				MessageBox.Show("Error in batch_csv using path: " + path);
-				Debug.Log(e);
-				return false;
+				//batch image mode. each image gets its own settings
+				foreach (byte_image image in images)
+				{
+					List<byte_image> single_zlevel_list = new List<byte_image>() { image };
+					pf.image_settings img_settings = (pf.image_settings)pf.settings[image.image_hash];
+					foreach (KeyValuePair<string, string> kvp in img_settings.modelist)
+					{
+						string mode = kvp.Key;
+						string description = kvp.Value;
+						build_csv(single_zlevel_list, outputpath, filename_format, mode, description, progress, status);
+					}
+				}
+				return true;
 			}
-		}
-
-		/// <summary>
-		/// Creates a template for a single image.
-		/// </summary>
-		/// <param name="image"></param>
-		/// <param name="path"></param>
-		/// <param name="progress"></param>
-		/// <param name="status"></param>
-		/// <returns></returns>
-		public bool single_csv(byte_image image, string path, string format, ProgressBar progress = null, Label status = null)
-		{
-			image_settings s = (image_settings)settings[image.image_hash];
-			List<byte_image> imagelist = new List<byte_image>();
-			imagelist.Add(image);
-
-			pf.image_settings img_settings = (pf.image_settings)pf.settings[image.image_hash];
-			foreach (KeyValuePair<string, string> kvp in img_settings.modelist)
-			{
-				string mode = kvp.Key;
-				string description = kvp.Value;
-				build_csv(imagelist, path, image.csv_file, format, mode, description, progress, status);
-			}
-
-			return true;
 		}
 
 		/// <summary>
 		/// Creates a multi-z-level template with the provided list of images.
 		/// </summary>
 		/// <param name="images">List of images -- one for each z-level. Must be the same dimensions</param>
-		/// <param name="path">Output file path for the template</param>
+		/// <param name="output_path">Output file path for the template</param>
 		/// <param name="filename">name of desired output file.</param>
 		/// <param name="mode">what kind of template which is being generated</param>
 		/// <param name="description">Image settings which have deisgnation info</param>
 		/// <param name="progress">ProgressBar object to track the function's progress</param>
 		/// <param name="status">Label object to provide a visual indicator of the function's status</param>
 		/// <returns></returns>
-		public bool build_csv(List<byte_image> images, string path, string filename, string format, string mode, string description, ProgressBar progress = null, Label status = null)
+		public bool build_csv(List<byte_image> images, string output_path, string filename_format, string mode, string description, ProgressBar progress = null, Label status = null)
 		{
 
 			if (images == null || images.Count == 0) return false;
 
 			StringBuilder csv_builder = new StringBuilder();
 			int image_index = 1;
-			string status_message;
 			int prediction = images[0].image.Width * images[0].image.Height;
 			
 			//check images to make sure they are the same size, prepare progressbar for multiple images
@@ -399,7 +375,7 @@ namespace picturefort
 
 			if (images.Count > 1)
 			{
-				byte_image previous = null;
+				byte_image first_image = null;
 				prediction = 0;
 
 				if (progress != null)
@@ -417,13 +393,13 @@ namespace picturefort
 						progress.Refresh();
 					}
 
-					if (previous == null)
+					if (first_image == null)
 					{
-						previous = current;
+						first_image = current;
 						continue;
 					}
 
-					if (previous.image.Size != current.image.Size)
+					if (first_image.image.Size != current.image.Size)
 					{
 						MessageBox.Show("Images must be the same size for multilevel templates");
 						Debug.Log("images do not match dimensions");
@@ -438,15 +414,16 @@ namespace picturefort
 
 			#region generate csv
 
-			//generate csv -- use stringbuilder to create file contents before writing to file
-			status_message = "Generating CSV";
-			Debug.Log(status_message);
-
+			//set progressbar estimate
 			if (progress != null)
 			{
 				progress.Maximum = prediction;
 				progress.Value = 0;
+				progress.Refresh();
 			}
+
+			//generate csv -- use stringbuilder to create file contents before writing to file
+			update_status(status, "Generating CSV");
 
 			//write first line -> template type, start position, comments
 			csv_builder.Append(string.Format("{0}\n", description));
@@ -454,11 +431,7 @@ namespace picturefort
 			foreach (byte_image current in images)
 			{
 
-				if (status != null)
-				{
-					status.Text = string.Format("Creating level ({0}/{1})", image_index, images.Count);
-					status.Refresh();
-				}
+				update_status(status, string.Format("Creating level ({0}/{1})", image_index, images.Count));
 
 				Queue<Color> color_queue = new Queue<Color>(current.image_array);
 
@@ -468,8 +441,15 @@ namespace picturefort
 					{
 						if (progress != null)
 						{
-							progress.Value++;
-							progress.Refresh();
+							try
+							{
+								progress.Value++;
+								progress.Refresh();
+							}
+							catch (Exception ex)
+							{
+								Debug.Log(string.Format("wrong value for progressbar: {0}", progress.Value, ex));
+							}
 						}
 
 						//write the setting value of the color based on the template type
@@ -530,45 +510,42 @@ namespace picturefort
 			#region write file
 
 			//write file
-			status_message = "Writing File";
-			if (status != null)
-			{
-				status.Text = status_message;
-				status.Refresh();
-			}
+			update_status(status, "Writing File");
+
+			string filename = images[0].out_file;
 
 			try
 			{
-				//if file is nothing, use the file name of the first image
-				if (filename == "") filename = images[0].csv_file.Replace(images[0].image_extension, "");
+
+				////if file is nothing, use the file name of the first image
+				//if (string.IsNullOrEmpty(filename)) filename = images[0].csv_file;
 
 				//if path is nothing, use the path of the first image
-				if (path == "") path = images[0].csv_filepath.Replace(images[0].csv_file, "");
-				path = path.TrimEnd('/').TrimEnd('\\');
+				if (string.IsNullOrEmpty(output_path)) output_path = images[0].out_path;
 				
-				//format filename, remove any .csv (it will be added at the end)
-				filename = csv_name_format(images[0], format, name: filename, mode: mode, levels: images.Count.ToString()).Replace(".csv", "");
+				//format filename
+				filename = csv_name_format(images[0], filename_format, name: filename.Replace(byte_image.out_extension, ""), mode: mode, levels: images.Count.ToString());
 
 				//save output path in settings
-				set_setting(setting.output_path, path);
+				set_setting(setting.output_path, output_path);
 
+				string csv_filepath = string.Format("{0}/{1}", output_path, filename);
 				//if user put / to make subfolders, set the path to subfolder
-				string csv_filepath = string.Format("{0}/{1}.csv", path, filename);
-				path = csv_filepath.Substring(0, csv_filepath.LastIndexOf('/'));
+				output_path = csv_filepath.Substring(0, csv_filepath.LastIndexOf('/'));
 
 				//if path doesn't exist, create it
-				if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+				if (!Directory.Exists(output_path)) Directory.CreateDirectory(output_path);
 
-				StreamWriter f = new StreamWriter(csv_filepath);
-				f.Write(csv_builder.ToString());
-				f.Close();
-				f.Dispose();
+				using (StreamWriter f = new StreamWriter(csv_filepath)) f.Write(csv_builder.ToString());
 
-				Debug.Log(status_message + ": " + csv_filepath);
+				update_status(status, "File Written");
+				Debug.Log(string.Format("file written to: {0}", csv_filepath));
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show(string.Format("File:{0}/{1} could not be written", path, filename));
+				string status_message = string.Format("Error. File:{0}/{1} could not be written", output_path, filename);
+				update_status(status, status_message);
+				MessageBox.Show(status_message);
 				Debug.Log(e);
 				return false;
 			}
@@ -576,6 +553,20 @@ namespace picturefort
 			#endregion write file
 
 			return true;
+		}
+
+		private void update_status(Label status, string message)
+		{
+			if (status != null)
+			{
+				status.Text = message;
+				status.Refresh();
+			}
+		}
+
+		private void update_progress(ProgressBar progress, int value)
+		{
+
 		}
 
 		#endregion
@@ -587,12 +578,28 @@ namespace picturefort
 			public List<Color> palette = new List<Color>();
 			public Queue<Color> image_array = new Queue<Color>();
 			public string image_hash;
-			public string image_path;
-			public string image_filepath;
+
 			public string image_file;
+			public string image_path;
+			public string image_filepath
+			{
+				get
+				{
+					return string.Format("{0}/{1}", image_path, image_file);
+				}
+			}
 			public string image_extension;
-			public string csv_filepath;
-			public string csv_file;
+
+			public string out_file;
+			public string out_path;
+			public string out_filepath
+			{
+				get
+				{
+					return string.Format("{0}/{1}", out_path, out_file);
+				}
+			}
+			public static string out_extension = ".csv";
 			
 			/// <summary>
 			/// Creates an image object which contains the image, a color palette, the image as an list of colors
@@ -605,29 +612,27 @@ namespace picturefort
 			/// <param name="l"></param>
 			public byte_image(Image raw_image, string img_filepath, string path = null, ProgressBar p = null, Label status = null)
 			{
+				//get input image location info
+				//----------------------------------------------
 				int fstart = img_filepath.LastIndexOf("/");
 				if (fstart == -1) fstart = img_filepath.LastIndexOf("\\");
 
-				image_filepath = img_filepath;
 				image_file = img_filepath.Substring(fstart + 1);
-				image_path = image_filepath.Replace(image_file, "");
+				image_path = img_filepath.Replace(image_file, "").TrimEnd('/').TrimEnd('\\');
+
 				image_extension = image_file.Substring(image_file.LastIndexOf("."));
 
-				//set csv name to image name
-				csv_file = image_file.Replace(image_extension, ".csv");
+				//get initial output location info
+				//----------------------------------------------
 
-				if (path == null || path == "")
-				{
-					//if provided path is null, csv_file will be created in same directory as image
-					csv_filepath = img_filepath.Replace(image_file, csv_file);
-				}
-				else
-				{
-					//otherwise, create the new directory and create the csv_file in the provided directory
-					if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-					path = path.TrimEnd('/').TrimEnd('\\');
-					csv_filepath = string.Format("{0}/{1}", path, csv_file);
-				}
+				//set csv name to image name
+				out_file = image_file.Replace(image_extension, out_extension);
+
+				//if provided path is null, csv_file will be created in same directory as image
+				out_path = string.IsNullOrEmpty(path) ? image_path : path.TrimEnd('/').TrimEnd('\\');
+
+				//get and create necessary image data
+				//----------------------------------------------
 
 				image = new Bitmap(raw_image);
 				load_pixel_data(p);
@@ -636,9 +641,9 @@ namespace picturefort
 				status.Text = "Creating Image Hash";
 				status.Refresh();
 
-				string the_colors = "";
-				foreach (Color c in image_array) the_colors += color_string(c).Replace("#", "");
-				image_hash = createHash(string.Format("({0}x{1})-{2}", image.Width, image.Height, the_colors));
+				StringBuilder colors = new StringBuilder();
+				foreach (Color c in image_array) colors.Append(color_string(c).Replace("#", ""));
+				image_hash = createHash(string.Format("({0}x{1})-{2}", image.Width, image.Height, colors));
 				Debug.Log(string.Format("Image Loaded:{0}; path:{1}; hash:{2}", image_filepath, path, image_hash));
 			}
 
@@ -739,8 +744,8 @@ namespace picturefort
 				this.image_filepath = img.image_filepath;
 				this.image_file = img.image_file;
 				this.image_extension = img.image_extension;
-				this.csv_filepath = img.csv_filepath;
-				this.csv_file = img.csv_file;
+				this.csv_filepath = img.out_filepath;
+				this.csv_file = img.out_file;
 			}
 
 			private string digDescription()

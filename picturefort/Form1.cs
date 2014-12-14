@@ -13,15 +13,15 @@ using System.Threading;
 
 //TODO
 /*
- ------------------------------* Completed
- -------------------------* default color designations (dropdown comboboxes)
- * custom output filenames
- * image/csv rotation
+ * recursive folder image loading			(          ) 0% Completed
+ * image/csv rotation						(          ) 0% Completed
+ * better UI								(-----     ) 50% Completed
+ * 
  */
 
 namespace picturefort
 {
-	public partial class Form1 : Form
+	public partial class MainWindow : Form
 	{
 		public const int scrollbar_width = 24;
 		pf p;
@@ -29,7 +29,7 @@ namespace picturefort
 
 		#region loading
 
-		public Form1()
+		public MainWindow()
 		{
 			InitializeComponent();
 
@@ -45,8 +45,7 @@ namespace picturefort
 			p.read_settings();
 			txtOutPath.Text = pf.settings[setting.output_path].ToString();
 
-			cbRecursive.Enabled = false;
-			cbRecursive.Visible = false;
+			panelMultiImageMode.Visible = false;
 		}
 
 		/// <summary>
@@ -77,7 +76,7 @@ namespace picturefort
 					pf.byte_image temp = new pf.byte_image(
 						Image.FromFile(image_filepath),
 						image_filepath,
-						(string)pf.settings[setting.output_path],
+						null,
 						progress_bar,
 						status);
 
@@ -92,9 +91,17 @@ namespace picturefort
 					status.Text = "Images Loaded";
 					status.Refresh();
 
-					//hide side panel if only one image is loaded
-					if (p.loaded_images.Count <= 1) tableImagePreview.ColumnStyles[0].Width = 0;
-					else tableImagePreview.ColumnStyles[0].Width = 200;
+					//hide side panel and multi-image mode if only one image is loaded
+					if (p.loaded_images.Count <= 1)
+					{
+						tableImagePreview.ColumnStyles[0].Width = 0;
+						panelMultiImageMode.Visible = false;
+					}
+					else
+					{
+						tableImagePreview.ColumnStyles[0].Width = 222;
+						panelMultiImageMode.Visible = true;
+					}
 
 					for (int i = 0; i < p.loaded_images.Count; i++)
 					{
@@ -176,8 +183,7 @@ namespace picturefort
 			txtCommentPlace.Text = s.placeComment;
 			txtCommentQuery.Text = s.queryComment;
 
-			txtOutFilePath.Text = selected.csv_file;
-			txtOutPath.Text = selected.csv_filepath.Replace(selected.csv_file, "");
+			txtOutPath.Text = selected.out_path;
 
 			if (pf.settings[setting.file_format] != null) txtOutputFormat.Text = pf.settings[setting.file_format].ToString();
 		}
@@ -255,7 +261,6 @@ namespace picturefort
 			status.Text = "Images Loaded";
 			status.Refresh();
 
-			Debug.Log("test: ");
 			Debug.Log("total colors loaded: " + progress_bar.Value);
 		}
 
@@ -289,10 +294,10 @@ namespace picturefort
 			switch (cbStartPos.SelectedValue.ToString())
 			{
 				case "Custom": break;
-				case "Center": txtStartPos.Text = String.Format("start({0};{1}; Start: Center)", Math.Ceiling((double)img.Width / 2), Math.Ceiling((double)img.Height / 2)); break;
-				case "Top-Left": txtStartPos.Text = String.Format("start({0};{1}; Start: Top-Left)", 0, 0); break;
-				case "Top-Right": txtStartPos.Text = String.Format("start({0};{1}; Start: Top-Right)", img.Width, 0); break;
-				case "Bottom-Left": txtStartPos.Text = String.Format("start({0};{1}; Start: Bottom-Left)", 0, img.Height); break;
+				case "Center": txtStartPos.Text = String.Format("start({0};{1}; Start: Center)", img.Width / 2 + 1, img.Height / 2 + 1); break;
+				case "Top-Left": txtStartPos.Text = String.Format("start({0};{1}; Start: Top-Left)", 1, 1); break;
+				case "Top-Right": txtStartPos.Text = String.Format("start({0};{1}; Start: Top-Right)", img.Width, 1); break;
+				case "Bottom-Left": txtStartPos.Text = String.Format("start({0};{1}; Start: Bottom-Left)", 1, img.Height); break;
 				case "Bottom-Right": txtStartPos.Text = String.Format("start({0};{1}; Start: Bottom-Right)", img.Width, img.Height); break;
 				default: break;
 			}
@@ -340,40 +345,23 @@ namespace picturefort
 			load_images();
 			load_settings(selected_image);
 
-			txtOutFilePath.Text = "";
 			txtOutPath.Text = pf.settings[setting.output_path].ToString();
 		}
 
-		private void btnSingleCSV_Click(object sender, EventArgs e)
+		private void buttonConvert_Click(object sender, EventArgs e)
 		{
-			if (p.loaded_images.Count == 0) return;
 
-			//save any last changes made before clicking
-			save_image_settings(selected_image);
-
-			pf.image_settings img_settings = (pf.image_settings)pf.settings[selected_image.image_hash];
-			foreach (KeyValuePair<string, string> kvp in img_settings.modelist)
+			if (radioMultiLevel.Checked)
 			{
-				string mode = kvp.Key;
-				string description = kvp.Value;
-				p.build_csv(p.loaded_images, txtOutPath.Text, selected_image.csv_file, txtOutputFormat.Text, mode, description, progress_bar, status);
+				save_image_settings(selected_image);
+				pf.image_settings settings = (pf.image_settings)pf.settings[selected_image.image_hash];
+				p.convert(p.loaded_images, txtOutPath.Text, txtOutputFormat.Text, true, settings, progress_bar, status);
 			}
-
-			//txtOutFilePath.Text = "#mode-" + selected_image.csv_file;
-
-			save_settings();
-		}
-
-		private void btnMultiCSV_Click(object sender, EventArgs e)
-		{
-			if (p.loaded_images.Count == 0) return;
-
-			//save any last changes made before clicking
-			save_image_settings(selected_image);
-
-			p.batch_csv(p.loaded_images, txtOutPath.Text, txtOutputFormat.Text, progress_bar, status);
-
-			//txtOutPath.Text = pf.settings[setting.output_path].ToString();
+			else
+			{
+				foreach (pf.byte_image img in p.loaded_images) save_image_settings(img);
+				p.convert(p.loaded_images, txtOutPath.Text, txtOutputFormat.Text, false, null, progress_bar, status);
+			}
 
 			save_settings();
 		}
@@ -427,10 +415,21 @@ namespace picturefort
 		private void btnTest_Click(object sender, EventArgs e)
 		{
 			load_images();
-			tabPanel.SelectedIndex = 1; //switch to color designation tab
+			//tabPanel.SelectedIndex = 1; //switch to color designation tab
 		}
 
 		#endregion event handlers
+
+		private void preview_MouseClick(object sender, MouseEventArgs e)
+		{
+			PictureBox pic = (PictureBox)sender;
+			double xpos = e.X * selected_image.image.Width / pic.Width + 1;
+			double ypos = e.Y * selected_image.image.Height / pic.Height + 1;
+
+			txtStartPos.Text = string.Format("start({0};{1}; Start: Custom)", xpos, ypos);
+			cbStartPos.SelectedIndex = 0;
+			update_start_positions();
+		}
 
 	}
 }
